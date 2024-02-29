@@ -1,0 +1,320 @@
+/**
+ * Created by jiscraft on 2016-05-30.
+ */
+Ext.define('Terp.view.mm.mm16e2401.Mm16e2401Controller', {
+    extend: 'Ext.app.ViewController',
+    alias: 'controller.mm16e2401',
+
+    requires: [
+        'Terp.view.tsoft.common.fileupload.singlefiletoloacal.TsoftSingleFileUploadToLocal'
+    ],
+
+    commonFn:'',
+    s_classId_headbutton:'',
+    s_classId_searchform :'',
+    s_classId_form1 :'',
+    s_classId_form1_store :'',
+    s_classId_grid1 :'',
+    s_classId_grid1_store :'' ,
+
+    init: function() {
+        commonFn = Terp.app.getController('TerpCommon');
+        s_classId_headbutton = this.lookupReference('s_classId_headbutton');
+        s_classId_searchform = this.lookupReference('s_classId_searchform');
+
+        s_classId_form1 = this.lookupReference('s_classId_form1');
+        s_classId_form1_store =  this.getViewModel().getStore('s_classId_form1_store') ;
+
+        s_classId_grid1 = this.lookupReference('s_classId_grid1');
+        s_classId_grid1_store =  this.getViewModel().getStore('s_classId_grid1_store') ;
+
+        this.onInitCombstore();
+        s_classId_form1.setReadOnly(true);
+
+    },
+
+    onInitCombstore : function(){
+        //폼에서 사용할 콤보store를 만든다. 콤보가 있는뷰는 반드시 리퍼런스로 선언되어 있어야 한다..
+        commonFn.setCommonCode(this.lookupReference('s_classId_fg_mm010') ,'MM010');
+        commonFn.setCommonCode(this.lookupReference('s_classId_fg_mm020') ,'MM020');
+        commonFn.setCommonCode(this.lookupReference('s_classId_fg_fi010') ,'FI010');
+
+        //help fields들 값 초기화
+        commonFn.setDataBindHelpBox(s_classId__form1, 'cd_b', records[0].data.cd_b, records[0].data.nm_p);
+    },
+
+
+
+    onSelect : function(){
+        //조회조건에 값이 입력되었는지 체크
+        var searchValue = s_classId_searchform.down('[name=cd_i]').getValue();
+        if (searchValue  == '' ||  searchValue == null ){
+            commonFn.toastMessage('원자재를 선택후 조회하세요','b')  ;
+            return;
+        };
+
+
+        var me = this;
+        var sendDataJsonEncode = s_classId_searchform.makeSendData('r');
+        s_classId_form1_store.load({
+            params :{
+                sendData : sendDataJsonEncode
+            },
+            callback : me.onSelctCallback,
+            scope : me
+        });
+    },
+
+
+    onSelctCallback : function(records, operation , success){
+        //그리드의경우
+        if(success == true ){
+
+
+            s_classId_grid1.setReadOnly(true);
+            s_classId_grid1.getSelectionModel().select(0);
+        }else{
+            var errorMsg = this.getViewModel().getStore('s_classId_grid1_store').getProxy().getReader().rawData.msg;
+            Terp.app.getController('TerpCommon').errorHandling(errorMsg);
+        }
+
+
+
+
+
+        //폼의경우
+        if(success == true ){
+            if  ( records.length < 1 ){
+                s_classId_form1.clearForm();
+            }else {
+                //데이타를 store에서 가져온다
+                s_classId_form1.loadRecord(records[0]);
+
+                //help fields들 값 초기화
+                commonFn.setDataBindHelpBox(s_classId__form1, 'cd_b', records[0].data.cd_b, records[0].data.nm_p);
+
+                //form화면 수정금지
+                s_classId_form1.setReadOnly(true);
+
+                //폼에 종속된 그리드가 있을경우
+                //this.onGridSelect();
+            }
+        }else{
+            var errorMsg = this.getViewModel().getStore('s_classId_store').getProxy().getReader().rawData.msg;
+            Terp.app.getController('TerpCommon').errorHandling(errorMsg);
+        }
+    },
+
+
+    onModify : function(){
+        s_classId_form1.setReadOnly(false);
+        s_classId_headbutton.down('[name = savebutton]').setDisabled(false);
+    },
+
+    onInsert : function(){
+        s_classId_searchform.clearForm();
+        s_classId_form1.clearForm();
+        s_classId_form1.down('[name=yn_use]').setValue('Y');
+        s_classId_form1.down('[name=cd_c]').setValue(commonFn.getUserInfo('cd_c'));
+
+        this.onModify();
+    },
+
+    onDelete : function(){
+        var me = this;
+        Ext.MessageBox.confirm('확인', '선택한 정보를 삭제하시겠습니까?', function(btn){
+            if (btn == 'yes') {
+                me.onDeleteCallback();
+            }
+        });
+    },
+
+
+    onDeleteCallback : function(){
+        var me = this;
+        var sendDataJsonEncode = s_classId_form1.makeSendData('d');
+
+        Ext.Ajax.request({
+            url :'../ServerPage/ma/ma_item.jsp' ,
+            method :'POST',
+            params :{
+                sendData : sendDataJsonEncode
+            },
+            success :function(res){
+                var obj = Ext.JSON.decode(res.responseText);
+                if(obj.success == true){
+                    commonFn.toastMessage('삭제성공','b');
+                    s_classId_form1.setReadOnly(true);
+                    s_classId_searchform.clearForm();
+                    s_classId_form1.clearForm();
+
+                }else{
+                    var errorMsg = obj.msg;
+                    Terp.app.getController('TerpCommon').errorHandling(errorMsg);
+                }
+            },
+            fail : function(){
+                commonFn.toastMessage("데이타처리중 오류가 발생했습니다",'b');
+            }
+        });
+    },
+
+    onSave : function(){
+        var me = this;
+
+        var sendDataJsonEncode = s_classId_form1.makeSendData('s');
+
+        Ext.Ajax.request({
+            url :'../ServerPage/ma/ma_item.jsp' ,
+            method :'POST',
+            params :{
+                sendData : sendDataJsonEncode
+            },
+            success :function(res){
+                var obj = Ext.JSON.decode(res.responseText);
+                if(obj.success == true){
+                    commonFn.toastMessage('저장성공','b');
+                    s_classId_form1.setReadOnly(true);
+                    s_classId_headbutton.down('[name = savebutton]').setDisabled(true);
+                    me.onSelect();
+
+                }else{
+                    var errorMsg = obj.msg;
+                    Terp.app.getController('TerpCommon').errorHandling(errorMsg);
+                }
+            },
+            fail : function(){
+                commonFn.toastMessage("데이타처리중 오류가 발생했습니다",'b');
+            }
+        });
+    },
+
+    onImageUpload : function(){
+        var cd_i = this.lookupReference('s_classId_form1').down('[name=cd_i]').getValue();
+        var loginCdc = commonFn.getUserInfo().cd_c;
+
+        if(cd_i == ''){
+            commonFn.toastMessage('원자재코드를 선택 조회후 이미지를 등록하세요','b');
+            return;
+        }
+
+        var returnData = commonFn.sqlSelect('sql' , "select count(*) cnt from ma_item where cd_c = '"+  loginCdc + "' and cd_i  = '"+ cd_i + "'" );
+
+        if (returnData[0].cnt < 1 ){
+            commonFn.toastMessage('원자재정보를 등록 저장한뒤 이미지를 업로드하세요','b');
+            return;
+        }
+
+
+    },
+
+
+    onGridSelect : function(){
+        var me = this;
+        var sendDataJsonEncode = s_classId_form1.makeSendData('m');
+        s_classId_grid1_store.load({
+            params :{
+                sendData : sendDataJsonEncode
+            },
+            callback : me.onGridSelctCallback,
+            scope : me
+        });
+    },
+
+
+    onGridSelctCallback : function(records, operation , success){
+        if(success == true ){
+            s_classId_grid1.setReadOnly(true);
+        }else{
+        db error처리 공통펑션으로 처리
+        ======================
+        시간나는데로 처리바랍니다.
+
+        }
+            var errorMsg = this.getViewModel().getStore('s_classId_store').getProxy().getReader().rawData.msg;
+            Terp.app.getController('TerpCommon').errorHandling(errorMsg);
+        }
+    },
+
+
+    onGridInsert_s_classId_grid1 : function(selection , rowIdx){
+        //headbutton으로 컨트롤 할때만
+        //s_classId_headbutton.down('[name = savebutton]').setDisabled(false);
+
+        //선택한로우의 위에 로우를 추가하기 위해 로우번호를 체크한다
+        var rowIdx = s_classId_grid1.getSelectionModel().selectionStartIdx;
+        if (rowIdx == 0 || rowIdx == undefined ){
+            rowIdx = 0 ;
+        };
+
+        //추가에 필요한 값 체크
+        if ( s_classId_form1.down('[name = cd_bom]').getValue() == '' ||  s_classId_form1.down('[name = cd_bom]').getValue() == null )
+        {
+            commonFn.toastMessage('BOM코드를 선택 조회한뒤 추가하세요','b');
+            return;
+        }
+
+
+
+        var data ={
+            cd_c: commonFn.getUserInfo().cd_c,
+            cd_i: s_classId_form1.down('[name = cd_i]').getValue(),
+            cd_p: '',
+            dt_apply: commonFn.getTodayInfo(),
+            up_apply : 0 ,
+            fg_sy020: '',
+            dc_remark: ''
+        };
+        //edit하던 내용을 컴플릿시킴..
+        s_classId_grid1.getPlugin('cellplugin').completeEdit();
+        s_classId_grid1.getStore('s_classId_grid1_store').insert(rowIdx, data);
+        s_classId_grid1.getSelectionModel().select(rowIdx);
+        s_classId_grid1.setReadOnly(false);
+        //row selection한뒤 에디트를 시작할 셀로 이동
+        s_classId_grid1.getPlugin('cellplugin').startEditByPosition({
+            row: rowIdx,
+            column: 0  //가고자하는 컬럼번호
+        });
+
+    },
+
+
+    onGridModify_s_classId_grid1 : function(){
+        s_classId_grid1.setReadOnly(false);
+    },
+
+
+    onGridDelete_s_classId_grid1 : function(selection , rowIdx){
+        s_classId_grid1_store.remove(selection);
+    },
+
+
+    onGridSave_s_classId_grid1 : function(){
+        var me = this;
+        s_classId_grid1.getPlugin('cellplugin').completeEdit();
+        var sendData = s_classId_grid1.makeSendData();
+
+        Ext.Ajax.request({
+            url :'../ServerPage/ma/ma_item_price.jsp' ,
+            method :'POST',
+            params :{
+                sendData : sendData
+            },
+
+            success :function(res){
+                var obj = Ext.JSON.decode(res.responseText);
+                if(obj.success == true){
+                    commonFn.toastMessage("저장성공",'b');
+                    s_classId_grid1.setReadOnly(true);
+                    //var s = me.lookupReference('ma16020401_grid1').getView().getSelectionModel().getSelection();
+                    //me.lookupReference('ma16020401_grid1').getSelectionModel().select(s);
+                }else{
+                    commonFn.toastMessage(obj.msg ,'b');
+                }
+            },
+            fail : function(){
+                commonFn.toastMessage("데이타처리중 오류가 발생했습니다",'b');
+            }
+        })
+    }
+});

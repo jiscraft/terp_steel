@@ -1,0 +1,277 @@
+1.json object
+
+var jsonData = {
+    'actiondata': 'm',
+    'loginIduser': commonFn.getUserInfo('id_user'),
+    'loginCdc': commonFn.getUserInfo('cd_c')
+};
+
+var sendDataJson = [];
+sendDataJson.push(jsonData);
+var sendDataJsonEncode = Ext.encode(sendDataJson);
+
+1.1. data를 가져온뒤 필요한 데이타를 추가
+        var modifydata = cn16g0201_grid2_store.getModifiedRecords() ;
+        var sendDataJson = [];
+
+        for (var i = 0; i < modifydata.length; i++) {
+            modifydata[i].data.actiondata = 'sgrd';
+            modifydata[i].data.loginIduser = commonFn.getUserInfo().id_user;
+            modifydata[i].data.loginCdc = commonFn.getUserInfo().cd_c;
+            sendDataJson.push(
+                modifydata[i].data
+            );
+        }
+
+        var sendDataJsonEncode = Ext.encode(sendDataJson);
+
+12.폼과 그리드를 한트랜잭션으로 처리하기위
+         var sendDataJson = [];
+         var objFrom = mm16k3001po_form1.makeSendData('s',false);
+         var objGrid = mm16k3001po_grid1.makeSendData('','',false);
+
+
+         objFrom[0].fg_procedure = 'form';
+         objFrom[0].actiondata_detail = objFrom[i].actiondata;
+         objFrom[0].actiondata = 'sbat';
+         sendDataJson.push(objFrom[0]);
+
+
+         for(var i=0; i < objGrid.length; i++){
+             objGrid[i].fg_procedure = 'grid';
+             objGrid[i].actiondata_detail = objGrid[i].actiondata;
+             objGrid[i].actiondata = 'sbat';
+             sendDataJson.push(objGrid[i]);
+         }
+
+         var sendDataJsonEncode = Ext.encode(sendDataJson);
+
+         commonFn.getTsoftAjaxRequest(sendDataJsonEncode , '../ServerPage/mm/mm_po_h.jsp' , true , function (ajaxResult) {
+             // sendDataJsonEncode 보낼데이타 ,  url , async값(순서상관없이 받을시 true) , callback받을펑션
+             if ( ajaxResult.success ){   // 결과가 성공일때
+                 commonFn.toastMessage('발주데이타 저장성공','t');
+             }
+         });
+        //jsp처리부분
+            if (tcf.getJsonValueSimple("object", jsonObject, "actiondata").toString().equals("sbat")) {
+                if (tcf.getJsonValueSimple("object", jsonObject, "fg_procedure").toString().equals("form")){
+                    if (tcf.getJsonValueSimple("object", jsonObject, "actiondata_detail").toString().equals("s")) {
+                        queryString = queryString + "exec usp_mm_po_h 's' ";
+                        queryString = queryString + ", @p_id_user = " + tcf.getJsonValueSimple("string", jsonObject, "loginIduser");
+                        queryString = queryString + ", @p_cd_c = " + tcf.getJsonValueSimple("string", jsonObject, "loginCdc");
+                        queryString = queryString + ", @p_no_po = " + tcf.getJsonValueSimple("string", jsonObject, "no_po");
+                        queryString = queryString + ", @p_dt_po = " + tcf.getJsonValueSimple("string", jsonObject, "dt_po");
+                        queryString = queryString + ", @p_cd_site = " + tcf.getJsonValueSimple("string", jsonObject, "cd_site");
+                        queryString = queryString + ", @p_cd_e = " + tcf.getJsonValueSimple("string", jsonObject, "cd_e");
+                        queryString = queryString + ", @p_cd_p = " + tcf.getJsonValueSimple("string", jsonObject, "cd_p");
+                        queryString = queryString + ", @p_dt_dlv = " + tcf.getJsonValueSimple("string", jsonObject, "dt_dlv");
+                        queryString = queryString + ", @p_dc_dlv = " + tcf.getJsonValueSimple("string", jsonObject, "dc_dlv");
+                        queryString = queryString + ", @p_dc_connection = " + tcf.getJsonValueSimple("string", jsonObject, "dc_connection");
+                        queryString = queryString + ", @p_dc_dlvuser = " + tcf.getJsonValueSimple("string", jsonObject, "dlvuser");
+                        queryString = queryString + ", @p_dc_remark = " + tcf.getJsonValueSimple("string", jsonObject, "dc_remark");
+
+                    }
+                }
+
+                if (tcf.getJsonValueSimple("object", jsonObject, "fg_procedure").toString().equals("grid")){
+                    if (tcf.getJsonValueSimple("object", jsonObject, "actiondata_detail").toString().equals("s")) {
+                        queryString = queryString + "exec usp_mm_po_l 's' ";
+                        queryString = queryString + ", @p_id_user = " + tcf.getJsonValueSimple("string", jsonObject, "loginIduser");
+                        queryString = queryString + ", @p_cd_c = " + tcf.getJsonValueSimple("string", jsonObject, "loginCdc");
+                        queryString = queryString + ", @p_no_po = " + tcf.getJsonValueSimple("string", jsonObject, "no_po");
+                        queryString = queryString + ", @p_ln_po = " + tcf.getJsonValueSimple("string", jsonObject, "ln_po");
+                        queryString = queryString + ", @p_cd_m = " + tcf.getJsonValueSimple("string", jsonObject, "cd_m");
+                        queryString = queryString + ", @p_dc_po_spec = " + tcf.getJsonValueSimple("string", jsonObject, "dc_po_spec");
+                        queryString = queryString + ", @p_qt_m = " + tcf.getJsonValueSimple("number", jsonObject, "qt_m");
+                        queryString = queryString + ", @p_dc_remark = " + tcf.getJsonValueSimple("string", jsonObject, "dc_remark");
+                    }
+
+                    if (tcf.getJsonValueSimple("object", jsonObject, "actiondata_detail").toString().equals("d")) {
+                        queryString = queryString + "exec usp_mm_po_l 'd' ";
+                        queryString = queryString + ", @p_id_user = " + tcf.getJsonValueSimple("string", jsonObject, "loginIduser");
+                        queryString = queryString + ", @p_cd_c = " + tcf.getJsonValueSimple("string", jsonObject, "loginCdc");
+                        queryString = queryString + ", @p_no_po = " + tcf.getJsonValueSimple("string", jsonObject, "no_po");
+                        queryString = queryString + ", @p_ln_po = " + tcf.getJsonValueSimple("string", jsonObject, "ln_po");
+                    }
+                }
+            }
+
+
+
+
+2.그리드로우 선택
+this.lookupReference('sy16020101_grid1').getSelectionModel().select(0);
+
+
+3.popup
+
+3.1 view에서 처리
+var pop = Ext.create('Terp.view.es.es16e3101.esdetailwindow.EsDetailWindow',{
+   //popup넘겨주는 view
+   popupParamThisView : Terp.app.getController('TerpCommon').getTopOwnerCt(this) ,
+   //전달변수
+    popupParams :record
+});
+pop.show();
+
+
+//popup이 종료되서 돌아와서 실행될 함수
+callbackPopup : function(){
+    //console.log('callbackPopup',this.getController());
+    this.getController().onGridSelect();
+}
+
+
+
+
+3.2 popoup
+popup view
+//팝업이 닫힐때 부모 호출할 함수를 호출
+    listeners: {
+        close: function(){
+            //console.log('close event');
+            this.popupParamThisView.callbackPopup();
+
+        }
+    }
+
+//팝업컨트롤러
+init : function(){
+        data = [];
+        data.push(this.getView().popupParams);
+        ....처리
+}
+
+
+4.record는 반드시 배열형태로 넘겨줘야 처리된다...
+helpParams = [];
+helpParams.push(record)  ;
+
+ex)[constructor]
+
+
+
+5.컬럼헤더정보를 읽어오기 위해
+
+var columnName = grid.headerCt.getGridColumns()[cellIndex].dataIndex;
+
+
+6.그리드가 수정상태인지 조회상태인지 확인한다
+grid.getPlugins()[0].disabled == false
+
+
+7.이미지 url 체크
+    mm16e2403_form1.loadRecord(records[0]);
+    commonFn.setDataBindHelpBox(mm16e2403_form1, 'cd_goods_class', records[0].data.cd_goods_class, records[0].data.nm_goods_class);
+    mm16e2403_form1.setReadOnly(true);
+    this.onGridSelect();
+    if (records[0].data.img_url != '') {
+        if ( commonFn.existUrl(records[0].data.img_url) ) {
+            this.getViewModel().set('bomImageUrl', './' + records[0].data.img_url);
+        }else{
+            this.getViewModel().set('bomImageUrl', './res/images/tumyeong.png' );
+        }
+
+    }else{
+        this.getViewModel().set('bomImageUrl', './res/images/tumyeong.png' );
+    }
+
+
+ 8.버튼등에 의해 직접데이타를 수정 반영
+     var models;
+     var models = sy16021301_grid1_store.getRange();
+     models[rowIndex].set('yn_use', 'Y');
+
+     //모델범위네에서 특정컬럼을 찾아 반영하고자 할때
+     findRecordIndex = sy16021301_grid1_store.find('id_menu' , id_menu2 );
+     models[findRecordIndex].set('yn_use', 'Y');
+
+
+ 9.그리드컬러조정
+     http://skirtlesden.com/articles/styling-extjs-grid-cells
+
+
+ 10.다시팝업정리
+
+     호출할때
+        var me = this;
+
+        var paramjsonData = {
+            'no_jc': record.data.no_jc,
+            'id_row' : record.data.id_row,
+            'fg_window':'edit'
+        };
+        var pop = Ext.create('Terp.view.wk.wk21j0501.wk21j0501popup.Wk21j0501popup',{
+            popupParamView : me.getView() ,   //부르는넘의 뷰
+            popupParamCallback : 'onPopupCallback_wk21j0501' ,  // 끝나고 돌아와서 처리할 펑션이름
+            popupParams : paramjsonData ,  //처리할파라미터
+            autoShow: true
+        });
+
+        pop.on('close', function() {
+            me.onSelect();
+        });
+
+ 11.messagebox
+        Ext.MessageBox.confirm('확인', '선택한타입을 타겟타입에 복사하시겠습니까?', function (btn) {
+            if (btn == 'yes') {
+                me.onGridCopy_type();
+            } else {
+                return;
+            }
+        });
+
+
+ 12.ajax 공통 request사용하기
+        commonFn.getTsoftAjaxRequest(sendDataJsonEncode , '../ServerPage/cn/cn_hardware_po_h.jsp' , true , function (ajaxResult) {
+            // sendDataJsonEncode 보낼데이타 ,  url , async값(순서상관없이 받을시 true) , callback받을펑션
+            if ( ajaxResult.success ){   // 결과가 성공일때
+                commonFn.toastMessage('발주서 삭제성공','t');
+                cn16k2401_form1.clearForm();
+                commonFn.setDataBindHelpBox(cn16k2401_searchform, 'no_po', '', '');
+                me.onGridSelect_cn16k2401_grid1();
+                me.onGridSelect_cn16k2401_grid2();
+                cn16k2401_headbutton.down('[name = savebutton]').setDisabled(true);
+            }
+        });
+
+
+ 13.summary recorde처리 및 레코드에서 데이타 찾기
+         features: [
+             {
+                 ftype: 'summary',
+                 dock: 'top'
+             }
+         ],
+
+        summaryRenderer: Ext.util.Format.numberRenderer('0,000')
+
+
+        summaryRenderer: function(value, summaryData, dataIndex){
+            var sumFeature =  mm17e0202_grid1.getView().findFeature('summary');
+            // console.log(sumFeature.summaryRecord.get('at_stock'));
+            // console.log(sumFeature.summaryRecord.get('at_stock_mang'));
+            return  Ext.util.Format.number(sumFeature.summaryRecord.get('at_stock') / ( sumFeature.summaryRecord.get('at_stock_mang')/2.5) ,'0,000.#') ;
+
+        }
+        //mm17e0202참조
+
+
+14.selection data처리
+        var selection = wk17b2501_grid2.getSelection();
+        var sendDataJson = [];
+
+        for (var i = 0; i < selection.length; i++) {
+            if (selection[i].data.at_jb_rem > 0){
+                selection[i].data.actiondata = 'ntrn';
+                selection[i].data.loginIduser = commonFn.getUserInfo().id_user;
+                selection[i].data.loginCdc = commonFn.getUserInfo().cd_c;
+                selection[i].data.dt_trns_next = wk17b2501_functionform.down('[name=dt_trns]').getValue();
+                sendDataJson.push(
+                    selection[i].data
+                );
+            }
+        }
+
+ 15.row insert한뒤 헬프컬럼에 네임으로 표시하기..
+ as접수진행등록 화면 참고

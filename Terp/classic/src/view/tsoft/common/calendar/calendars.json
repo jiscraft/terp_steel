@@ -1,0 +1,16 @@
+[{
+  "id": 1,
+  "title": "Personal"
+}, {
+  "id": 2,
+  "title": "Office Meeting"
+}, {
+  "id": 3,
+  "title": "Scrum Call"
+}, {
+  "id": 4,
+  "title": "Personal Alarm"
+}, {
+  "id": 5,
+  "title": "Appointment"
+}]

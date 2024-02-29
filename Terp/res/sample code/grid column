@@ -1,0 +1,282 @@
+0.일반text field
+{
+    text:'대체원자재명',
+    dataIndex:'nm_i_alt',
+    width:200,
+    editor: 'tsofttextfield'
+},
+
+
+1.yesno콤보
+{
+    text:'계산여부',
+    dataIndex:'yn_calculate',
+    width:80,
+    editor: 'tsoftcomboboxyesno',
+    renderer : function (value, metaData, record, rowIndex, colIndex, store, view) {
+	    return Terp.app.getController('TerpCommon').yesnoRender(value);
+    }
+},
+
+
+2.date컬럼
+{
+    text:'단가적용일',
+    dataIndex:'dt_apply',
+    width:100,
+    editor: 'tsoftdatefield',
+    renderer : function (value, metaData, record, rowIndex, colIndex, store, view) {
+        return Terp.app.getController('TerpCommon').dateRender(value);
+    }
+},
+
+2. yearmonth컬럼
+{
+    text:'단가적용일',
+    dataIndex:'dt_apply',
+    width:100,
+    editor: 'tsoftyearmonthfield',
+    renderer : function (value, metaData, record, rowIndex, colIndex, store, view) {
+	    return Terp.app.getController('TerpCommon').yearMonthRender(value);
+    }
+},
+
+
+3.number컬럼
+{
+    text:'적용단가',
+    dataIndex:'up_apply',
+    width:100,
+    editor: 'tsoftnumberfield',
+    align :'right',
+    //방법1
+    formatter: 'number("0,000")'  //포매터랑 렌더러랑 동시에 쓰면 충돌남
+    //방법2
+    renderer : function(value, metaData, record, rowIndex, colIndex, store, view) {
+	    return value == 0 ? '' : Ext.util.Format.number(value, '0,000.##')
+    }
+},
+
+
+4.공통코드콤보적용컬럼
+4.1. 공통코드를 사용해서 처리 ( 공통코드는 로긴할때 commonCodeStore를 만듬 )
+    - 입력과 조회둘다 처리할 경우 조회시는 editor 안달면 됨
+{
+    text : '적용계산식',
+    dataIndex: 'fg_mm040',
+
+    renderer :function(value, metaData, record, rowIndex, colIndex , store ){
+        if ( value == null  ){
+            return '';
+        }else {
+            return Terp.app.getController('TerpCommon').commonCodeRender(value , 'MM040');
+        }
+    },
+
+    editor: {
+        xtype: 'tsoftcommoncodecombobox',
+        allowBlank: false ,
+        listeners :{
+            render:  function(){
+                Terp.app.getController('TerpCommon').setCommonCode(this ,'MM040' ,'Y');
+            }
+        }
+    }
+},
+
+
+4.2. 조회만 하는 경우
+render 파라미터에 record필드를 이용하여 처리함 ( 당연히 쿼리시 nm을 보내줘야함 )
+renderer :function(value, metaData, record, rowIndex, colIndex , store ){
+    return record.nm_fg010 ;
+},
+
+
+
+
+
+
+
+
+5.직접value 콤보적용컬럼
+5.1. 방법 1 뷰모델에 콤보스토어를 설정한뒤 처리하는 방법
+
+{
+    text:'구분',
+    dataIndex:'fg_bom',
+    width:80,
+    renderer :function(value, metaData, record, rowIndex, colIndex , store ){
+        if ( value == null  ){
+            return '';
+        }else {
+            return Terp.app.getController('TerpCommon').valueComboRender(Terp.app.getController('TerpCommon').getTopOwnerCt(this).getViewModel().getStore('fg_bom_store')  , value ,  colIndex );
+        }
+
+    },
+    editor: {
+        xtype: 'tsoftcombobox',
+        allowBlank: false,
+        listeners: {
+            render: function(){
+                this.setStore(Terp.app.getController('TerpCommon').getTopOwnerCt(this.ownerCt.grid).getViewModel().getStore('fg_bom_store'));
+            }
+        }
+
+    }
+},
+
+* 뷰모델부분
+fg_bom_store :{
+    data : [
+        {field1: '0',   field2: '틀'},
+        {field1: '1',    field2: '짝'},
+        {field1: '2',     field2: '망'},
+        {field1: '3', field2: '유리'},
+        {field1: '9', field2: '기타'}
+    ]
+}
+
+5.2. 방법 2 에디터에 스토어를 만든뒤 render할때는 geteditor해서 처리하는 방법
+            만일 조회만 하는 컬럼일때는 사용할 수 없슴
+{
+    text:'사용',
+    dataIndex:'fg_tax',
+    width:90,
+    renderer :function(value, metaData, record, rowIndex, colIndex , store ){
+        return Terp.app.getController('TerpCommon').valueComboRender(this.columns[colIndex].getEditor().store  , value ,  colIndex );
+    },
+    editor: {
+        xtype: 'tsoftcombobox',
+        store :[
+            ['0','과세'],
+            ['1','면세'],
+            ['2','불공'],
+            ['3','카드'],
+            ['4','법인카드'],
+            ['5','현금'],
+            ['6','기타']
+        ]
+    }
+},
+
+5.3. 방법3 조회만 하는 직접벨류처리
+렌더에다 if... else if.... 를 써서 집접처리
+
+
+6.help창 컬럼
+반드시 classic/src/view/tsoft/componentux/grideditor에 xtype이 존재해야 한다..
+폼과달리 그리드는 코드와 네임을 둘다표현한다...( nmIndex = 코드의 네임을 뿌려줄 컬럼인덱스명 )
+입력창이 아니면 당연히  네임으로 조인한다..
+
+
+{
+    text: '원자재코드',
+    dataIndex: 'cd_i',
+    nmIndex: 'nm_i',
+    unitIndex : 'nm_mm010',  // 자재코드에서만 사용 단위
+    editor: {
+        xtype: 'tsoftitemgridfield'
+    }
+},
+
+
+7.grid cell merge
+view에서
+enableCellMergePlugin: true,	// cell merge 플러그인 사용 여부
+enableSubTotal: false,	// sub total 적용여부
+rowLines: false,	// cell merge 플러그인 사용시 반드시 false로 설정해야 함
+bufferedRenderer: false ,
+
+* 앞에 컬럼부터 순서대로 쓸것....중간에 하면 이상한 결과 나옴,.,
+
+{
+    text:'자재구분',
+    dataIndex:'fg_bom',
+    width:80,
+    renderer :function(value, metaData, record, rowIndex, colIndex , store, view) {
+        var nm_bom = Terp.app.getController('TerpCommon').valueComboRender(this.columns[colIndex].getEditor().store  , value ,  colIndex );
+        return view.grid.getMergeValue(nm_bom, metaData, record, rowIndex, colIndex, store, view);
+    },
+    editor: {
+        xtype: 'tsoftcombobox',
+        allowBlank: false,
+        store :[
+            ['0','틀'],
+            ['1','짝'],
+            ['2','망'],
+            ['3','유리'],
+            ['4','기타']
+        ]
+    }
+},
+
+
+8.그리드합계행처리
+ 뷰에서 처리할 내용
+features: [
+ {
+     ftype: 'summary',
+     dock: 'top'
+ }
+],
+
+columns :[
+    {
+        text: '타입',
+        dataIndex: 'dc_type',
+        editor: 'tsofttextfield',
+        summaryRenderer: function (value, summaryData, dataIndex, rowIndex, colIndex, store, view) {
+                     return '셋트계' ;
+                 }
+    },
+    {
+        text:'셋트',
+        dataIndex:'qt_set',
+        width:100,
+        align : 'right',
+        formatter: 'number("0,000")',
+        summaryType :'sum'
+
+    }
+]
+
+사업장필드
+{
+    text:'사업장',
+    dataIndex:'cd_b',
+
+    width : 150 ,
+    renderer :function(value, metaData, record, rowIndex, colIndex , store ){
+
+        if( this.columns[colIndex].getEditor().store.data.length == 0) {
+            return record.data.nm_b;
+        } else {
+            var i = this.columns[colIndex].getEditor().store.find('cd_b' , value);
+
+            if (i >= 0 ) {
+                return this.columns[colIndex].getEditor().store.getAt(i).data.nm_b;
+            }else{
+                return ''
+            }
+        }
+    },
+
+    editor: {
+        xtype: 'tsoftbusinesshelpfield'
+
+    }
+},
+
+* 부서컬럼
+{
+    text:'부서',
+    dataIndex:'cd_o',
+    nmIndex :'nm_o' ,
+    width : 150 ,
+    renderer :function(value, metaData, record, rowIndex, colIndex , store ){
+        return record.data.nm_o ;
+    },
+    editor: {
+        xtype: 'tsoftorggridfield'
+    }
+},

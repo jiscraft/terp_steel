@@ -1,0 +1,73 @@
+ //호출할때
+{
+    xtype :'tsoftfuctionform',
+    reference: 'es16i2601win_functionform',
+
+    items :[
+        {
+            xtype:'tsoftfilebutton',
+            name : 'fileUploadButton',
+            handler: 'onButtonClick_attachFile'
+        }
+    ]
+}
+
+
+그냥 xtype만 선언해주면됨....
+그리고 select 성공할때 setFileButton 아니면 상황에 따라 초기화시..
+    setFileButton : function(){
+        var popupParams = {
+            cd_c: commonFn.getUserInfo().cd_c,
+            fg_af : '2000' ,
+            nm_tbl : 'cn_master_hardware_list',
+            cd_key1 : cn16g0702_searchform.down('[name=cd_site]').getValue() ,
+            cd_key2 : '' ,
+            cd_key3 : '' ,
+            cd_key4 : '' ,
+            cd_key5 : '' ,
+            cd_ref1 :'hwlist',
+            windowTitle : '현장철물일람관련첨부화일',  // 윈도우타이틀이름
+            enableModify: true  // 추가삭제가 가능한지 여부
+        };
+
+        this.getView().down('[name=fileUploadButton]').setButtonParams(popupParams);
+    },
+
+
+
+  아래항목은 별도로 크리에이트 하고 그럴때나 사용함..
+
+
+
+
+    onFunctionButtonClick2_cn16i0601gs : function(){
+
+        var popupParams = {
+            cd_c: commonFn.getUserInfo().cd_c,
+            fg_af : '2000' ,
+            nm_tbl : 'cn_gs',
+            cd_key1 : cn16i0601gs_form1.down('[name=no_gs]').getValue() ,
+            cd_key2 : '' ,
+            cd_key3 : '' ,
+            cd_key4 : '' ,
+            cd_key5 : '' ,
+            cd_ref1 :'',  //문서타입
+            windowTitle : '기성관련첨부화일',  // 윈도우타이틀이름
+            enableModify: true  // 추가삭제가 가능한지 여부
+        };
+
+        var me = this;
+        var wkRefFilesWin = Ext.create('Terp.view.tsoft.common.fileupload.fileUploadWindow.FileUploadWindow', {
+            openerController: me,
+            popupParamView : me.getView() ,   //부르는넘의 뷰
+            popupParamCallback : 'onFileUploadCallback' ,  // 끝나고 돌아와서 처리할 펑션이름
+            popupParams : popupParams ,
+            autoShow: true
+        });
+    },
+
+
+    onFileUploadCallback : function(fileCount){
+
+        console.log(fileCount + '건의 화일이 있습니다');
+    }

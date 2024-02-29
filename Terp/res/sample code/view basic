@@ -1,0 +1,136 @@
+/**
+ * Created by jiscraft on 2016-05-30.
+ * 자재등록
+ */
+Ext.define('Terp.view.mm.mm16e2401.Mm16e2401', {
+    extend: 'Terp.view.tsoft.componentbase.TsoftPagePanel',
+    xtype: 'mm16e2401',
+
+    controller : 's_classId',
+    viewModel: {
+        type :'s_classId'
+    },
+
+    layout :{
+        type : 'vbox',
+        align : 'stretch'
+    },
+
+    items: [
+        {
+            xtype :'tsoftheadbuttons',
+            reference: 's_classId_headbutton'
+        },
+        {
+            xtype :'tsoftsearchform',
+            reference: 's_classId_searchform',
+            items :[
+                {
+                    xtype :'tsoftitemhelpfield',
+                    fieldLabel: '원자재',
+                    name : 'cd_i',
+                    keyField: true ,
+                    width : 200
+
+                }
+            ]
+        },
+        {
+            xtype: 'panel',
+            flex: 10,
+            layout :{
+                type : 'vbox',
+                align : 'stretch'
+            },
+            items: [
+                {
+                    xtype: 'tsoftform',
+                    title: '원자재상세정보',
+                    reference: 's_classId_form1',
+                    iconCls :'fa fa-list',
+                    layout: {
+                        type: 'table',
+                        columns: 5
+                    },
+                    defaults: {
+                        width: 300,
+                        labelWidth: 80
+                    },
+                    items: [
+
+                    ]
+                },
+                {
+                    xtype: 'tbspacer',
+                    height: 10,
+                    colspan: 5
+                },
+                {
+                    xtype :'tsoftgrid',
+                    title : '단가등록',
+                    iconCls: 'fa fa-dollar',
+                    reference: 's_classId_grid1',
+                    flex : 1,
+                    header:false, //헤더정보를 안보이게 할때
+                    hiddenTools :['plus','edit','minus','save','copy','export' , 'cancel' , 'import'], //헤더에 안보일 툴버튼을 설정
+                    bind :{
+                        store :'{s_classId_grid1_store}'
+                    },
+                    //머지 및 서브토탈을 처리하기 위해
+                    enableCellMergePlugin: true,	// cell merge 플러그인 사용 여부
+                    enableSubTotal: false,	// sub total 적용여부
+                    rowLines: false,	// cell merge 플러그인 사용시 반드시 false로 설정해야 함
+                    bufferedRenderer: false ,
+                    //렌더러 컬럼에 처리
+                    renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                        return view.grid.getMergeValue(value, metaData, record, rowIndex, colIndex, store, view);
+                    }
+
+                    //그리드합계를 처리하기 위해
+                    features: [
+                        {
+                            ftype: 'summary',
+                            dock: 'top'
+                        }
+                    ],
+
+                    columns:[
+
+                     ],
+                    listeners :{
+                        //수정할수 없는 키값일 경우 여기서 처리....
+                        beforecellclick:  function( obj, td, cellIndex, record, tr, rowIndex, e, eOpts){
+                            var colimnName = this.headerCt.getGridColumns()[cellIndex].dataIndex;
+
+                            if ( colimnName == 'cd_codel' && record.phantom == false  && this.getPlugins()[0].disabled == false ){
+                                this.getSelectionModel().select(rowIndex);
+                                //Terp.app.getController('TerpCommon').toastMessage('선택한 정보는 key값이어서 수정 할 수 없습니다','b');
+                                return false;
+                            }
+
+                        }
+
+                    }
+                },
+                {
+                    xtype :'tsoftfuctionform',
+                    reference: 's_classId_functionform',
+
+                    items :[
+                        {
+                            xtype:'button',
+                            text : '  사진등록',
+                            height : 24,
+                            width : 100 ,
+                            handler :'onImageUpload',
+                            cls :'x-btn-default-small-custom',
+                            iconCls: 'fa fa-upload',
+                            scale : 'small',
+                            iconAlign: 'left'
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+});

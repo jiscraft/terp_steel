@@ -1,0 +1,102 @@
+1.로컬서버에 화일을 업로드할때
+* 서버로컬에 web.xml의 context-param의 디렉토리가 있는지 확인한다.
+
+view 부분
+{
+    xtype :'tsoftfuctionform',
+    reference: 'mm16e2401_functionform',
+
+    items :[
+        {
+            xtype:'button',
+            text : '  사진등록',
+            height : 24,
+            width : 100 ,
+            handler :'onImageUpload',
+            cls :'x-btn-default-small-custom',
+            iconCls: 'fa fa-upload',
+            scale : 'small',
+            iconAlign: 'left'
+        }
+    ]
+}
+
+controller부분
+*제일마지막줄에 pop.getController().init(this , 'item' , cd_i)  ;  item은 이미지종류구분이며 서버로컬에 item이라는 디렉토리를 생성,저장한다...
+
+onImageUpload : function(){
+var cd_i = this.lookupReference('mm16e2401_form1').down('[name=cd_i]').getValue();
+var loginCdc = commonFn.getUserInfo().cd_c;
+
+if(cd_i == ''){
+    commonFn.toastMessage('원자재코드를 선택 조회후 이미지를 등록하세요','b');
+    return;
+}
+
+var returnData = commonFn.sqlSelect('sql' , "select count(*) cnt from ma_item where cd_c = '"+  loginCdc + "' and cd_i  = '"+ cd_i + "'" );
+
+if (returnData[0].cnt < 1 ){
+    commonFn.toastMessage('원자재정보를 등록 저장한뒤 이미지를 업로드하세요','b');
+    return;
+}
+
+var pop = Ext.create('Terp.view.tsoft.common.fileupload.singlefiletoloacal.TsoftSingleFileUploadToLocal');
+pop.show();
+pop.getController().init(this , 'item' , cd_i)  ;
+},
+
+
+
+
+terpcommon부분
+* excuteType == 'uploadSingleFile'에 디비에 저장할 정보를 처리해준다...
+
+//SQL문을 처리해준다 ( select 리턴이 없을경우 )
+sqlExtcute : function( excuteType , param ){
+    //console.log(param);
+    var commonFn = Terp.app.getController('TerpCommon');
+    var sendData = null
+    loginCdc = commonFn.getUserInfo().cd_c ;
+    loginIduser = commonFn.getUserInfo().id_user ;
+    loginCde = commonFn.getUserInfo().cd_e ;
+
+    if (excuteType == 'addFavorite'){
+        sendData = {   'sqlData': "insert into sy_menufavorite values ( '" + loginIduser + "', '0' , '" + param  + "') "   };
+    }
+
+    if (excuteType == 'deleteFavorite'){
+        sendData = {  'sqlData': "delete from sy_menufavorite where id_user = '" + loginIduser + "' and  fg_favorite = '0' and id_menu = '" + param + "'  "  };
+    }
+
+    if (excuteType == 'insertUseMenu'){
+        sendData = {  'sqlData': "insert sy_menu_log values ( '" + loginCdc + "' , '" +  loginIduser + "' , getdate() , '"+ param.id_menu +"'  ,  '"+ param.nm_menu + "' , '"+  param.dc_url +"' )"    };
+    }
+
+    if (excuteType == 'uploadSingleFile'){
+        var data = '/erpfiles/'+ loginCdc + '/' + param.uploadType + '/' + param.newFileName ;
+
+        if ( param.uploadType == 'emp' ) {
+            sendData = {  'sqlData': "update ma_emp set img_url = '" +  data + "'  where cd_c = '" + loginCdc + "' and  cd_e ='" +  param.keyData + "' "    };
+        } else if (param.uploadType == 'sign'){
+            sendData = {  'sqlData': "update sy_user set sign_url = '" +  data + "'  where cd_c = '" + loginCdc + "' and  id_user ='" +  param.keyData + "' "    };
+        }else if (param.uploadType == 'bom'){
+            sendData = {  'sqlData': "update ma_bom set img_url = '" +  data + "'  where cd_c = '" + loginCdc + "' and  cd_bom ='" +  param.keyData + "' "    };
+        }else if (param.uploadType == 'item'){
+            sendData = {  'sqlData': "update ma_item set img_url = '" +  data + "'  where cd_c = '" + loginCdc + "' and  cd_i ='" +  param.keyData + "' "    };
+        }
+    }
+
+    if (excuteType == 'sql'){
+        sendData = {  'sqlData': param    };
+    }
+
+
+    var sendDataJson = [];
+    sendDataJson.push(sendData);
+    var sendDataJsonEncode = Ext.encode(sendDataJson);
+
+    this.sqlExcuteAjaxRequest ( sendDataJsonEncode , function(value){
+        returnTrueFalse = value ;
+    });
+    return returnTrueFalse;
+},

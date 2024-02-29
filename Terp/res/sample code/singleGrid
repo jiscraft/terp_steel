@@ -1,0 +1,287 @@
+/**
+ * Created by resh on 2016-09-07.
+ */
+Ext.define('Terp.view.sm.sm16i0701.Sm16i0701', {
+    extend: 'Terp.view.tsoft.componentbase.TsoftPagePanel',
+    xtype: 'sm16i0701',
+    requires: [
+        'Ext.grid.column.Column',
+        'Ext.grid.column.Number',
+        'Ext.grid.feature.Summary',
+        'Ext.layout.container.Table',
+        'Ext.layout.container.VBox',
+        'Ext.util.Format',
+        'Terp.view.sm.sm16i0701.Sm16i0701Controller',
+        'Terp.view.sm.sm16i0701.Sm16i0701Model',
+        'Terp.view.tsoft.componentbase.TsoftCommonCodeComboBox',
+        'Terp.view.tsoft.componentbase.TsoftDateFieldDouble',
+        'Terp.view.tsoft.componentbase.TsoftGrid',
+        'Terp.view.tsoft.componentux.TsoftHeadButtons',
+        'Terp.view.tsoft.componentux.TsoftPartnerHelpField',
+        'Terp.view.tsoft.componentux.TsoftSearchForm',
+        'Terp.view.tsoft.componentux.TsoftSiteHelpField'
+    ],
+    controller: 'sm16i0701',
+    viewModel: {
+        type: 'sm16i0701'
+    },
+    layout: {
+        type: 'vbox',
+        align: 'stretch'
+    },
+    scrollable: true,
+
+    items: [
+        {
+            xtype :'tsoftheadbuttons',
+            reference: 'sm16i0701_headbutton'
+        },
+        {
+            xtype: 'tsoftsearchform',
+            reference: 'sm16i0701_searchform',
+            layout: {
+                type: 'table',
+                columns: '3'
+            },
+            items: [
+                {
+                    xtype: 'tsoftsitehelpfield',
+                    fieldLabel: '현장',
+                    labelWidth: 50,
+                    labelAlign: 'right',
+                    name: 'cd_site',
+                    displayValue: 'nm_site',
+                    width: 320
+                },
+                {
+                    xtype: 'tsoftpartnerhelpfield',
+                    fieldLabel: '발주',
+                    labelWidth: 70,
+                    labelAlign: 'right',
+                    name: 'cd_p_root',
+                    displayValue: 'nm_p_root',
+                    width: 250
+                },
+                {
+                    xtype: 'tsoftpartnerhelpfield',
+                    fieldLabel: '원청',
+                    labelWidth: 50,
+                    labelAlign: 'right',
+                    name: 'cd_p',
+                    displayValue: 'nm_p',
+                    width: 230
+                },
+                {
+                    xtype: 'tsoftdatefielddouble',
+                    fieldLabel: '계약일',
+                    labelWidth: 50,
+                    labelAlign: 'right',
+                    width: 320,
+                    initValueTypeFr: 'yearFirst',
+                    initValueTypeTo: 'today'
+                },
+                {
+                    xtype: 'tsoftcommoncodecombobox',
+                    reference: 'sm16i0701_fg_sm020',
+                    fieldLabel: '공사구분',
+                    labelWidth: 70,
+                    labelAlign: 'right',
+                    name: 'fg_sm020',
+                    width: 250
+                }
+            ]
+        },
+        {
+            xtype: 'tsoftgrid',
+            reference: 'sm16i0701_grid1',
+            //title: '계약현황',
+            //iconCls: 'fa fa-file-text fa-lg',
+            flex: 1,
+            features: [
+                {
+                    ftype: 'summary',
+                    dock: 'top'
+                }
+            ],
+            viewConfig: {
+                loadMask: false
+            },
+            bind: {
+                store: '{sm16i0701_grid1_store}'
+            },
+            hiddenTools: ['plus', 'edit', 'minus', 'save', 'copy', 'import', 'cancel'],
+            columns: [
+                {
+                    text: '현장명',
+                    dataIndex: 'nm_site',
+                    width: 220
+                },
+                {
+                    text: '계약코드',
+                    dataIndex: 'ln_contract',
+                    align: 'center',
+                    width: 80
+                },
+                {
+                    text: '계약명',
+                    dataIndex: 'nm_contract',
+                    width: 270
+                },
+                {
+                    text: '계약일',
+                    dataIndex: 'dt_contract',
+                    align: 'center',
+                    renderer : function (value) {
+                        return Terp.app.getController('TerpCommon').dateRender(value);
+                    }
+                },
+                {
+                    text: '발주사',
+                    width: 150,
+                    dataIndex: 'cd_p_root'
+                },
+                {
+                    text: '원청사',
+                    width: 150,
+                    dataIndex: 'nm_p'
+                },
+                {
+                    text: '공사구분',
+                    dataIndex: 'nm_sm020'
+                },
+                {
+                    text: '공급가',
+                    dataIndex: 'at_contract_s',
+                    align: 'right',
+                    editor: 'tsoftnumberfield',
+                        formatter: 'number("0,000")',
+                    summaryType: 'sum',
+                    summaryRenderer: Ext.util.Format.numberRenderer('0,000'),
+                    width: 140
+                },
+                {
+                    text: '총계약금액(VAT포함)',
+                    dataIndex: 'at_contract_s_ttl',
+                    align: 'right',
+                    editor: 'tsoftnumberfield',
+                    formatter: 'number("0,000")',
+                    summaryType: 'sum',
+                    summaryRenderer: Ext.util.Format.numberRenderer('0,000'),
+                    width: 150
+                },
+                {
+                    text: '환종',
+                    dataIndex: 'nm_sy020',
+                    align: 'center',
+                    width: 80
+                },
+                {
+                    text: '계약금액(한화)',
+                    dataIndex: 'at_contract_krw_s',
+                    align: 'right',
+                    editor: 'tsoftnumberfield',
+                    formatter: 'number("0,000")',
+                    summaryType: 'sum',
+                    summaryRenderer: Ext.util.Format.numberRenderer('0,000'),
+                    width: 130
+                },
+                {
+                    text: '선급금',
+                    dataIndex: 'at_contract_pre_s',
+                    editor: 'tsoftnumberfield',
+                    formatter: 'number("0,000")',
+                    summaryType: 'sum',
+                    summaryRenderer: Ext.util.Format.numberRenderer('0,000'),
+                    align: 'right',
+                    width: 120
+                },
+                {
+                    text: '진행상태',
+                    dataIndex: 'nm_status',
+                    align: 'center'
+                },
+                {
+                    xtype: 'gridcolumn',
+                    text: '공급가액',
+                    //dataIndex: 'at_contract_s',
+                    defaults: {
+                        xtype: 'numbercolumn',
+                        summaryType: 'sum',
+                        align: 'right',
+                        summaryRenderer: Ext.util.Format.numberRenderer('0,000'),
+                        width: 150,
+                        formatter: 'number("0,000")'
+                    },
+                    columns: [
+                        {
+                            dataIndex: 'at_contract_before',
+                            text: '전기까지'
+                        },
+                        {
+                            dataIndex: 'at_contract_this',
+                            text: '당기'
+                        },
+                        {
+                            dataIndex: 'at_contract_sum',
+                            text: '합계'
+                        }
+                    ]
+                },
+                //{
+                //    xtype: 'gridcolumn',
+                //    text: '기성청구액',
+                //    defaults: {
+                //        xtype: 'numbercolumn',
+                //        summaryType: 'sum',
+                //        align: 'right',
+                //        summaryRenderer: Ext.util.Format.numberRenderer('0,000'),
+                //        formatter: 'number("0,000")'
+                //    },
+                //    columns: [
+                //        {
+                //            dataIndex: 'at_gs_before',
+                //            text: '전기까지',
+                //            width: 150
+                //        },
+                //        {
+                //            dataIndex: 'at_gs_this',
+                //            text: '당기',
+                //            width: 130
+                //        }
+                //    ]
+                //},
+                {
+                    text: '진행상태',
+                    dataIndex: 'nm_status',
+                    align: 'center'
+                },
+                {
+                    text: '계약기간',
+                    dataIndex: 'pd_contract',
+                    align: 'center',
+                    width: 150
+                },
+                {
+                    text: '하자보수기간',
+                    dataIndex: 'pd_sm',
+                    align: 'center',
+                    width: 150
+                },
+                {
+                    text: '준공일',
+                    dataIndex: 'dt_end',
+                    align: 'center',
+                    renderer : function (value) {
+                        return Terp.app.getController('TerpCommon').dateRender(value);
+                    }
+                },
+                //{
+                //    text: '진행률(%)',
+                //    dataIndex: 'rt_process',
+                //    //width: 80,
+                //    align: 'right'
+                //}
+            ]
+        }
+    ]
+});

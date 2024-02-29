@@ -1,0 +1,168 @@
+1.일반텍스트필드
+*텍스트필드는 기본이 왼쪽정렬
+{
+    fieldLabel: '원자재명',
+    xtype: 'tsofttextfield',
+    name: 'nm_i',
+    colspan: 3,
+    width: 300,
+    allowBlank: false
+},
+
+2.넘버필드
+*넘버필드는 기본이 오른쪽 정렬
+{
+    fieldLabel: '변환중량',
+    xtype: 'tsoftnumberfield',
+    name: 'qt_weight',
+    width: 200,
+    colspan: 1
+},
+
+데이트필드
+{
+    name :'dt_es',
+    xtype : 'tsoftdatefield',
+    fieldLabel: '견적작성일',
+    allowBlank: false ,
+    colspan : 1,
+    width : 220
+}
+
+
+텍스트area
+
+{
+    name :'dc_remark',
+    xtype :'textareafield',
+    fieldLabel: '설명',
+    width : 800 ,
+    height : 100 ,r
+    colspan : 5
+}
+
+
+
+
+3.헬프필드
+
+* controller  onSelctCallback 에서 조회시 설정해주어야 한다...
+commonFn.setDataBindHelpBox(s_classId__form1, 'cd_b', records[0].data.cd_b, records[0].data.nm_p);
+
+
+
+{
+    xtype :'tsoftbusinesshelpfield',
+    fieldLabel: '귀속사업장',
+    name :'cd_b',
+    colspan : 3 ,
+    allowBlank: false
+},
+
+
+
+4.value콤보박스
+{
+    fieldLabel: '조달구분',
+    xtype :'tsoftcombobox',
+    name :'fg_supply',
+    allowBlank: false,
+    editable: false ,
+    displayField: 'name',
+    valueField: 'value',
+    queryMode:'local',
+    colspan: 1 ,
+    width: 200,
+    store :[
+        ['0','제작'],
+        ['1','구매'],
+        ['9','기타']
+    ]
+},
+
+
+5.공통코드콤보박스
+
+view부분
+{
+    xtype: 'tsoftcommoncodecombobox',
+    fieldLabel: '단위',
+    name: 'fg_mm010',
+    reference: 'mm16e2401_fg_mm010',
+    allowBlank: false,
+    editable : false,
+    width: 200,
+    colspan: 1
+
+},
+
+
+controller부분
+* init함수에 설정 ( 뷰에 리퍼런스가 선언되어 있어야 한다 )
+commonFn.setCommonCode(this.lookupReference('mm16e2401_fg_mm010') ,'MM010');
+
+
+6.yesno 콤보박스
+{
+    xtype: 'tsoftcomboboxyesno',
+    fieldLabel: '사용여부',
+    name: 'yn_use',
+    width: 200,
+    colspan: 1
+},
+
+
+
+7.이미지박스
+
+뷰부분
+{
+    name: 'img_url',
+    xtype: 'image',
+    bind: {
+        src: '{itemImageUrl}'
+    },
+
+    width: 140,
+    height: 140 ,
+    rowspan: 5,
+    colspan:1,
+    border: 1,
+    style: {
+        borderColor: 'grey',
+        borderStyle: 'solid'
+    },
+    alignTarget: 'center',
+    listeners: {}
+
+},
+
+
+컨트롤러부분
+* 셀렉트에 성공하고 데이타가 있으면...바인딩...
+
+onSelctCallback : function(records, operation , success){
+
+    if(success == true ){
+        if  ( records.length < 1 ){
+            mm16e2401_form1.clearForm();
+        }else {
+            mm16e2401_form1.loadRecord(records[0]);
+            mm16e2401_form1.setReadOnly(true);
+            this.onGridSelect();
+            if (records[0].data.img_url != '') {
+                if ( commonFn.existUrl(records[0].data.img_url) ) {  //url이 존재하는 체크하여 처리..
+                    this.getViewModel().set('bomImageUrl', './' + records[0].data.img_url);
+                }else{
+                    this.getViewModel().set('bomImageUrl', './res/images/tumyeong.png' );
+                }
+
+            }else{
+                this.getViewModel().set('bomImageUrl', './res/images/tumyeong.png' );
+            }
+
+        }
+    }else{
+        Ext.Msg.alert('fail',this.getViewModel().getStore('mm16e2401_store').getProxy().getReader().rawData.msg);
+    }
+},

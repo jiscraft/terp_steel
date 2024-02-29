@@ -1,0 +1,57 @@
+/* join
+left outer join ma_partner p on a.cd_c = p.cd_c and a.cd_p = p.cd_p
+left outer join ma_item i on a.cd_c = i.cd_c and a.cd_i = i.cd_i
+left outer join ma_site s on a.cd_c = s.cd_c and a.cd_site = s.cd_site
+left outer join sy_codel hr010 on a.cd_c = hr010.cd_c and a.fg_hr010 = hr010.cd_codel and hr010.cd_codeh = 'hr010'
+left outer join ma_org o on a.cd_c = o.cd_c and a.cd_o = o.cd_o
+left outer join ma_emp e on a.cd_c = e.cd_c and a.cd_e = e.cd_e
+left outer join uf_empinfo (a.cd_c ,'')  on a.cd_c = b.cd_c and a.cd_e = c.cd_e and yn_fake ='N'-- 특정날자의 직원 종합 정보를 알기위해서 사용
+*/
+
+
+/* where
+and a.cd_c = @p_cd_c
+and (isnull(@p_cd_e,'') = '' or a.cd_e = @p_cd_e)
+and (isnull(@p_cd_o,'') = '' or a.cd_o = @p_cd_o)
+and (isnull(@p_cd_b,'') = '' or a.cd_b = @p_cd_b)
+and (isnull(@p_cd_p,'') = '' or a.cd_p = @p_cd_p)
+and (isnull(@p_cd_site,'') = '' or a.cd_site = @p_cd_site )
+and (isnull(@p_fg_hr010,'') = '' or a.fg_hr010 = @p_fg_hr010)
+and (isnull(@p_fg_workstatus,'') = '' or a.fg_workstatus = @p_fg_workstatus)
+and (isnull(@p_dt_apply,'') = '' or a.dt_apply = @p_dt_apply)
+and (isnull(@p_yn_use,'') = '' or a.yn_use = @p_yn_use)
+and (isnull(@p_yn_use,'')  = '' or a.yn_use in ( select cd_str from uf_sy_combostringparsing( @p_yn_use )  ) )
+and (isnull(@p_nm_b,'') = '' or a.nm_b like '%'+@p_nm_b +'%')
+and ( (isnull(@p_dt_fr,'') = '' or a.dt_apply  >= @p_dt_fr)  and (isnull(@p_dt_to,'') = '' or a.dt_apply  <= @p_dt_to) )
+and ( (isnull(@p_search,'') = '' or a.nm_b like '%'+@p_search +'%')
+*/
+
+/*function or return procedure
+exec terp.usp_sy_rowid_getoutput @id_row output
+exec terp.usp_sy_docu_getoutput @p_cd_c , 'td' , @tdy , @id_docu output
+exec terp.usp_sy_docuseq_getoutput @p_cd_c , 'ebxxxxxx-xxxxxx' , @ln_docu output
+select * from uf_empinfo(@p_cd_c,'')
+*/
+
+
+/*전자결재관련
+select a.cd_c , a.no_vc ,  g.cd_doc , case when g.cd_doc is null then '미상신' else g.nm_ea001 end nm_ea001
+	from wk_vacation a
+	left outer join  v_get_erpgwstatus g on a.cd_c = g.cd_c and a.no_vc = g.id_row_erp
+*/
+
+/*begin catch
+begin catch
+	-- cursor에러처리
+    if exists (select 1 from sys.syscursors where cursor_name = 'cur')
+    begin
+        close cur
+        deallocate cur
+    end
+
+
+	if @@trancount > 0
+		rollback transaction
+	exec [terp].usp_sy_rethrowerror
+end catch
+*/

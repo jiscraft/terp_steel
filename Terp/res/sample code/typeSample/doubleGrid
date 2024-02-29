@@ -1,0 +1,655 @@
+/**
+ *  Standard View
+ */
+Ext.define('Terp.view.fi.convertClassId.convertClassId', {
+    extend: 'Terp.view.tsoft.componentbase.TsoftPagePanel',
+    xtype: 'convertClassId',
+
+    requires: [
+        'Ext.layout.container.VBox',
+        'Terp.view.fi.convertClassId.convertClassIdController',
+        'Terp.view.fi.convertClassId.convertClassIdModel',
+        'Terp.view.tsoft.componentbase.TsoftCommonCodeComboBox',
+        'Terp.view.tsoft.componentbase.TsoftGrid',
+        'Terp.view.tsoft.componentux.TsoftHeadButtons'
+    ],
+
+    controller : 'convertClassId',
+    viewModel: {
+        type :'convertClassId'
+    },
+
+    layout :{
+        type : 'vbox',
+        align : 'stretch'
+    },
+
+
+
+    items: [
+        {
+            xtype :'tsoftheadbuttons',
+            reference: 'convertClassId_headbutton'
+        },
+        {
+            xtype :'tsoftsearchform',
+            reference: 'convertClassId_searchform',
+            items :[
+                {
+                    xtype :'tsofttextfield',
+                    fieldLabel: '검색',
+                    name : 'p_search',
+                    width : 300
+                },
+                {
+                    xtype :'tbspacer',
+                    width : 20
+                },
+                {
+                    xtype :'tsoftpartnerhelpfield',
+                    fieldLabel: '건설사',
+                    name :'cd_p',
+                    width : 200 ,
+                    editable: false ,
+                    //협력업체 헬프윈도우에 초기화값을 보내준다.
+                    helpInitParams :{
+                        'helpInitParam_fg_p' : '0',
+                        'helpInitParam_h_search' : ''
+                    }
+
+                },
+                {
+                    xtype :'tbspacer',
+                    width : 20
+                },
+                {
+                    xtype :'tsoftsitehelpfield',
+                    fieldLabel: '현장',
+                    name :'cd_site',
+                    width : 300 ,
+                    editable: false
+
+                }
+            ]
+        },
+        {
+            xtype :'tsoftgrid',
+            title : '회사계좌등록',
+            iconCls: 'fa fa-dollar',
+            reference: 'convertClassId_grid1',
+            flex : 1,
+            hiddenTools :['plus','edit','minus','save','copy','cancel' , 'import'],
+            bind :{
+                store :'{convertClassId_grid1_store}'
+            },
+            columns:[
+                {
+                    text:'코드',
+                    dataIndex:'cd_codel',
+                    width:100,
+                    editor: 'tsofttextfield'
+                },
+                {
+                    text:'계좌명',
+                    dataIndex:'nm_codel',
+                    width:200,
+                    editor: 'tsofttextfield'
+                },
+                {
+                    text:'icube금융거래처코드',
+                    dataIndex:'dc_codel',
+                    width:200,
+                    editor: 'tsofttextfield'
+                },
+                {
+                    text:'계좌번호',
+                    dataIndex:'dc_codel1',
+                    width:200,
+                    editor: 'tsofttextfield'
+                },
+                {
+                    text : '금융기관',
+                    dataIndex: 'dc_codel2',
+                    width:200,
+                    renderer :function(value, metaData, record, rowIndex, colIndex , store ){
+                        if ( value == null  ){
+                            return '';
+                        }else {
+                            return Terp.app.getController('TerpCommon').commonCodeRender(value , 'FI010');
+                        }
+                    },
+
+                    editor: {
+                        xtype: 'tsoftcommoncodecombobox',
+                        allowBlank: false ,
+                        listeners :{
+                            render:  function(){
+                                Terp.app.getController('TerpCommon').setCommonCode(this ,'FI010' ,'Y');
+                            }
+                        }
+                    }
+                },
+                {
+                    text:'카드번호',
+                    dataIndex:'dc_codel3',
+                    width:200,
+                    editor: 'tsofttextfield'
+                },
+                {
+                    text:'사용여부',
+                    dataIndex:'yn_use',
+                    width:80,
+                    editor: 'tsoftcomboboxyesno',
+                    renderer : function (value, metaData, record, rowIndex, colIndex, store, view) {
+                        return Terp.app.getController('TerpCommon').yesnoRender(value);
+                    }
+                }
+
+            ],
+
+            listeners :{
+                selectionchange: 'onGridSelectionchanage_convertClassId_grid1'
+            }
+
+
+
+
+        }
+        {
+            xtype :'tsoftgrid',
+            title : '회사계좌등록',
+            iconCls: 'fa fa-dollar',
+            reference: 'convertClassId_grid2',
+            flex : 1,
+            hiddenTools :['plus','edit','minus','save','copy','cancel' , 'import'],
+            bind :{
+                store :'{convertClassId_grid2_store}'
+            },
+            columns:[
+                {
+                    text:'코드',
+                    dataIndex:'cd_codel',
+                    width:100,
+                    editor: 'tsofttextfield'
+                },
+                {
+                    text:'계좌명',
+                    dataIndex:'nm_codel',
+                    width:200,
+                    editor: 'tsofttextfield'
+                },
+                {
+                    text:'icube금융거래처코드',
+                    dataIndex:'dc_codel',
+                    width:200,
+                    editor: 'tsofttextfield'
+                },
+                {
+                    text:'계좌번호',
+                    dataIndex:'dc_codel1',
+                    width:200,
+                    editor: 'tsofttextfield'
+                },
+                {
+                    text : '금융기관',
+                    dataIndex: 'dc_codel2',
+                    width:200,
+                    renderer :function(value, metaData, record, rowIndex, colIndex , store ){
+                        if ( value == null  ){
+                            return '';
+                        }else {
+                            return Terp.app.getController('TerpCommon').commonCodeRender(value , 'FI010');
+                        }
+                    },
+
+                    editor: {
+                        xtype: 'tsoftcommoncodecombobox',
+                        allowBlank: false ,
+                        listeners :{
+                            render:  function(){
+                                Terp.app.getController('TerpCommon').setCommonCode(this ,'FI010' ,'Y');
+                            }
+                        }
+                    }
+                },
+                {
+                    text:'카드번호',
+                    dataIndex:'dc_codel3',
+                    width:200,
+                    editor: 'tsofttextfield'
+                },
+                {
+                    text:'사용여부',
+                    dataIndex:'yn_use',
+                    width:80,
+                    editor: 'tsoftcomboboxyesno',
+                    renderer : function (value, metaData, record, rowIndex, colIndex, store, view) {
+                        return Terp.app.getController('TerpCommon').yesnoRender(value);
+                    }
+                }
+
+            ]
+        }
+
+
+        /*,
+        {
+            xtype :'tsoftfuctionform',
+            reference: 'convertClassId_functionform',
+
+            items :[
+                {
+                    xtype:'button',
+                    text : '퇴 근',
+                    height : 24,
+                    width : 120 ,
+                    handler :'onFunctionButtonClick_@@@@@@',
+                    cls :'x-btn-default-small-custom',
+                    iconCls: 'fa fa-external-link',
+                    scale : 'small',
+                    iconAlign: 'left'
+                }
+            ]
+        }*/
+    ]/*,
+
+    //화면로드후 바로 조회하기 위해
+    listeners: {
+        afterrender: 'onSelect'
+    }
+    */
+});
+
+
+/**
+ * Standard Model
+ */
+Ext.define('Terp.view.fi.convertClassId.convertClassIdModel', {
+    extend: 'Ext.app.ViewModel',
+    alias: 'viewmodel.convertClassId',
+
+    requires: [
+        'Ext.data.proxy.Ajax',
+        'Ext.data.reader.Json'
+    ],
+
+    stores: {
+        convertClassId_grid1_store :{
+            config:{
+                proxy: {
+                    type :'ajax',
+                    url:'../ServerPage/@@/@@_@@@@.jsp',
+                    actionMethods: {
+                        create :'POST',
+                        read :'POST',
+                        update :'POST',
+                        destroy :'POST'
+                    },
+                    params:{
+                        sendData :''
+                    },
+                    reader :{
+                        type:'json',
+                        rootProperty: 'data',
+                        keepRawData: true
+                    }
+                },
+                autoLoad: false
+            }
+        },
+
+        convertClassId_grid2_store :{
+            config:{
+                proxy: {
+                    type :'ajax',
+                    url:'../ServerPage/@@/@@_@@@@2.jsp',
+                    actionMethods: {
+                        create :'POST',
+                        read :'POST',
+                        update :'POST',
+                        destroy :'POST'
+                    },
+                    params:{
+                        sendData :''
+                    },
+                    reader :{
+                        type:'json',
+                        rootProperty: 'data',
+                        keepRawData: true
+                    }
+                },
+                autoLoad: false
+            }
+        }
+
+    }
+
+    data: {
+        /* This object holds the arbitrary data that populates the ViewModel and is then available for binding. */
+    }
+});
+
+
+
+
+/**
+ * Standard Controller
+ */
+
+Ext.define('Terp.view.cn.cn16i0601.Cn16i0601Controller', {
+    extend: 'Ext.app.ViewController',
+    alias: 'controller.convertClassId',
+
+    requires: [
+
+    ],
+    control: {
+        'convertClassId [reference=convertClassId_grid2]': {
+            celldblclick :'onHandleDblclick'
+        }
+    },
+    commonFn:'',
+    convertClassId_headbutton:'',
+    convertClassId_searchform :'',
+    convertClassId_grid1 :'',
+    convertClassId_grid1_store :'' ,
+    convertClassId_grid2 :'',
+    convertClassId_grid2_store :'' ,
+
+    init: function() {
+        commonFn = Terp.app.getController('TerpCommon');
+        convertClassId_headbutton = this.lookupReference('convertClassId_headbutton');
+        convertClassId_searchform = this.lookupReference('convertClassId_searchform');
+
+        convertClassId_grid1 = this.lookupReference('convertClassId_grid1');
+        convertClassId_grid1_store =  this.getViewModel().getStore('convertClassId_grid1_store') ;
+
+        convertClassId_grid2 = this.lookupReference('convertClassId_grid2');
+        convertClassId_grid2_store =  this.getViewModel().getStore('convertClassId_grid2_store') ;
+
+
+        this.onInitValue();
+        convertClassId_grid1.setReadOnly(true);
+        convertClassId_grid2.setReadOnly(true);
+    },
+
+    onInitValue : function(){
+
+    },
+
+    onSelect : function(){
+
+              var me = this;
+
+              var searchValue = convertClassId_searchform.down('[name=cd_site]').getValue();
+              if (searchValue  == '' ||  searchValue == null ){
+                  commonFn.toastMessage('현장코드를 선택후 조회하세요','t')  ;
+                  return;
+              };
+
+
+              var sendDataJsonEncode = convertClassId_searchform.makeSendData('rhd');
+
+              convertClassId_grid1_store.load({
+                  params :{
+                      sendData : sendDataJsonEncode
+                  },
+                  callback : me.onSelctCallback,
+                  scope : me
+              });
+          },
+
+
+          onSelctCallback : function(records, operation , success) {
+
+              if (success == true) {
+                  convertClassId_grid1.setReadOnly(true);
+                  convertClassId_grid1.getSelectionModel().select(0);
+              } else {
+                  var errorMsg = this.getViewModel().getStore('convertClassId_grid1_store').getProxy().getReader().rawData.msg;
+                  commonFn.errorHandling(errorMsg);
+              }
+
+          },
+
+    onInsert : function(){
+        //var me = this;
+        //var gridRowindex = convertClassId_grid1.getGridRowIdx();
+        //var gridSelection = convertClassId_grid1.getGridSelection();
+        //
+        //if (gridRowindex < 0){
+        //    commonFn.toastMessage('기성을 청구할 계약을 선택한후 추가하세요','t')
+        //}
+        //
+        //var pop = Ext.create('Terp.view.cn.convertClassId.convertClassIdReq.convertClassIdReq',{
+        //    popupParamView : me.getView() ,   //부르는넘의 뷰
+        //    popupParamCallback : 'onSelect' ,  // 끝나고 돌아와서 처리할 펑션이름
+        //    popupParams : gridSelection   //처리할파라미터
+        //});
+        //pop.show();
+
+    },
+
+
+    onModify : function(){
+        //var me = this;
+        //convertClassId_grid1.setReadOnly(false);
+        //convertClassId_headbutton.down('[name = savebutton]').setDisabled(false);
+    },
+
+
+    onDelete : function(){
+        //var me = this;
+        //var gridRowindex = convertClassId_grid1.getGridRowIdx();
+        //var gridSelection = convertClassId_grid1.getGridSelection();
+        //
+        //convertClassId_headbutton.down('[name = savebutton]').setDisabled(false);
+        //
+        //convertClassId_grid1_store.remove(gridSelection);
+        //convertClassId_grid1.getSelectionModel().select(gridRowindex);
+    },
+
+
+    onSave : function(){
+        //var me = this;
+        //convertClassId_grid1.getPlugin('cellplugin').completeEdit();
+        //var sendData = convertClassId_grid1.makeSendData();
+        //
+        //Ext.Ajax.request({
+        //    url :'../ServerPage/@@/@@_@@@@.jsp' ,
+        //    method :'POST',
+        //    params :{
+        //        sendData : sendData
+        //    },
+        //
+        //    success :function(res){
+        //        var obj = Ext.JSON.decode(res.responseText);
+        //        if(obj.success == true){
+        //            commonFn.toastMessage("저장성공",'t');
+        //            convertClassId_grid1.setReadOnly(true);
+        //            convertClassId_headbutton.down('[name = savebutton]').setDisabled(true);
+        //        }else{
+        //            var errorMsg = obj.msg;
+        //            commonFn.errorHandling(errorMsg);
+        //
+        //        }
+        //    },
+        //    fail : function(){
+        //        commonFn.toastMessage("데이타처리중 오류가 발생했습니다",'t');
+        //    }
+        //})
+    },
+
+
+    onGridRowdblclick_convertClassId_grid1 : function(obj , record , tr , rowIndex , e , eOpts){
+
+    },
+
+
+    onGridSelectionchanage_convertClassId_grid1 : function(obj, selected, eOpts){
+        var me = this ;
+        if (selected.length == 0 || selected == undefined ){
+            return;
+        }
+
+        var jsonData = {
+            'actiondata': 'rlst',
+            'loginIduser': commonFn.getUserInfo('id_user'),
+            'loginCdc': commonFn.getUserInfo('cd_c'),
+            'cd_site': selected[0].data.cd_site ,
+            'ln_contract': selected[0].data.ln_contract
+        };
+
+        var sendDataJson = [];
+        sendDataJson.push(jsonData);
+        var sendDataJsonEncode = Ext.encode(sendDataJson);
+
+
+        convertClassId_grid2_store.load({
+            params :{
+                sendData : sendDataJsonEncode
+            },
+            callback : me.onSelctCallback_grid2,
+            scope : me
+        });
+    },
+
+    onSelctCallback_grid2 : function(records, operation , success) {
+        if (success == true) {
+            convertClassId_grid2.setReadOnly(true);
+            convertClassId_grid2.getSelectionModel().select(0);
+        } else {
+            var errorMsg = this.getViewModel().getStore('convertClassId_grid2_store').getProxy().getReader().rawData.msg;
+            commonFn.errorHandling(errorMsg);
+        }
+    },
+
+
+    onGridInsert_convertClassId_grid2 : function(gridSelection , gridRowindex){
+        var me = this;
+        if (gridRowindex == 0 || gridRowindex == undefined ){
+            gridRowindex = 0 ;
+        }
+
+        var gridRowindex_grid1 = convertClassId_grid1.getGridRowIdx();
+        var gridSelection_grid1 = convertClassId_grid1.getGridSelection();
+        console.log(gridSelection_grid1);
+        var insertData ={
+            cd_c: commonFn.getUserInfo().cd_c,
+            cd_site : gridSelection_grid1.data.cd_site ,
+            ln_contract: gridSelection_grid1.data.ln_contract ,
+            ym_req : '',
+            dt_req : commonFn.getTodayInfo(),
+            dt_confirm :'',
+            at_gs_tax_dg : 0,
+            at_gs_free_dg : 0 ,
+            at_gs_vat_dg : 0 ,
+            at_gs_ttl_dg : 0 ,
+            at_gs_tax_unconfirm : 0,
+            at_gs_free_unconfirm : 0 ,
+            at_gs_vat_unconfirm : 0 ,
+            at_gs_ttl_unconfirm : 0 ,
+            at_gs_tax : 0,
+            at_gs_free : 0 ,
+            at_gs_vat : 0 ,
+            at_gs_ttl : 0 ,
+            at_deduction_ttl : 0
+
+
+        };
+
+        convertClassId_grid2.setReadOnly(false);
+        convertClassId_grid2.getPlugin('cellplugin').completeEdit();
+        convertClassId_headbutton.down('[name = savebutton]').setDisabled(false);
+
+        convertClassId_grid2_store.insert(gridRowindex, insertData);
+        convertClassId_grid2.getPlugin('cellplugin').startEditByPosition({
+            row: gridRowindex,
+            column: 0
+        });
+
+    },
+
+    onGridModify_convertClassId_grid2 : function(){
+        var me = this;
+        //var gridSelection = convertClassId_grid2.getGridSelection();
+        //if ( gridSelection.data.dt_confirm != ''){
+        //    commonFn.toastMessage('기성확정된 청구내역은 수정할 수 없습니다','t');
+        //    convertClassId_grid2.setReadOnly(true);
+        //    return false;
+        //}
+
+        convertClassId_grid2.setReadOnly(false);
+        convertClassId_headbutton.down('[name = savebutton]').setDisabled(false);
+    },
+
+
+    onGridDelete_convertClassId_grid2 : function(){
+        var me = this;
+        var gridRowindex = convertClassId_grid2.getGridRowIdx();
+        var gridSelection = convertClassId_grid2.getGridSelection();
+
+        convertClassId_headbutton.down('[name = savebutton]').setDisabled(false);
+
+        convertClassId_grid2_store.remove(gridSelection);
+        convertClassId_grid2.getSelectionModel().select(gridRowindex);
+    },
+
+    onGridSave_convertClassId_grid2 : function(){
+        var me = this;
+        convertClassId_grid2.getPlugin('cellplugin').completeEdit();
+        var sendData = convertClassId_grid2.makeSendData();
+
+        Ext.Ajax.request({
+            url :'../ServerPage/cn/cn_gs.jsp' ,
+            method :'POST',
+            params :{
+                sendData : sendData
+            },
+
+            success :function(res){
+                var obj = Ext.JSON.decode(res.responseText);
+                if(obj.success == true){
+                    commonFn.toastMessage("저장성공",'t');
+                    convertClassId_grid2.setReadOnly(true);
+                    convertClassId_headbutton.down('[name = savebutton]').setDisabled(true);
+                }else{
+                    var errorMsg = obj.msg;
+                    commonFn.errorHandling(errorMsg);
+
+                }
+            },
+            fail : function(){
+                commonFn.toastMessage("데이타처리중 오류가 발생했습니다",'t');
+            }
+        })
+    },
+
+    cellChange_convertClassId_grid2 : function(obj , value ){
+        //console.log(obj , value);
+        var models;
+        var models = convertClassId_grid2_store.getRange();
+        var gridRowindex_grid2 = convertClassId_grid2.getGridRowIdx();
+
+        if ( obj.dataIndex == "at_gs_tax_dg"){
+            models[gridRowindex_grid2].set('at_gs_vat_dg', value * 0.1 );
+            models[gridRowindex_grid2].set('at_gs_ttl_dg', value + models[gridRowindex_grid2].get('at_gs_free_dg') + parseInt(models[gridRowindex_grid2].get('at_gs_vat_dg')) );
+        }
+
+        if ( obj.dataIndex == "at_gs_free_dg"){
+            models[gridRowindex_grid2].set('at_gs_ttl_dg', value + models[gridRowindex_grid2].get('at_gs_tax_dg') + parseInt(models[gridRowindex_grid2].get('at_gs_vat_dg')) );
+        }
+
+        if ( obj.dataIndex == "at_gs_tax_unconfirm"){
+            models[gridRowindex_grid2].set('at_gs_vat_unconfirm', value * 0.1 );
+            models[gridRowindex_grid2].set('at_gs_ttl_unconfirm', value + models[gridRowindex_grid2].get('at_gs_free_unconfirm') + parseInt(models[gridRowindex_grid2].get('at_gs_vat_unconfirm')) );
+        }
+
+        if ( obj.dataIndex == "at_gs_free_unconfirm"){
+            models[gridRowindex_grid2].set('at_gs_ttl_unconfirm', value + models[gridRowindex_grid2].get('at_gs_tax_unconfirm') + parseInt(models[gridRowindex_grid2].get('at_gs_vat_unconfirm')) );
+        }
+    }
+
+
+
+});

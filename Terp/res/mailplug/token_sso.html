@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" crossorigin="anonymous"></script>
+	</head>
+<body>
+
+전송 URL : http://mail.kerheung.co.kr/mail_api/token_sso/ <br/>
+데이타 형식 : json <br/>
+데이타 필드 <br/>
+1.cid : 사용자 아이디<br/>
+2.MailToken : 토큰 값 고유값이면 일회성 값입니다. 쿠키값에 저장 () <br/>
+쿠키 생성후 리다이렉트 URL http://mail.kerheung.co.kr/lw_api/token_sso/?return_url=로그인후이동url<br/>
+또는  http://mail.kerheung.co.kr/lw_api/token_sso/MailToken값?return_url=로그인후이동url
+등록된 IP만 접속 가능 몇 해당 토큰은 10초만 유효합니다. <br/>
+<br/>
+<form method='POST' action="http://mail.airtecheng.co.kr/mail_api/token_sso" target="_blank">
+<table border='1' cellspacing="0" cellpadding="5" style="width: 700px" align="left">
+	<tr>
+		<th>api_key</th>
+		<td><input type="text" name="api_key" id="api_key" value="!AirtechMailKey" style="width: 98%;"><br/>
+			메일플러그에서 발급된 api_key 키값
+		</td>
+	</tr>
+	<tr>
+		<th>도메인명</th>
+		<td><input type="text" name="host_domain" id="host_domain" value="kerheung.co.kr" style="width: 98%;"></td>
+	</tr>
+	<tr>
+		<th>데이타</th>
+		<td><textarea name="data" id="data" style="width: 650px; height: 100px">{"cid":"jiscraft", "MailToken":"StPEuM9pm7NL49UEpdzgxjjiL8MHaF5uBxCrI1kP"}</textarea></td>
+	</tr>
+	<tr>
+		<td colspan="2" align="center">
+			<input type="button" id="btnOK" value="전송" />
+		</td>
+	</tr>
+</table>
+</form>
+<script>
+var token = "";
+function makeid()
+{
+	var text = "";
+	var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+	for( var i=0; i < 40; i++ )
+		text += possible.charAt(Math.floor(Math.random() * possible.length));
+	return text;
+}
+
+$(function(){
+	token = makeid();
+	$("#data").val('{"cid":"jiscraft", "MailToken":"' + token + '"}')
+});
+$("#btnOK").click(function(){
+	$.ajax({
+		type : "POST",
+		dataType : "json",
+		url : "https://mail.airtecheng.co.kr/mail_api/token_sso",
+		data : {
+			"api_key" : $("#api_key").val(),
+			"host_domain" : $("#host_domain").val(),
+			"data" : $("#data").val(),
+		},
+		/*
+		crossDomain: true,
+		xhrFields: {
+			withCredentials: true
+		},
+		beforeSend : function(xhr){
+			xhr.setRequestHeader("X-Forwarded-For", "59.15.16.58"),
+			xhr.setRequestHeader("True-Client-IP", "59.15.16.58")
+		},
+		*/
+		success:function(data){
+			console.log(data);
+			var date = new Date();
+			date.setTime(date.getTime() + (10 * 1000));
+			$.cookie('MailToken' , token, {expires: date, path: "/", domain: ".airtecheng.co.kr"});
+			//window.open('http://mail.kerheung.co.kr/lw_api/token_sso/?return_url=/webmail/lists', 'MAIL', '');
+			window.open('https://mail.airtecheng.co.kr/lw_api/token_sso/'+ token + '?return_url=/webmail/lists', 'MAIL', '');
+		},
+		error:function(e){
+			alert(e.responseText);
+		}
+	});
+});
+</script>

@@ -1,0 +1,55 @@
+/**
+ * Created by jiscraft on 2016-05-30.
+ */
+Ext.define('Terp.view.mm.mm16e2401.Mm16e2401Model', {
+    extend: 'Ext.app.ViewModel',
+    alias: 'viewmodel.mm16e2401',
+
+    requires: [
+        'Ext.data.proxy.Ajax',
+        'Ext.data.reader.Json'
+    ],
+
+    stores: {
+
+        s_classId_form1_store :{
+            config:{
+                proxy: {
+                    type :'ajax',
+                    url:'../ServerPage/ma/ma_item.jsp',
+                    method :'POST',
+                    reader :{
+                        type:'json',
+                        rootProperty: 'data',
+                        keepRawData: true
+                    }
+                },
+                autoLoad: false
+            }
+        },
+
+        s_classId_grid1_store :{
+            config:{
+                proxy: {
+                    type :'ajax',
+                    url:'../ServerPage/ma/ma_item.jsp',
+                    method :'POST',
+                    params:{
+                        sendData :''
+                    },
+                    reader :{
+                        type:'json',
+                        rootProperty: 'data',
+                        keepRawData: true
+                    }
+                },
+                autoLoad: false
+            }
+        }
+
+    },
+
+    data: {
+
+    }
+});

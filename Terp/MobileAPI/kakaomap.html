@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Kakao Map</title>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			background-color: #ddd;
+		}
+
+		element.style {
+		}
+		.modal-backdrop.show {
+			opacity: .5;
+		}
+		.modal-backdrop.fade {
+			opacity: 0;
+		}
+		.backdrop {
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: 1000;
+			width: 100vw;
+			height: 100vh;
+			background-color: #fff0;
+		}
+		.toolbar {
+			padding: 10px;
+			border: 1px solid #8f9498;
+			border-bottom-width: 0;
+		}
+		.searchBox {
+			position: relative;
+			left: 25%;
+			width: 50%;
+			display: flex;
+		}
+		@media screen and (max-width: 767px) {
+			.searchBox {
+				left: 0;
+				width: 100%;
+				display: flex;
+			}
+		}
+		.searchTerm {
+			width: 100%;
+			border: 3px solid #00B4CC;
+			border-right: none;
+			padding: 5px;
+			height: 20px;
+			border-radius: 5px 0 0 5px;
+			outline: none;
+			color: #9DBFAF;
+		}
+		.searchTerm:focus{
+			color: #00B4CC;
+		}
+		.searchButton {
+			width: 40px;
+			height: 36px;
+			border: 1px solid #00B4CC;
+			background: #00B4CC;
+			text-align: center;
+			color: #fff;
+			border-radius: 0 5px 5px 0;
+			cursor: pointer;
+			font-size: 20px;
+		}
+		.map {
+			width: calc(100vw - 2px);
+			height: calc(100vh - 58px);
+			border: 1px solid #8f9498;
+		}
+		.info {
+			position: relative;
+			top: 5px;
+			left: 5px;
+			border-radius: 6px;
+			border: 1px solid #ccc;
+			border-bottom: 2px solid #ddd;
+			padding: 5px;
+			background: #fff;
+			margin: 0;
+		}
+		.info .label {
+			display: inline-block;
+			width: 50px;
+		}
+		.overlayButtonWrap {
+			margin-top: 10px;
+			text-align: center;
+		}
+		.overlayButtonWrap button {
+			margin: 0 2px;
+			width: 80px;
+		}
+	</style>
+</head>
+
+<body>
+
+	<div id="backdrop" class="backdrop"></div>
+	<div id="toolbar" class="toolbar">
+		<div class="searchBox">
+			<input type="text" id="address" class="searchTerm" placeholder="주소를 입력하세요...">
+			<button onclick="runGeocoder()" class="searchButton">
+				<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
+					<path d="M0 0h24v24H0z" fill="none"/>
+					<path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+				</svg>
+			</button>
+		</div>
+	</div>
+	<div id="map" class="map"></div>
+
+
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=165d3a22a507ef41ce116768d0cf8302&libraries=drawing,services"></script>
+	<script>
+
+		var defaultCenterPosition = { latitude: 37.50653606526279, longitude: 127.13014919772273 };
+		var mapContainer = document.getElementById('map');
+		var mapOption = {
+			center: new kakao.maps.LatLng(defaultCenterPosition.latitude, defaultCenterPosition.longitude),
+			level: 3
+		};
+		var map = new kakao.maps.Map(mapContainer, mapOption);
+
+		var marker = new kakao.maps.Marker({
+			map: map,
+			position: new kakao.maps.LatLng(defaultCenterPosition.latitude, defaultCenterPosition.longitude)
+		});
+
+		var infoContent = '';
+		var preApplyFlag = false;
+		var drawingFlag = false;
+		var centerPosition;
+		var radius = 0;
+
+		var drawingCircle;
+		var drawingLine;
+		var drawingOverlay;
+		var drawingDot;
+		var circles = [];
+		var jsonInfo = {};
+
+		kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
+			if (!preApplyFlag) {
+				if (!drawingFlag) {
+					console.log('1');
+					removeCircles();
+					drawingFlag = true;
+					centerPosition = mouseEvent.latLng;
+
+					if (!drawingLine) {
+						drawingLine = new kakao.maps.Polyline({
+							strokeWeight: 3,
+							strokeColor: '#00a0e9',
+							strokeOpacity: 1,
+							strokeStyle: 'solid'
+						});
+					}
+					if (!drawingCircle) {
+						drawingCircle = new kakao.maps.Circle({
+							strokeWeight: 1,
+							strokeColor: '#00a0e9',
+							strokeOpacity: 0.1,
+							strokeStyle: 'solid',
+							fillColor: '#00a0e9',
+							fillOpacity: 0.2
+						});
+					}
+					if (!drawingOverlay) {
+						drawingOverlay = new kakao.maps.CustomOverlay({
+							xAnchor: 0,
+							yAnchor: 0,
+							zIndex: 1
+						});
+					}
+				}
+				else {
+					var rClickPosition = mouseEvent.latLng;
+					var polyline = new kakao.maps.Polyline({
+						path: [centerPosition, rClickPosition],
+						strokeWeight: 3,
+						strokeColor: '#00a0e9',
+						strokeOpacity: 1,
+						strokeStyle: 'solid'
+					});
+					var circle = new kakao.maps.Circle({
+						center: centerPosition,
+						radius: polyline.getLength(),
+						strokeWeight: 1,
+						strokeColor: '#00a0e9',
+						strokeOpacity: 0.1,
+						strokeStyle: 'solid',
+						fillColor: '#00a0e9',
+						fillOpacity: 0.2
+					});
+
+					radius = Math.round(circle.getRadius());
+					jsonInfo = {
+						latitude: centerPosition.Ma,
+						longitude: centerPosition.La,
+						radius: radius
+					};
+					console.log(jsonInfo);
+
+					var radiusOverlay = new kakao.maps.CustomOverlay({
+						infoContent: infoContent,
+						position: rClickPosition,
+						xAnchor: 0,
+						yAnchor: 0,
+						zIndex: 1
+					});
+					document.getElementById('overlayButtonWrap').style.display = '';
+
+					circle.setMap(map);
+					polyline.setMap(map);
+					radiusOverlay.setMap(map);
+
+					var radiusObj = {
+						'polyline': polyline,
+						'circle': circle,
+						'overlay': radiusOverlay
+					};
+					circles.push(radiusObj);
+
+					preApplyFlag = true;
+					drawingFlag = false;
+					centerPosition = null;
+					drawingCircle.setMap(null);
+					drawingLine.setMap(null);
+					//drawingOverlay.setMap(null);
+				}
+			}
+		});
+
+		kakao.maps.event.addListener(map, 'mousemove', function (mouseEvent) {
+			if (drawingFlag) {
+				var mousePosition = mouseEvent.latLng;
+				var linePath = [centerPosition, mousePosition];
+				drawingLine.setPath(linePath);
+				var length = drawingLine.getLength();
+				if (length > 0) {
+					var circleOptions = {
+						center : centerPosition,
+						radius: length
+					};
+					drawingCircle.setOptions(circleOptions);
+
+					radius = Math.round(drawingCircle.getRadius()),
+					infoContent = '<div id="infoContent" class="info"><div>'
+							.concat('위도 ').concat(centerPosition.Ma)
+							.concat('<br>경도 ').concat(centerPosition.La)
+							.concat('<br>반경 <b>').concat(radius).concat('</b>m</div>')
+							.concat('<div id="overlayButtonWrap" class="overlayButtonWrap" style="display:none">')
+							.concat('<button id="applyButton" onclick="applyInfo()">적용</button>')
+							.concat('<button id="cancelButton" onclick="cancelInfo()">취소</button>')
+							.concat('</div></div>');
+
+					drawingOverlay.setPosition(mousePosition);
+					drawingOverlay.setContent(infoContent);
+					drawingCircle.setMap(map);
+					drawingLine.setMap(map);
+					drawingOverlay.setMap(map);
+				}
+				else {
+					drawingCircle.setMap(null);
+					drawingLine.setMap(null);
+					drawingOverlay.setMap(null);
+				}
+			}
+		});
+
+		kakao.maps.event.addListener(map, 'rightclick', function (mouseEvent) {
+			if (drawingFlag) {
+				removeCircles();
+			}
+		});
+
+		function removeCircles() {
+			cancelInfo();
+			for (var i = 0; i < circles.length; i++) {
+				circles[i].circle.setMap(null);
+				circles[i].polyline.setMap(null);
+				circles[i].overlay.setMap(null);
+			}
+			circles = [];
+			jsonInfo = {};
+		}
+
+		document.getElementById('address').addEventListener('keyup', function(event) {
+			if (event.keyCode === 13) {
+				event.preventDefault();
+				runGeocoder();
+			}
+		});
+		function runGeocoder() {
+			var address = document.getElementById('address').value.replace(/\s+/g,'');
+			var geocoder = new kakao.maps.services.Geocoder();
+			geocoder.addressSearch(address, function(result, status) {
+				if (status === kakao.maps.services.Status.OK) {
+					var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+					console.log(coords);
+					map.setCenter(coords);
+					map.setLevel(3);
+					document.getElementById('address').value = '';
+				}
+			});
+		}
+
+		function applyInfo() {
+			console.log('2');
+			self.parent.postMessage({ controllerName: 'MapController', methodName: 'onApply', arguments: [ jsonInfo ]}, '*');
+			removeCircles();
+		}
+
+		function cancelInfo() {
+			preApplyFlag = false;
+			drawingFlag = false;
+			if (drawingCircle) drawingCircle.setMap(null);
+			if (drawingLine) drawingLine.setMap(null);
+			if (drawingOverlay) drawingOverlay.setMap(null);
+		}
+
+		function updateCircle(args) {
+			console.log(args,arguments);
+			defaultCenterPosition.latitude, defaultCenterPosition.longitude;
+			var latitude = arguments[0] ? arguments[0] : defaultCenterPosition.latitude;
+			var longitude = arguments[1] ? arguments[1] : defaultCenterPosition.longitude;
+			var radius = arguments[2] ? arguments[2] : 100;
+			var coords = new kakao.maps.LatLng(latitude, longitude);
+			console.log(coords);
+			map.setCenter(coords);
+			cancelInfo();
+
+			if (!drawingCircle) {
+				drawingCircle = new kakao.maps.Circle({
+					strokeWeight: 1,
+					strokeColor: '#00a0e9',
+					strokeOpacity: 0.1,
+					strokeStyle: 'solid',
+					fillColor: '#00a0e9',
+					fillOpacity: 0.2
+				});
+			}
+			drawingCircle.setOptions({
+				center : coords,
+				radius: radius,
+				removable: true
+			});
+			drawingCircle.setMap(map);
+		}
+
+		function setReadOnly(args) {
+			console.log(args,arguments);
+			var fg = arguments[0];
+			if (fg) {
+				document.getElementById('backdrop').style.display = 'block';
+				document.getElementById('toolbar').style.display = 'none';
+				document.getElementById('map').style.height = 'calc(100vh - 2px)';
+			}
+			else {
+				document.getElementById('toolbar').style.display = 'block';
+				document.getElementById('map').style.height = 'calc(100vh - 58px)';
+				document.getElementById('backdrop').style.display = 'none';
+			}
+		}
+		setReadOnly(true);
+
+		self.addEventListener('message', function(e) {
+			console.log('child message');
+			console.log(e.data); // { parentData : 'test parent data' }
+			console.log("e.origin : " + e.origin); //http://abc.com(부모창 도메인)
+			eval(e.data.functionName+'('+e.data.arguments+')')
+		});
+
+	</script>
+
+</body>
+
+</html>

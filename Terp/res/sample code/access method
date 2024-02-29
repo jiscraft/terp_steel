@@ -1,0 +1,16 @@
+1.view에서 모델스토어 및 컨트롤러에 접근
+
+var commFn = Terp.app.getController('TerpCommon');
+commFn.getTopOwnerCt(this).getViewModel().getStore('fg_bom_store');
+
+
+commFn.getTopOwnerCt(this).getController(). ????
+
+
+
+2.컨트롤러에서 뷰에접근
+
+2.1. lookupreference
+2.2. this.getView(). ????
+2.3. Ext.getCmp()
+2.4. up , down

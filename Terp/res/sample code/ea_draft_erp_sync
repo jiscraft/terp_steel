@@ -1,0 +1,32 @@
+// ERP에서 기안문서 작성 팝업 오픈
+var eaDraftWin = Ext.create('Terp.view.gw.ea.common.EaDraftWin.EaDraftWin', {
+	autoShow: true,
+	showMode: 'ERP',
+	ErpDocData: {
+        fg_prior: '0',  // 긴급여부 (0:일반9:긴급)
+		yn_erp: 'Y',	// ERP연동 여부
+		dc_title: '',	// 제목
+		dc_cont_html: '',	// 기안내용 HTML
+		am_doc: 1000000,	// 기안금액
+		cd_site: '',	// 현장코드
+		cd_form: '',	//
+		fg_ea010: '1',	// 내외부문서구분 (1:내부문서,2:외부문서)
+		fg_ea020: '1',	// 기안구분 (sy_codel 참조:없으면 추가 후 설정)
+		fg_ea030: '1000',	// 양식구분 (sy_codel 참조:없으면 추가 후 설정)
+		fg_ea040: '1000',	// 문서구분 (sy_codel 참조:없으면 추가 후 설정)
+		refErpData: {
+			cd_key1: '',	// ERP 데이터 연동 KEY #1
+			cd_key2: '',	// ERP 데이터 연동 KEY #2
+			cd_key3: '',	// ERP 데이터 연동 KEY #3
+			cd_key4: '',	// ERP 데이터 연동 KEY #4
+			cd_key5: '',	// ERP 데이터 연동 KEY #5
+			cd_ref1: '',	// ERP 데이터 참조 정보 #1
+			cd_ref2: '',	// ERP 데이터 참조 정보 #2
+			cd_ref3: '',	// ERP 데이터 참조 정보 #3
+			dc_remark: ''	// 비고
+		}
+	},
+	callback: function() {
+
+	}
+});

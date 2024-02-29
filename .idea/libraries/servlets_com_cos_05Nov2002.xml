@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="servlets.com:cos:05Nov2002" type="repository">
+    <properties maven-id="servlets.com:cos:RELEASE" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/javalib/cos-05Nov2002.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

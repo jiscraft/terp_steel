@@ -1,0 +1,1240 @@
+/*headbuttons image cls*/
+.myinsertimagebutton {
+    width:16px!important; height:16px!important;
+    background-image: url(./res/icons/icons16/Create.png) !important;  border:none
+}
+/*build/development/WebApp/resources/images/icons/icons16/3dBarChart.png*/
+.myselectimagebutton {
+    width:16px!important; height:16px!important;
+    background-image: url(./res/icons/icons16/Download.png) !important;  border:none
+}
+
+.mymodifyimagebutton {
+    width:16px!important; height:16px!important;
+    background-image: url(./res/icons/icons16/Modify.png) !important;  border:none
+}
+
+.mydeleteimagebutton {
+    width:16px!important; height:16px!important;
+    background-image: url(./res/icons/icons16/Close.png) !important;  border:none
+}
+
+.myprintimagebutton {
+    width:16px!important; height:16px!important;
+    background-image: url(./res/icons/icons16/Print.png) !important;  border:none
+}
+
+.mysaveimagebutton {
+    width:16px!important; height:16px!important;
+    background-image: url(./res/icons/icons16/Upload.png) !important;  border:none
+}
+
+.myhelpimagebutton {
+    width:16px!important; height:16px!important;
+    background-image: url(./res/icons/icons16/Info.png) !important;  border:none
+}
+
+
+/*투명이미지 cls*/
+.mytumyeong {
+    width:20px!important; height:20px!important;
+    background-image: url(./res/images/tumyeong.jpg) !important; background-color: #ffffff; border:none
+}
+
+/*x window 관련 cls*/
+.x-window-header-default-top {
+    background-color: #444849;
+}
+.x-window-default {
+    border-width: 2px;
+    border-color:#444849 ;
+}
+.x-window-header-default {
+    border-color: #444849;
+}
+.x-toolbar-footer {
+    background-color: #F7F8F9 ;
+}
+.x-window-header-default .x-tool-img {
+    background-color: rgba(106, 132, 241, 0.02);
+}
+
+.x-window.toastmessage-warning .x-window-header {
+    background-color: #ff6f28;
+    border-color:  #ff6f28;
+    color: white;
+}
+
+.x-mask {
+    background-color: rgba(204, 204, 204, 0);
+}
+
+/*panel 일반정보*/
+.x-panel-header-default {
+    background-image: none;
+    background-color: #717784;
+}
+.x-panel-header-default:not([class*="x-collapse"]) {
+    height: 36px !important;
+}
+
+.x-panel-header-title-default {
+    color: #fff;
+    font-weight: bold;
+    font-family: helvetica, arial, verdana, sans-serif;
+}
+.x-panel-header-default:not([class*="x-collapse"]) .x-panel-header-title-default {
+    top: 2px !important;
+}
+
+/*panel custom 일반정보*/
+.x-panel-header-default-custom {
+    background-image: none;
+    background-color: #ffffff;
+
+}
+
+.x-panel-header-title-default-custom {
+    color: #444849;
+    font-weight: bold;
+    font-family: helvetica, arial, verdana, sans-serif;
+}
+
+/**/
+.x-panel-default-outer-border-trl {
+    border-top: 1px #8f9498 !important;
+    border-right: 1px #8f9498 !important;
+    border-left: 1px #8f9498 !important;
+}
+
+.x-panel-header-default .x-tool-img {
+    background-color: #717784;
+}
+
+.x-panel-default-outer-border-trbl {
+    border-color: #8F9498 !important;
+    border-width: 1px !important;
+}
+
+
+.x-panel-default-outer-border-rbl {
+    border-right-color: #8f9498 !important;
+    border-right-width: 1px !important;
+    border-bottom-color: #8f9498 !important;
+    border-bottom-width: 1px !important;
+    border-left-color: #8f9498 !important;
+    border-left-width: 1px !important;
+}
+
+/*그리드정보*/
+.x-column-header-align {
+    text-align: center;
+}
+
+.x-column-header {
+    border-right: 1px solid #999999;
+    color: #ffffff;
+    font: bold 12px/14px helvetica, arial, verdana, sans-serif;
+    outline: 0;
+    background-color: rgba(186, 189, 194, 0.92);
+    text-align: center !important;
+}
+
+.x-column-header-over {
+    background-image: none;
+    background-color: rgba(9, 102, 214, 0.43);
+}
+/* 20160611 bkoh*/
+/*
+.x-column-header-checkbox .x-column-header-inner,
+.x-grid-cell-row-checker .x-grid-cell-inner {
+	padding: 0px;
+}
+*/
+
+.x-grid-item {
+    color: #000;
+    font: normal 12px/15px helvetica, arial, verdana, sans-serif;
+    background-color: #fff;
+}
+
+.x-grid-item-selected {
+    color: #000;
+    background-color: #cfdaf2;
+}
+
+
+
+/*폼정보*/
+.x-form-item-label-default {
+    color: #000;
+    font: normal 12px/14px helvetica, arial, verdana, sans-serif;
+    min-height: 20px;
+    padding-top: 4px;
+    padding-right: 5px;
+}
+
+.x-form-text-default {
+    color: #000;
+    padding: 4px 6px 3px;
+    background-color: #fff;
+    font: normal 12px/14px helvetica, arial, verdana, sans-serif;
+    min-height: 20px;
+}
+.x-form-item-default.x-item-disabled {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
+    opacity: 0.6;
+}
+
+/*head button*/
+.x-btn-default-small-custom {
+    background-color: #9bbbd7 !important;
+    margin: 0 1px !important;
+}
+.x-btn-default-small-custom {
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+    padding: 3px 3px 3px 3px;
+    border: 1px solid #898b8c !important;
+    background-image: none;
+
+    /*background-image: -webkit-gradient(linear, top, bottom, color-stop(0%, #4c9dd8), color-stop(50%, #3892d4), color-stop(51%, #358bc9), color-stop(0%, #3892d4));*/
+    /*background-image: -webkit-linear-gradient(top, ##EDF0F3, ##EDF0F350%, ##EDF0F351%, ##EDF0F3);*/
+    /*background-image: -moz-linear-gradient(top, #4c9dd8, #3892d4 50%, #358bc9 51%, #3892d4);*/
+    /*background-image: -o-linear-gradient(top, #4c9dd8, #3892d4 50%, #358bc9 51%, #3892d4);*/
+    /*background-image: -ms-linear-gradient(top, #4c9dd8, #3892d4 50%, #358bc9 51%, #3892d4);*/
+    /*background-image: linear-gradient(top, #4c9dd8, #3892d4 50%, #358bc9 51%, #3892d4);*/
+}
+.x-btn-default-small-custom.x-btn-disabled {
+    background-image: none !important;
+}
+
+/*첨부파일버튼*/
+.x-btn-default-small-custom-file {
+    background-color: #c5a7d7 !important;
+    margin: 0 1px !important;
+}
+.x-btn-default-small-custom-file {
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+    padding: 3px 3px 3px 3px;
+    border: 1px solid #898b8c !important;
+    background-image: none;
+
+    /*background-image: -webkit-gradient(linear, top, bottom, color-stop(0%, #4c9dd8), color-stop(50%, #3892d4), color-stop(51%, #358bc9), color-stop(0%, #3892d4));*/
+    /*background-image: -webkit-linear-gradient(top, ##EDF0F3, ##EDF0F350%, ##EDF0F351%, ##EDF0F3);*/
+    /*background-image: -moz-linear-gradient(top, #4c9dd8, #3892d4 50%, #358bc9 51%, #3892d4);*/
+    /*background-image: -o-linear-gradient(top, #4c9dd8, #3892d4 50%, #358bc9 51%, #3892d4);*/
+    /*background-image: -ms-linear-gradient(top, #4c9dd8, #3892d4 50%, #358bc9 51%, #3892d4);*/
+    /*background-image: linear-gradient(top, #4c9dd8, #3892d4 50%, #358bc9 51%, #3892d4);*/
+}
+.x-btn-default-small-custom-file.x-btn-disabled {
+    background-image: none !important;
+}
+
+/*전자결재버튼*/
+.x-btn-default-small-custom-gw {
+    background-color: #ff8c33 !important;
+    margin: 0 1px !important;
+}
+.x-btn-default-small-custom-gw {
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+    padding: 3px 3px 3px 3px;
+    border: 1px solid #898b8c !important;
+    background-image: none;
+
+    /*background-image: -webkit-gradient(linear, top, bottom, color-stop(0%, #4c9dd8), color-stop(50%, #3892d4), color-stop(51%, #358bc9), color-stop(0%, #3892d4));*/
+    /*background-image: -webkit-linear-gradient(top, ##EDF0F3, ##EDF0F350%, ##EDF0F351%, ##EDF0F3);*/
+    /*background-image: -moz-linear-gradient(top, #4c9dd8, #3892d4 50%, #358bc9 51%, #3892d4);*/
+    /*background-image: -o-linear-gradient(top, #4c9dd8, #3892d4 50%, #358bc9 51%, #3892d4);*/
+    /*background-image: -ms-linear-gradient(top, #4c9dd8, #3892d4 50%, #358bc9 51%, #3892d4);*/
+    /*background-image: linear-gradient(top, #4c9dd8, #3892d4 50%, #358bc9 51%, #3892d4);*/
+}
+.x-btn-default-small-custom-gw.x-btn-disabled {
+    background-image: none !important;
+}
+
+/*popup에서 head button */
+.x-btn-default-small-custom-function {
+    background-color: #d2c5ff !important;
+    margin: 0 1px !important;
+}
+.x-btn-default-small-custom-function {
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+    padding: 3px 3px 3px 3px;
+    border: 1px solid #898b8c !important;
+    background-image: none;
+
+    /*background-image: -webkit-gradient(linear, top, bottom, color-stop(0%, #4c9dd8), color-stop(50%, #3892d4), color-stop(51%, #358bc9), color-stop(0%, #3892d4));*/
+    /*background-image: -webkit-linear-gradient(top, ##EDF0F3, ##EDF0F350%, ##EDF0F351%, ##EDF0F3);*/
+    /*background-image: -moz-linear-gradient(top, #4c9dd8, #3892d4 50%, #358bc9 51%, #3892d4);*/
+    /*background-image: -o-linear-gradient(top, #4c9dd8, #3892d4 50%, #358bc9 51%, #3892d4);*/
+    /*background-image: -ms-linear-gradient(top, #4c9dd8, #3892d4 50%, #358bc9 51%, #3892d4);*/
+    /*background-image: linear-gradient(top, #4c9dd8, #3892d4 50%, #358bc9 51%, #3892d4);*/
+}
+.x-btn-default-small-custom-function.x-btn-disabled {
+    background-image: none !important;
+}
+
+
+.x-btn-over.x-btn-default-toolbar-small {
+    border-color: #1164a1;
+    background-image: none;
+    background-color: #3487c3;
+    background-image: -webkit-gradient(linear, top, bottom, color-stop(0%, #4893c9), color-stop(50%, #3487c3), color-stop(51%, #3180b9), color-stop(0%, #3487c3));
+    background-image: -webkit-linear-gradient(top, #4893c9, #3487c3 50%, #3180b9 51%, #3487c3);
+    background-image: -moz-linear-gradient(top, #4893c9, #3487c3 50%, #3180b9 51%, #3487c3);
+    background-image: -o-linear-gradient(top, #4893c9, #3487c3 50%, #3180b9 51%, #3487c3);
+    background-image: -ms-linear-gradient(top, #4893c9, #3487c3 50%, #3180b9 51%, #3487c3);
+    background-image: linear-gradient(top, #4893c9, #3487c3 50%, #3180b9 51%, #3487c3);
+}
+.x-btn-focus.x-btn-default-toolbar-small {
+    background-image: none;
+    background-color: #3892d4;
+    background-image: -webkit-gradient(linear, top, bottom, color-stop(0%, #4c9dd8), color-stop(50%, #3892d4), color-stop(51%, #358bc9), color-stop(0%, #3892d4));
+    background-image: -webkit-linear-gradient(top, #4c9dd8, #3892d4 50%, #358bc9 51%, #3892d4);
+    background-image: -moz-linear-gradient(top, #4c9dd8, #3892d4 50%, #358bc9 51%, #3892d4);
+    background-image: -o-linear-gradient(top, #4c9dd8, #3892d4 50%, #358bc9 51%, #3892d4);
+    background-image: -ms-linear-gradient(top, #4c9dd8, #3892d4 50%, #358bc9 51%, #3892d4);
+    background-image: linear-gradient(top, #4c9dd8, #3892d4 50%, #358bc9 51%, #3892d4);
+    -webkit-box-shadow: #d7e9f6 0 1px 0px 0 inset, #d7e9f6 0 -1px 0px 0 inset, #d7e9f6 -1px 0 0px 0 inset, #d7e9f6 1px 0 0px 0 inset;
+    -moz-box-shadow: #d7e9f6 0 1px 0px 0 inset, #d7e9f6 0 -1px 0px 0 inset, #d7e9f6 -1px 0 0px 0 inset, #d7e9f6 1px 0 0px 0 inset;
+    box-shadow: #d7e9f6 0 1px 0px 0 inset, #d7e9f6 0 -1px 0px 0 inset, #d7e9f6 -1px 0 0px 0 inset, #d7e9f6 1px 0 0px 0 inset;
+}
+.x-btn-focus.x-btn-menu-active.x-btn-default-toolbar-small,
+.x-btn-focus.x-btn-pressed.x-btn-default-toolbar-small {
+    border-color: #0e5284;
+    background-image: none;
+    background-color: #2a6e9f;
+    background-image: -webkit-gradient(linear, top, bottom, color-stop(0%, #2a6e9f), color-stop(50%, #286897), color-stop(51%, #2a6e9f), color-stop(0%, #3f7ca8));
+    background-image: -webkit-linear-gradient(top, #2a6e9f, #286897 50%, #2a6e9f 51%, #3f7ca8);
+    background-image: -moz-linear-gradient(top, #2a6e9f, #286897 50%, #2a6e9f 51%, #3f7ca8);
+    background-image: -o-linear-gradient(top, #2a6e9f, #286897 50%, #2a6e9f 51%, #3f7ca8);
+    background-image: -ms-linear-gradient(top, #2a6e9f, #286897 50%, #2a6e9f 51%, #3f7ca8);
+    background-image: linear-gradient(top, #2a6e9f, #286897 50%, #2a6e9f 51%, #3f7ca8);
+}
+
+
+/* 20160627 resh */
+.x-btn-default-small-resh {
+    background-color: #B8C1C7 !important;
+    color: #3892d4 !important;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+    padding: 3px 3px 3px 3px;
+    border: 1px solid #898b8c !important;
+    background-image: none;
+}
+
+.x-btn-default-small-week {
+    background-color: #C4CACE !important;
+    color: #8F9498 !important;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+    padding: 3px 3px 3px 3px;
+    border: 1px solid #8F9498 !important;
+    background-image: none;
+}
+
+
+/* 20160613 bkoh */
+.x-btn-inner-default-small,
+.x-btn-icon-el-default-small,
+.x-btn-inner-default-toolbar-small,
+.x-btn-icon-el-default-toolbar-small {
+    color: #fff !important;
+}
+
+.x-datepicker-month .x-btn-inner {
+    color: #3892d4 !important;
+}
+
+/*tab head*/
+.x-tab.x-tab-active.x-tab-default {
+    border-color: #B8C1C7;
+    background-color: #EFF5F9;
+
+}
+
+
+.x-tab-default-top {
+    -moz-border-radius-topleft: 3px;
+    -webkit-border-top-left-radius: 3px;
+    border-top-left-radius: 3px;
+    -moz-border-radius-topright: 3px;
+    -webkit-border-top-right-radius: 3px;
+    border-top-right-radius: 3px;
+    -moz-border-radius-bottomright: 0;
+    -webkit-border-bottom-right-radius: 0;
+    border-bottom-right-radius: 0;
+    -moz-border-radius-bottomleft: 0;
+    -webkit-border-bottom-left-radius: 0;
+    border-bottom-left-radius: 0;
+    padding: 7px 12px 6px 12px;
+    border-width: 1px;
+    border-style: solid;
+    background-color: #C4CACE;
+    border-color: #a1afc0;
+}
+
+.x-tab-bar-default-top > .x-tab-bar-body-default {
+    padding: 0;
+    background-color: white;
+}
+
+.x-tab-bar-strip-default {
+    border-style: solid;
+    border-color: #157fcc;
+    background-color: whitesmoke;
+}
+
+
+
+/*function buttons*/
+.x-panel-default-outer-border-trbl-custombottom {
+    border-color: #878c90 !important;
+    border-width: 1px !important;
+    background-color: whitesmoke;
+}
+
+
+/*grid cell 속성*/
+.custom-green-gridcell {
+    /*background-color: #ffa;*/
+    /*background-image: url(/static/lib/silk/bullet_red.png);*/
+    /*background-position: right center;*/
+    color: #009900;
+}
+
+.custom-red-gridcell {
+    /*background-color: #ffa;*/
+    /*background-image: url(/static/lib/silk/bullet_red.png);*/
+    /*background-position: right center;*/
+    color: indianred;
+
+}
+
+.custom-blue-gridcell {
+    /*background-color: #ffa;*/
+    /*background-image: url(/static/lib/silk/bullet_red.png);*/
+    /*background-position: right center;*/
+    color: #2826cd;
+
+}
+
+.custom-enforce-gridcell {
+    background-color: #bcffa6;
+    color: #1a232b;
+
+}
+
+
+
+.tsoft-pwchange {
+    background-image: url(./res/icons/icons24/Unlock.png) !important;
+    /*background-image: url(./res/icons/icons24/Boss.png) !important;*/
+    align-items: center;
+    border-style: none !important;
+    border-radius: 0px !important;
+    background-size: contain !important;
+    background-color: transparent;
+    width: 20px;
+    height: 20px;
+}
+
+.tsoft-mail {
+    background-image: url(./res/icons/IcoMoon/custom/mail4.png) !important;
+    /*background-image: url(./res/icons/icons24/Boss.png) !important;*/
+    align-items: center;
+    border-style: none !important;
+    border-radius: 0px !important;
+    background-size: contain !important;
+    background-color: transparent;
+    width: 16px;
+    height: 16px;
+}
+
+
+.tsoft-personal_info {
+    background-image: url(./res/icons/icons24/Script.png) !important;
+    border-style: none !important;
+    border-radius: 0px !important;
+    background-size: contain !important;
+    background-color: transparent;
+    width: 20px;
+    height: 20px;
+}
+
+.tsoft-partner {
+    background-image: url(./res/icons/icons24/Hourglass.png) !important;
+    /*background-image: url(./res/icons/icons24/Zoom.png) !important;*/
+    border-style: none !important;
+    border-radius: 0px !important;
+    background-size: contain !important;
+    background-color: transparent;
+    width: 20px;
+    height: 20px;
+}
+
+.tsoft-site {
+    background-image: url(./res/icons/icons24/Repair.png) !important;
+    /*background-image: url(./res/icons/icons24/Zoom.png) !important;*/
+    border-style: none !important;
+    border-radius: 0px !important;
+    background-size: contain !important;
+    background-color: transparent;
+    width: 20px;
+    height: 20px;
+}
+
+.tsoft-users {
+    background-image: url(./res/icons/icons24/People.png) !important;
+    /*background-image: url(./res/icons/icons24/Zoom.png) !important;*/
+    border-style: none !important;
+    border-radius: 0px !important;
+    background-size: contain !important;
+    background-color: transparent;
+    width: 20px;
+    height: 20px;
+}
+
+.tsoft-schedule {
+    background-image: url(./res/icons/icons24/History.png) !important;
+    /*background-image: url(./res/icons/icons24/Zoom.png) !important;*/
+    border-style: none !important;
+    border-radius: 0px !important;
+    background-size: contain !important;
+    background-color: transparent;
+    width: 20px;
+    height: 20px;
+}
+
+.tsoft-list {
+    background-image: url(./res/icons/icons24/List.png) !important;
+    /*background-image: url(./res/icons/icons24/Zoom.png) !important;*/
+    border-style: none !important;
+    border-radius: 0px !important;
+    background-size: contain !important;
+    background-color: transparent;
+    width: 20px;
+    height: 20px;
+}
+
+.tsoft-user {
+    background-image: url(./res/icons/IcoMoon/custom/user.png) !important;
+    /*background-image: url(./res/icons/icons24/Zoom.png) !important;*/
+    border-style: none !important;
+    border-radius: 0px !important;
+    background-size: contain !important;
+    background-color: transparent;
+    width: 20px;
+    height: 20px;
+}
+
+.tsoft-home {
+    background-image: url(./res/icons/icons24/Home.png) !important;
+    /*background-image: url(./res/icons/icons24/Zoom.png) !important;*/
+    border-style: none !important;
+    border-radius: 0px !important;
+    background-size: contain !important;
+    background-color: transparent;
+    width: 20px;
+    height: 20px;
+}
+
+.tsoft-idregister {
+    background-image: url(./res/icons/IcoMoon/custom/user.png) !important;
+    /*background-image: url(./res/icons/icons24/Zoom.png) !important;*/
+    border-style: none !important;
+    border-radius: 0px !important;
+    background-size: contain !important;
+    background-color: transparent;
+    width: 16px;
+    height: 16px;
+}
+
+/*그리드 tools*/
+/* 20160609 bkoh */
+.tsoft-component-tool .x-tool-img {
+    background-image:none !important;
+    font: 16px 'Font Awesome 5 Free';
+    color: white;
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
+    opacity: 0.7;
+}
+.tsoft-component-tool.x-tool-over .x-tool-img {
+    color: white;
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+    opacity: 1;
+}
+.tsoft-component-tool.x-tool-disabled .x-tool-img {
+    color: white;
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
+    opacity: 0.3;
+}
+.tsoft-component-tool .x-tool-plus:before{
+    content: "\f055" !important;
+}
+.tsoft-component-tool .x-tool-edit:before{
+    content: "\f044" !important;
+}
+.tsoft-component-tool .x-tool-minus:before{
+    content: "\f056" !important;
+}
+.tsoft-component-tool .x-tool-save:before{
+    /*content: "\f0c7" !important;*/
+    content: "\f00c" !important;
+}
+.tsoft-component-tool .x-tool-copy:before{
+    content: "\f0c5" !important;
+}
+.tsoft-component-tool .x-tool-export:before{
+    content: "\f1c3" !important;
+}
+.tsoft-component-tool .x-tool-import:before{
+    content: "\f0ce" !important;
+}
+.tsoft-component-tool .x-tool-cancel:before{
+    content: "\f05e" !important;
+}
+.tsoft-component-tool .x-tool-user:before{
+    content: "\f007;" !important;
+}
+/*
+.tsoft-component-tool-export .x-tool-export{
+	background-image:none !important;
+	font: 16px/1 'Font Awesome 5 Free Regular';
+	color: white;
+}
+.tsoft-component-tool-export .x-tool-export:before{
+	content: "\f016" !important;
+}
+
+
+.tsoft-component-tool-edit .x-tool-edit{
+	background-image:none !important;
+	font: 16px/1 'Font Awesome 5 Free Regular';
+	color: white;
+}
+.tsoft-component-tool-edit .x-tool-edit:before{
+	content: "\f044" !important;
+}
+
+
+.tsoft-component-tool-save .x-tool-save{
+	background-image:none !important;
+	font: 16px/1 'Font Awesome 5 Free Regular';
+	color: white;
+}
+.tsoft-component-tool-save .x-tool-save:before{
+	content: "\f0c7" !important;
+}
+*/
+
+/* tinyMCE 관련 */
+.tinymce-hide-border,
+.mce-tinymce {
+    border-width: 0px !important;
+}
+
+/* cell merge */
+.grid-row-span .x-grid-cell {
+    border-bottom: 1px solid #ededed;
+}
+.grid-row-span .row-span-cell {
+    border-bottom-width: 0;
+}
+.grid-row-span .row-span-first,
+.grid-row-span .row-span-same {
+    border-bottom-width: 0;
+}
+.grid-row-span .row-span-last,
+.grid-row-span .row-span-last.row-span-same,
+.grid-row-span .row-span-first.row-span-last {
+    border-bottom: 1px solid #ededed;
+}
+
+
+
+/* 결재방 관련 CSS - 20160630 bkoh */
+.tsoft-ea-apro-line-box {
+    border-collapse: collapse;
+}
+.tsoft-ea-apro-line-box .apro-cell {
+    font-size: 12px;
+    text-align: center;
+    height: 20px;
+}
+.tsoft-ea-apro-line-box .apro-cell.fg {
+    width: 20px;
+}
+.tsoft-ea-apro-line-box .apro-cell.jt {
+}
+.tsoft-ea-apro-line-box .apro-cell.nm {
+    height: 60px;
+    background-repeat: no-repeat;
+    background-size: 50%;
+    background-position: center 95%;
+}
+.tsoft-ea-apro-line-box .apro-cell.dt {
+    width: 80px;
+}
+.tsoft-ea-apro-line-box .apro-cell.jt.last {
+}
+.tsoft-ea-apro-line-box .apro-cell.nm.last {
+}
+.tsoft-ea-apro-line-box .apro-cell.dt.last {
+}
+.tsoft-ea-apro-doc-wrap .tsoft-ea-apro-line-box .apro-cell.nm:not(.fg002-121x):not(.lc2) {
+    padding-bottom: 15px;
+}
+.tsoft-ea-apro-doc-wrap .tsoft-ea-apro-line-box .apro-cell.nm.fg002-120 {
+    background-image: url(res/images/ea/120.png);
+}
+.tsoft-ea-apro-doc-wrap .tsoft-ea-apro-line-box .apro-cell.nm.fg002-121 {
+    background-image: url(./res/images/ea/121.png);
+}
+.tsoft-ea-apro-doc-wrap .tsoft-ea-apro-line-box .apro-cell.nm.fg002-121x {
+    background-image: url(./res/images/ea/121x.png);
+    background-size: 100% 100%;
+}
+.tsoft-ea-apro-doc-wrap .tsoft-ea-apro-line-box .apro-cell.nm.fg002-121x.last.lc2 {
+    background-image: url(./res/images/ea/121x-lc2.png);
+    background-size: 100% 100%;
+}
+.tsoft-ea-apro-doc-wrap .tsoft-ea-apro-line-box .apro-cell.nm.fg002-122 {
+    background-image: url(./res/images/ea/122.png);
+}
+.tsoft-ea-apro-doc-wrap .tsoft-ea-apro-line-box .apro-cell.nm.fg002-123 {
+    background-image: url(./res/images/ea/123.png);
+}
+.tsoft-ea-apro-doc-wrap .tsoft-ea-apro-line-box .apro-cell.nm.fg002-130 {
+    background-image: url(./res/images/ea/130.png);
+}
+.tsoft-ea-apro-doc-wrap .tsoft-ea-apro-line-box .apro-cell.nm.fg002-140 {
+    background-image: url(./res/images/ea/140.png);
+}
+.tsoft-ea-apro-doc-wrap .tsoft-ea-apro-line-box .apro-cell.nm.fg002-200 {
+    background-image: url(./res/images/ea/200.png);
+}
+.tsoft-ea-apro-doc-wrap .tsoft-ea-apro-line-box .apro-cell.nm.fg002-220 {
+    background-image: url(./res/images/ea/220.png);
+}
+.tsoft-ea-apro-doc-wrap .tsoft-ea-apro-line-box .apro-cell.nm.fg002-230 {
+    background-image: url(./res/images/ea/230.png);
+}
+.tsoft-ea-apro-doc-wrap .tsoft-ea-apro-line-box .apro-cell.nm.fg002-240 {
+    background-image: url(./res/images/ea/240.png);
+}
+.tsoft-ea-apro-doc-wrap .tsoft-ea-apro-line-box .apro-cell.nm.fg002-120.last,
+.tsoft-ea-apro-doc-wrap .tsoft-ea-apro-line-box .apro-cell.nm.fg002-121 {
+    font-weight: bold;
+}
+.tsoft-ea-apro-doc-wrap .tsoft-ea-apro-line-box .apro-cell.nm.fg002-130.last,
+.tsoft-ea-apro-doc-wrap .tsoft-ea-apro-line-box .apro-cell.nm.fg002-140.last {
+    font-weight: bold;
+}
+.tsoft-ea-apro-doc-wrap .tsoft-ea-apro-line-box .apro-cell.nm.fg002-121x {
+    font-style: italic;
+    color: #999;
+}
+
+/* 기안문서 보기 관련 CSS - 20160709 bkoh*/
+.tsoft-ea-apro-doc-wrap,
+.tsoft-ea-apro-ref-wrap {
+    width: 780px;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+.tsoft-ea-apro-doc-wrap .label,
+.tsoft-ea-apro-ref-wrap .label {
+    text-align: center;
+    border-bottom: 1px solid gray;
+    border-right: 1px solid gray;
+}
+.tsoft-ea-apro-doc-wrap .value {
+    padding: 0 10px;
+    border-bottom: 1px solid gray;
+}
+.tsoft-ea-apro-doc-wrap .value.am-doc {
+    width: 200px;
+    border-right: 1px solid gray;
+}
+.tsoft-ea-apro-doc-wrap .dc-cont-html {
+    padding: 10px;
+}
+.tsoft-ea-apro-doc-head {
+    width: 100%;
+    border-collapse: collapse;
+}
+.tsoft-ea-apro-doc-head tr:first-child .label,
+.tsoft-ea-apro-doc-head tr:first-child .value,
+.tsoft-ea-apro-ref-wrap tr:first-child .label,
+.tsoft-ea-apro-ref-wrap tr:first-child .value {
+    border-top: 1px solid gray;
+}
+.tsoft-ea-apro-doc-title {
+    width: 100%;
+    border-collapse: collapse;
+}
+.tsoft-ea-apro-doc-title .value.dc-title {
+    font-size: 14px;
+    font-weight: bold;
+}
+.tsoft-ea-apro-ref-wrap td.value {
+    padding: 5px 10px;
+    line-height: 20px;
+    border-bottom: 1px solid gray;
+}
+.tsoft-ea-apro-ref-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.tsoft-ea-apro-ref-list li {
+    float: left;
+    margin: 0 10px 0 0;
+}
+
+
+/* jiscraft */
+.x-grid-row-summary .x-grid-cell, .x-grid-row-summary .x-grid-rowwrap, .x-grid-row-summary .x-grid-cell-rowbody {
+    border-color: #ededed;
+    background-color: #fffee4 !important;
+    border-top: 1px solid #ededed;
+    font: normal 13px/15px helvetica, arial, verdana, sans-serif;
+}
+
+
+/* sdk 6.0.1 변경시 배경색이 #3892d4인 것을 변경 처리 - 20160704 bkoh */
+body.x-border-layout-ct, div.x-border-layout-ct {
+    background-color: white;
+}
+
+/* 버튼 아이콘이 텍스트 보다 1px 위로 보이는 현상 보정 - 20160708 bkoh */
+.x-btn-icon > .x-btn-icon-el {
+    padding-top: 1px;
+}
+
+/* 기안작성 및 문서보기 팝업 dataview CSS - 20160718 bkoh */
+.refdoc-dataview-item-wrap {
+    margin: 0;
+    padding:0 0 0 20px;
+}
+.refdoc-dataview-item {
+    cursor: pointer;
+    padding: 5px 5px 0 0;
+}
+.refdoc-dataview-item.x-view-item-focused {
+    outline: none !important;
+}
+.refdoc-dataview-item.x-item-selected {
+    background-color: #cfdaf2;
+}
+.preview-dataview-item-wrap {
+    border-bottom: 1px dotted gray;
+    cursor: pointer;
+}
+.preview-dataview-item-wrap .title-wrap {
+    background-color: #f5f5f5;
+    padding: 5px;
+}
+.preview-dataview-item-wrap .title-wrap .name {
+}
+.preview-dataview-item-wrap .title-wrap .dt {
+}
+.preview-dataview-item-wrap .title-wrap .stat {
+}
+.preview-dataview-item-wrap .cont-wrap {
+    padding: 5px;
+}
+
+.sy-faq-rowbody /*.x-grid-td .x-grid-cell-rowbody*/ {
+    margin: 0px 10px 0px 230px;
+    line-height: 20px;
+    min-width: 400px;
+    font-size: 12px;
+    color:#0000f9;
+}
+
+.sy-faq-rownumber .x-grid-cell-inner.x-grid-cell-inner-row-numberer {
+    background-color: transparent;
+}
+
+
+
+
+/*그리드의 로우 컬러를 강조하기 위해 지정*/
+.enforce-row .x-grid-cell {
+    background-color: #fffff1;
+    color: #1a232b;
+}
+
+.enforce-row-gray .x-grid-cell {
+    /*background-color: #ffe41c;*/
+    background-color: #ffffcc;
+    color: #1a232b;
+}
+
+
+.enforce-row-strong .x-grid-cell {
+    background-color: #dddddd;
+    color: #1a232b;
+}
+
+.enforce-row-weak .x-grid-cell {
+    background-color: #bcffa6;
+    color: #1a232b;
+}
+
+.enforce-row-red .x-grid-cell {
+    background-color: #e6c3cf;
+    color: #1a232b;
+}
+
+.enforce-row-red .x-grid-cell-inner.x-grid-cell-inner-row-numberer {
+    background-color: #e6c3cf;
+    color: #1a232b;
+}
+
+/*그리드의 컬럼정보를 강조하기위해*/
+.x-grid-row .enforce-column {
+    background-color: #a1afc0;
+    color: #4e4e4e;
+    /*font-weight: bold;*/
+}
+
+/*그리드의 컬럼을 강조하기 위해 지정*/
+.x-grid-row .enforce-column-type1 {
+    background-color: #fffff1;
+    color: #4e4e4e;
+    font-weight: bold;
+}
+
+.x-grid-row .enforce-column-type2 {
+    background-color: #fdfbff;
+    color: #4e4e4e;
+    font-weight: bold;
+}
+
+/* locked border color - 20160922 bkoh */
+.x-grid-inner-locked {
+    border-right-color: black;
+}
+
+/* 게시판 관련 css - 20160818 bkoh */
+.bb-view-wrap {
+}
+.bb-view-header {
+    border-top: 1px solid #d3d3d3;
+    border-bottom: 1px solid #d3d3d3;
+}
+.bb-view-header .title {
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #f0f0f0;
+    color: #00f;
+    padding: 6px;
+}
+.bb-view-header .info {
+}
+.bb-view-header .info:after {
+    content:"";
+    display: block;
+    clear: both;
+}
+.bb-view-header .dt {
+    float: left;
+    padding: 6px;
+}
+.bb-view-header .nm {
+    float: right;
+    padding: 6px;
+}
+.bb-view-body {
+    padding: 10px 20px;
+}
+
+
+/* full calendar 관련 css - 20160823 bkoh */
+.fc-state-disabled {
+    cursor: none !important;
+    background-image: none;
+    opacity: 0.25;
+    filter: alpha(opacity=25);
+    box-shadow: none
+}
+
+@media all {
+    .page-break  { display: none; }
+}
+
+@media print {
+    .page-break  { display: block; page-break-before: always; }
+}
+
+.biggertext
+{
+    font-size: 16px!important;
+}
+
+
+.smallertext
+{
+    font-size: 10px!important;
+}
+.selection-disabled .x-selmodel-column {
+    visibility: hidden;
+
+}
+
+
+
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+    clear: both;
+}
+
+.orange {
+    color: orange;
+}
+.blue {
+    color: dodgerblue;
+}
+.green {
+    color: forestgreen;
+}
+.red {
+    color: orangered;
+}
+.magenta {
+    color: darkmagenta;
+}
+
+.modern-main-menu-btn .x-badge-el {
+    top: 0px !important;
+    right: 10px !important;
+}
+.modern-main-menu-btn .x-icon-el {
+    width: 48px !important;
+    height: 48px !important;
+}
+.modern-main-menu-btn .x-icon-el:before {
+    font-size: 48px !important;
+}
+
+.modern-main-menu-btn.my:not(.x-pressing) .x-icon-el:before {
+    color: orange;
+}
+.modern-main-menu-btn.apro:not(.x-pressing) .x-icon-el:before {
+    color: dodgerblue;
+}
+.modern-main-menu-btn.rcv:not(.x-pressing) .x-icon-el:before {
+    color: forestgreen;
+}
+.modern-main-menu-btn.cc:not(.x-pressing) .x-icon-el:before {
+    color: orangered;
+}
+.modern-main-menu-btn.msg:not(.x-pressing) .x-icon-el:before {
+    color: darkmagenta;
+}
+.modern-main-menu-btn.memo:not(.x-pressing) .x-icon-el:before {
+    color: slateblue;
+}
+.modern-main-menu-btn.vc:not(.x-pressing) .x-icon-el:before {
+    color: red;
+}
+.modern-main-menu-btn.ot:not(.x-pressing) .x-icon-el:before {
+    color: blue;
+}
+.modern-main-menu-btn.jc:not(.x-pressing) .x-icon-el:before {
+    color: purple;
+}
+
+.modern-ea-list .x-listitem-inner-el {
+    flex-grow: 1;
+}
+.modern-ea-list .x-listitem-inner-el .x-innerhtml {
+    width: 100%;
+}
+.modern-ea-list .x-tool-type-disclosure:before {
+    content: '\f138' !important;
+    font-family: 'Font Awesome 5 Free' !important;
+    font-weight: bold;
+    color: orangered;
+}
+
+
+.modern-ea-memo .x-tool-type-disclosure:before {
+    content: '\f00d' !important;
+    font-family: 'Font Awesome 5 Free' !important;
+    font-weight: bold;
+    color: red;
+}
+.modern-ea-check .x-tool-type-disclosure:before {
+    content: '\f00c' !important;
+    font-family: 'Font Awesome 5 Free' !important;
+    font-weight: bold;
+    color: forestgreen;
+}
+.modern-ea-attach .x-tool-type-disclosure:before {
+    content: '\f019' !important;
+    font-family: 'Font Awesome 5 Free' !important;
+    font-weight: bold;
+    color: dodgerblue;
+}
+
+.modern-ea-tab .x-tab {
+    line-height: 1;
+}
+.modern-ea-tab .x-tab.x-has-text .x-inner-el {
+    padding: 14px 4px 4px;
+}
+
+.modern-ea-iframe .x-innerhtml {
+    width: 100%;
+    height: 100%;
+}
+
+/* 에어테크 */
+.main-top-body {
+    background-color: rgb(1,4,19);
+    background-image: url(res/images/top_bg.jpg);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: top left;
+}
+
+.main-left {
+    border-right: 1px solid steelblue;
+}
+.main-left .x-panel-header-default {
+    background-image: none;
+    background-color: steelblue;
+}
+
+.main-center {
+    border-left: 1px solid steelblue;
+}
+.main-tabbar > .x-tab-bar-body {
+    padding: 3px 2px 0 2px;
+    background-color: steelblue;
+}
+.main-tabbar > .x-tab-bar-strip {
+    height: 0;
+}
+.main-tabbar .x-tab.x-tab-active {
+    background-color: white;
+}
+.main-tabbar .x-tab.x-tab-active .x-tab-close-btn {
+    background-color: steelblue;
+}
+
+.main-bottom {
+    border-top: 1px solid steelblue;
+}
+.main-bottom .login-user-name .x-form-trigger-wrap {
+    height: 24px;
+}
+
+.main-login-form {
+}
+
+.main-btn-login {
+}
+
+.leftmenu-tbar-body {
+    padding : 5px 0 7px;
+    border-width: 0px !important;
+    background-color: #f7f8fa;
+}
+.leftmenu-tree-body {
+    padding : 5px 0;
+    border-width: 0px !important;
+}
+
+.btn-filter-tree {
+    border-radius: 0 !important;
+}
+
+.tsoft-btn-red {
+    background-image: none !important;
+    background-color: orangered !important;
+    border-color: orangered !important;
+}
+.tsoft-btn-red.x-btn-over .x-btn-icon-el,
+.tsoft-btn-red.x-btn-over .x-btn-inner {
+    font-weight: bold !important;;
+    color: yellow !important;;
+}
+
+.tsoft-btn-blue {
+    background-image: none !important;
+    background-color: #80a8e1 !important;
+    border-color: #80a8e1 !important;
+}
+.tsoft-btn-blue.x-btn-over .x-btn-icon-el,
+.tsoft-btn-blue.x-btn-over .x-btn-inner {
+    font-weight: bold !important;;
+    color: yellow !important;;
+}
+
+.tsoft-btn-green {
+    background-image: none !important;
+    background-color: #68cb0d !important;
+    border-color: #68cb0d !important;
+}
+.tsoft-btn-green.x-btn-over .x-btn-icon-el,
+.tsoft-btn-green.x-btn-over .x-btn-inner {
+    font-weight: bold !important;;
+    color: yellow !important;;
+}
+
+
+
+/* triton 기반 custom
+.x-window {
+    border-color: gray;
+}
+.x-window .x-window-header {
+    background-color: gray;
+}
+
+.x-tree-arrows .x-tree-expander {
+    font-size: 12px;
+}
+.x-tree-elbow-img {
+    width: 10px;
+    margin-right: 2px;
+}
+.x-tree-node-text {
+    padding-left: 4px;
+}
+
+.tsoft-search-form .x-field {
+    margin-bottom: 5px;
+}
+*/
+

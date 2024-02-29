@@ -1,0 +1,203 @@
+/**
+ * Created by jiscraft on 2016-09-10.
+ */
+Ext.define('Terp.view.cn.cn16i1001.convertClassId.convertClassId', {
+    extend: 'Terp.view.tsoft.componentbase.TsoftWindow',
+    xtype: 'convertClassId',
+
+    requires: [
+        'Ext.layout.container.VBox',
+        'Ext.toolbar.Spacer',
+        'Ext.util.Format',
+        'Terp.view.cn.cn16i1001.convertClassId.convertClassIdController',
+        'Terp.view.cn.cn16i1001.convertClassId.convertClassIdModel',
+        'Terp.view.tsoft.componentbase.TsoftForm',
+        'Terp.view.tsoft.componentbase.TsoftGrid',
+        'Terp.view.tsoft.componentbase.TsoftTextField',
+        'Terp.view.tsoft.componentux.TsoftSiteHelpField'
+    ],
+
+    controller: 'convertClassId',
+    viewModel: {
+        type :'convertClassId'
+    },
+
+
+    title: '예상매출등록',
+    maximizable: false,
+    layout :{
+        type : 'vbox',
+        align : 'stretch'
+    },
+
+    width : 1000 ,
+    height : 400 ,
+    
+    items :[
+        
+        {
+            xtype :'tsoftform',
+            reference: 'convertClassId_form1',
+            items :[
+                {
+                    xtype :'tsofttextfield',
+                    fieldLabel: '기성월',
+                    name : 'ym_req',
+                    width : 150,
+                    align :'center',
+                    editable: false
+                },
+                {
+                    xtype :'tbspacer',
+                    width : 20
+                },
+                {
+                    xtype :'tsoftsitehelpfield',
+                    fieldLabel: '현장',
+                    name :'cd_site',
+                    width : 300 ,
+                    editable: false
+
+                }
+            ]
+                    
+        },
+        {
+            xtype :'tsoftgrid',
+            title : '예상매출정보',
+            iconCls: 'fa fa-dollar',
+            reference: 'convertClassId_grid1',
+            flex : 1,
+            hiddenTools :['plus','edit','minus','save','copy','cancel' , 'import'],
+            bind :{
+                store :'{convertClassId_grid1_store}'
+            },
+            columns:[
+                {
+                    text:'계약번호',
+                    dataIndex:'ln_contract',
+                    width:100
+                },
+                {
+                    text:'계약명',
+                    dataIndex:'nm_contract',
+                    width:300
+                },
+                {
+                    text:'계약금액',
+                    dataIndex:'v_at_contract_ttl',
+                    width:300
+                },
+                {
+                    text:'M+1',
+                    dataIndex:'at_1',
+                    width:120,
+                    align : 'right' ,
+                    renderer : function(value, metaData, record, rowIndex, colIndex, store, view) {
+                        return Ext.util.Format.number(value, '0,000')
+                    },
+                    editor :'tsoftnumberfield'
+                },
+                {
+                    text:'M+2',
+                    dataIndex:'at_2',
+                    width:120,
+                    align : 'right' ,
+                    renderer : function(value, metaData, record, rowIndex, colIndex, store, view) {
+                        return Ext.util.Format.number(value, '0,000')
+                    },
+                    editor :'tsoftnumberfield'
+                },
+                {
+                    text:'M+3',
+                    dataIndex:'at_3',
+                    width:120,
+                    align : 'right' ,
+                    renderer : function(value, metaData, record, rowIndex, colIndex, store, view) {
+                        return Ext.util.Format.number(value, '0,000')
+                    },
+                    editor :'tsoftnumberfield'
+                }
+            ]
+        }
+    ],
+    ,
+
+    listeners: {
+        close: 'onClose_convertClassId'
+    }
+
+});
+
+
+
+
+
+/**
+ * Created by jiscraft on 2016-09-10.
+ */
+Ext.define('Terp.view.cn.cn16i1001.convertClassId.convertClassIdController', {
+    extend: 'Ext.app.ViewController',
+    alias: 'controller.convertClassId',
+
+    commonFn: '',
+
+    convertClassId_form1 :'',
+    convertClassId_form1_store :'' ,
+
+    convertClassId_grid1 :'',
+    convertClassId_grid1_store :'' ,
+
+
+    init: function() {
+        commonFn = Terp.app.getController('TerpCommon');
+
+        convertClassId_form1 = this.lookupReference('convertClassId_form1');
+        //convertClassId_form1_store =  this.getViewModel().getStore('convertClassId_form1_store') ;
+
+        convertClassId_grid1 = this.lookupReference('convertClassId_grid1');
+        convertClassId_grid1_store =  this.getViewModel().getStore('convertClassId_grid1_store') ;
+
+        this.onInitValue();
+        convertClassId_form1.setReadOnly(true);
+    },
+
+
+
+    onInitValue : function(){
+        //폼에서 사용할 콤보store를 만든다. 콤보가 있는뷰는 반드시 리퍼런스로 선언되어 있어야 한다..
+        commonFn.setCommonCode(this.lookupReference('s_classId_fg_mm010') ,'MM010');
+        
+        //폼에서 사용할 핼프들
+        convertClassId_form1.down('[name=ym_req]').setValue(this.getView().popupParams.ym_req);
+        commonFn.setDataBindHelpBox(convertClassId_form1, 'cd_site', this.getView().popupParams.cd_site, this.getView().popupParams.nm_site);
+    },
+
+
+    onClose_convertClassId : function(){
+        var parentController = this.getView().popupParamView.getController();
+        parentController[this.getView().popupParamCallback]();
+        //me.view.close();
+    }
+});
+
+
+
+     호출할때
+
+     var me = this;
+     var pop = Ext.create('Terp.view.sm.sm16h0901.sm16h0901Plan.Sm16h0901Plan',{
+         popupParamView : me.getView() ,   //부르는넘의 뷰
+         popupParamCallback : 'onCallback' ,  // 끝나고 돌아와서 처리할 펑션이름
+         popupParams : sm16h0901_searchform.down('[name=dc_rev]').value   //처리할파라미터
+         autoShow: true
+     });
+
+
+
+
+    처리할때
+        //콜백을 처리하기 위해 ( 저장할때 또는 윈도우가 닫힐때 )
+        var parentController = this.getView().popupParamView.getController();
+        parentController[this.getView().popupParamCallback]();
+        //me.view.close();

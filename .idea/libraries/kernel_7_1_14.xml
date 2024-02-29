@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="kernel-7.1.14">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Terp/WEB-INF/lib/kernel-7.1.14.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

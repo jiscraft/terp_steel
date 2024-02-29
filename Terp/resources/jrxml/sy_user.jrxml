@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sy_user" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1283cdae-ba26-4afc-8082-f9eca75e67c9">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ATEC"/>
+	<queryString language="SQL">
+		<![CDATA[select * from dbo.sy_user]]>
+	</queryString>
+	<field name="id_user" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="id_user"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_user"/>
+	</field>
+	<field name="nm_user" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nm_user"/>
+		<property name="com.jaspersoft.studio.field.label" value="nm_user"/>
+	</field>
+	<field name="dc_pw_sha" class="byte[]">
+		<property name="com.jaspersoft.studio.field.name" value="dc_pw_sha"/>
+		<property name="com.jaspersoft.studio.field.label" value="dc_pw_sha"/>
+	</field>
+	<field name="dt_pwchange" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="dt_pwchange"/>
+		<property name="com.jaspersoft.studio.field.label" value="dt_pwchange"/>
+	</field>
+	<field name="fg_user" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="fg_user"/>
+		<property name="com.jaspersoft.studio.field.label" value="fg_user"/>
+	</field>
+	<field name="cd_c" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cd_c"/>
+		<property name="com.jaspersoft.studio.field.label" value="cd_c"/>
+	</field>
+	<field name="cd_e" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cd_e"/>
+		<property name="com.jaspersoft.studio.field.label" value="cd_e"/>
+	</field>
+	<field name="cd_p" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cd_p"/>
+		<property name="com.jaspersoft.studio.field.label" value="cd_p"/>
+	</field>
+	<field name="dc_personalmail" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="dc_personalmail"/>
+		<property name="com.jaspersoft.studio.field.label" value="dc_personalmail"/>
+	</field>
+	<field name="dc_mobile" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="dc_mobile"/>
+		<property name="com.jaspersoft.studio.field.label" value="dc_mobile"/>
+	</field>
+	<field name="dc_message" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="dc_message"/>
+		<property name="com.jaspersoft.studio.field.label" value="dc_message"/>
+	</field>
+	<field name="yn_use" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="yn_use"/>
+		<property name="com.jaspersoft.studio.field.label" value="yn_use"/>
+	</field>
+	<field name="fg_sy030" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="fg_sy030"/>
+		<property name="com.jaspersoft.studio.field.label" value="fg_sy030"/>
+	</field>
+	<field name="dc_pw" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="dc_pw"/>
+		<property name="com.jaspersoft.studio.field.label" value="dc_pw"/>
+	</field>
+	<field name="yn_mainid" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="yn_mainid"/>
+		<property name="com.jaspersoft.studio.field.label" value="yn_mainid"/>
+	</field>
+	<field name="cd_o" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cd_o"/>
+		<property name="com.jaspersoft.studio.field.label" value="cd_o"/>
+	</field>
+	<field name="yn_gwsign" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="yn_gwsign"/>
+		<property name="com.jaspersoft.studio.field.label" value="yn_gwsign"/>
+	</field>
+	<field name="tm_workzone" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="tm_workzone"/>
+		<property name="com.jaspersoft.studio.field.label" value="tm_workzone"/>
+	</field>
+	<field name="tm_message_fr" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="tm_message_fr"/>
+		<property name="com.jaspersoft.studio.field.label" value="tm_message_fr"/>
+	</field>
+	<field name="tm_message_to" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="tm_message_to"/>
+		<property name="com.jaspersoft.studio.field.label" value="tm_message_to"/>
+	</field>
+	<field name="yn_message_mobile" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="yn_message_mobile"/>
+		<property name="com.jaspersoft.studio.field.label" value="yn_message_mobile"/>
+	</field>
+	<field name="yn_message_mail" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="yn_message_mail"/>
+		<property name="com.jaspersoft.studio.field.label" value="yn_message_mail"/>
+	</field>
+	<field name="dc_companymail" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="dc_companymail"/>
+		<property name="com.jaspersoft.studio.field.label" value="dc_companymail"/>
+	</field>
+	<field name="dc_companymail_pw" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="dc_companymail_pw"/>
+		<property name="com.jaspersoft.studio.field.label" value="dc_companymail_pw"/>
+	</field>
+	<field name="sign_url" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="sign_url"/>
+		<property name="com.jaspersoft.studio.field.label" value="sign_url"/>
+	</field>
+	<field name="nm_o" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nm_o"/>
+		<property name="com.jaspersoft.studio.field.label" value="nm_o"/>
+	</field>
+	<field name="nm_p" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nm_p"/>
+		<property name="com.jaspersoft.studio.field.label" value="nm_p"/>
+	</field>
+	<field name="dc_email" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="dc_email"/>
+		<property name="com.jaspersoft.studio.field.label" value="dc_email"/>
+	</field>
+	<field name="yn_use_issue" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="yn_use_issue"/>
+		<property name="com.jaspersoft.studio.field.label" value="yn_use_issue"/>
+	</field>
+	<field name="dt_insert" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="dt_insert"/>
+		<property name="com.jaspersoft.studio.field.label" value="dt_insert"/>
+	</field>
+	<field name="id_insert" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="id_insert"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_insert"/>
+	</field>
+	<field name="dt_update" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="dt_update"/>
+		<property name="com.jaspersoft.studio.field.label" value="dt_update"/>
+	</field>
+	<field name="id_update" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="id_update"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_update"/>
+	</field>
+	<field name="id_row" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="id_row"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_row"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="554" height="20" uuid="cab3a7e7-9226-4394-afc3-c0f993abb5fc">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="맑은 고딕" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Report제목]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="554" height="20" uuid="39a49c61-5ed0-4752-956e-d67c6d1a58eb">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="맑은 고딕" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[페이지 header]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="17" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="2" width="80" height="12" uuid="379dd431-5e0f-44c8-8516-56a11ec1373f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="39292434-74a9-46e2-aa75-2657b4268c93"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="맑은 고딕" size="8"/>
+				</textElement>
+				<text><![CDATA[id_user]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="90" y="2" width="465" height="12" uuid="47e68e1e-9511-4276-bbe8-6ad55a0385e3">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="60328b97-b471-4f63-909d-74fcbf2cab1a"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="맑은 고딕" size="8"/>
+				</textElement>
+				<text><![CDATA[nm_user]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" uuid="48239e09-5bbc-4248-bc58-3e3c8ae16f0a">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="0" y="16" width="555" height="1" uuid="f987ce63-5154-4590-93cf-22e7c75bcedd">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="85" y="0" width="1" height="16" uuid="4661b034-acef-4a99-ac9b-6f84fb81bf54">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="17" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="2" width="80" height="12" uuid="0b5d8cb6-9c17-4732-ae31-5d79aa66e772">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="39292434-74a9-46e2-aa75-2657b4268c93"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="맑은 고딕" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{id_user}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="90" y="2" width="465" height="12" uuid="814bc9ea-f242-46f5-9380-db020518acd6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="60328b97-b471-4f63-909d-74fcbf2cab1a"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="맑은 고딕" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nm_user}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="85" y="0" width="1" height="16" uuid="bf3057cd-60dc-4313-af06-333b476f8c85">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="0" y="16" width="555" height="1" uuid="623cabad-941f-4c09-b0ad-56988d967aca">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="0" y="0" width="554" height="20" uuid="ebbd08cf-e535-48be-8f57-f1c7f04a61e8">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="맑은 고딕" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[페이지 footer]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="554" height="20" uuid="990439e1-1a4d-4097-9079-6b4cf154db93">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="맑은 고딕" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[summary]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

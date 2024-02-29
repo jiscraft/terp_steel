@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="Generator" content="EditPlus®">
+	<meta name="Author" content="">
+	<meta name="Keywords" content="">
+	<meta name="Description" content="">
+</head>
+<body>
+
+	<form id="f" name="f" method="post" action="upload.jsp" enctype="multipart/form-data">
+		<input type="hidden" name="pfx" value="test">
+		<input type="file" name="uf" id="uf">
+		<input type="file" name="uf">
+		<input type="button" value="파일 전송" onclick='check();'>
+	</form>
+	<script>
+		function check() {
+			console.log(document.getElementById('uf').files[0]);
+			return false;
+		}
+	</script>
+
+</body>
+</html>

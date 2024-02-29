@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="html2pdf-3.0.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Terp/WEB-INF/lib/html2pdf-3.0.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

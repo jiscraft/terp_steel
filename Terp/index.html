@@ -1,0 +1,328 @@
+<!DOCTYPE HTML>
+<html manifest="">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=10, user-scalable=yes">
+
+    <title>Terp</title>
+
+    <script type="text/javascript">
+
+        window.onbeforeunload = function(s) {
+            if (UserConnectionManager.UnloadCheckFg) {
+                return 'ERP페이지를 새로 고침하시겠습니까?\n로고침하면 모든 정보는 초기화 됩니다';
+            }
+            UserConnectionManager.UnloadCheckFg = true;
+        };
+
+        var Ext = Ext || {}; // Ext namespace won't be defined yet...
+
+        // This function is called by the Microloader after it has performed basic
+        // device detection. The results are provided in the "tags" object. You can
+        // use these tags here or even add custom tags. These can be used by platform
+        // filters in your manifest or by platformConfig expressions in your app.
+        //
+        Ext.beforeLoad = function (tags) {
+            var s = location.search,  // the query string (ex "?foo=1&bar")
+                profile;
+
+            // For testing look for "?classic" or "?modern" in the URL to override
+            // device detection default.
+            //
+            if (s.match(/\bclassic\b/)) {
+                profile = 'classic';
+            }
+            else if (s.match(/\bmodern\b/)) {
+                profile = 'modern';
+            }
+            else {
+                profile = tags.desktop ? 'classic' : 'modern';
+                //profile = tags.phone ? 'modern' : 'classic';
+            }
+
+            if (tags.desktop) {
+                if (tags.windows && ((tags.chrome === 0) || (navigator.userAgent.indexOf('Chrome') === -1))) {
+                    self.location.replace('./SupportedBrowserGuide.html');
+                }
+            }
+
+            //profile = 'classic';
+            Ext.manifest = profile; // this name must match a build profile name
+
+            // This function is called once the manifest is available but before
+            // any data is pulled from it.
+            //
+            //return function (manifest) {
+                // peek at / modify the manifest object
+            //};
+        };
+    </script>
+
+    <!-- The line below must be kept intact for Sencha Cmd to build your application -->
+    <script id="microloader" data-app="11dd4e3a-b072-4c40-8004-9bd2f3f06507" type="text/javascript" src="bootstrap.js"></script>
+
+    <script type="text/javascript">
+        Ext.Microloader.onMicroloaderReady(function() {
+            //Ext.util.Cookies.clear('ATECTERPLON');
+
+            /*
+            Ext.Ajax.request({
+                async: false,
+                url: '/ServerPage/login/userLoginStatus.jsp',
+                success: function (response) {
+                    var response = Ext.decode(response.responseText);
+                    if (response.success) {
+                        Ext.Ajax.request({
+                            async: false,
+                            url : '/ServerPage/login/userLogout.jsp',
+                            params: {
+                                sendData: Ext.encode([{loginIduser:''}])
+                            }
+                        });
+                    }
+                },
+                failure: function (response) {
+                }
+            });
+            */
+
+            window.UserConnectionManager = {
+                SITE_ID: 'ATECTERP',
+                LogonUserId: '',
+                AutoLogoutFg: false,
+                UnloadCheckFg: true,
+                SessionIn: function(sendData, callback) {
+                    Ext.Ajax.request({
+                        async: false,
+                        url: '/ServerPage/login/userLogin.jsp',
+                        params: {
+                            sendData: Ext.encode(sendData)
+                        },
+                        success: function(response) {
+                            if ((typeof callback === 'object') && callback.success) callback.success(response);
+                        },
+                        failure: function(response) {
+                            Ext.Msg.alert('알림' , '세션 바인딩 실패');
+                            if ((typeof callback === 'object') && callback.failure) callback.failure(response);
+                        }
+                    });
+                },
+                SessionOut: function(sendData, callback) {
+                    Ext.Ajax.request({
+                        async: false,
+                        url: '/ServerPage/login/userLogout.jsp',
+                        params: {
+                            sendData: Ext.encode(sendData)
+                        },
+                        success: function(response) {
+                            if ((typeof callback === 'object') && callback.success) callback.success(response);
+                        },
+                        failure: function(response) {
+                            Ext.Msg.alert('알림' , '세션 바인딩 해제 실패');
+                            if ((typeof callback === 'object') && callback.failure) callback.failure(response);
+                        }
+                    });
+                },
+                SessionChecking: null,
+                SessionCheckingInterval: 1 * 10 * 1000,
+                SessionCheck: function() {
+                    var me = UserConnectionManager;
+                    var lss = Ext.util.Cookies.get(me.SITE_ID + 'SS');
+                    lss = Ext.isEmpty(lss) ? '' : Ext.decode(decodeURIComponent(Ext.util.Cookies.get(me.SITE_ID + 'SS').split('+').join(' ')));
+                    //console.log(lss);
+                    me.AutoLogoutFg = false;
+                    if (Ext.isEmpty(lss)) {
+                        clearInterval(me.SessionChecking);
+                        me.LogonUserId = '';
+                        me.AutoLogoutFg = true;
+                    }
+                    else {
+                        var now = new Date();
+                        var last = (Ext.isEmpty(lss.last) || (lss.last === 0)) ? now : new Date(lss.last);
+                        var diff = now.getTime() - last.getTime();
+                        var age = parseInt(lss.age, 10) * 1000;
+                        var sendData = [{
+                            loginIduser: me.LogonUserId
+                        }];
+                        if (diff > age) {
+                            if (me.SessionChecking) clearInterval(me.SessionChecking);
+                            me.AutoLogoutFg = false;
+                            me.UnloadCheckFg = false;
+                            Ext.util.Cookies.set(me.SITE_ID + 'AutoLogOff', '1');
+                            me.SessionOut(sendData, {
+                                success: function(response) {
+                                    Ext.util.Cookies.set(window.UserConnectionManager.SITE_ID + 'LON', '0');
+                                    window.localStorage.setItem(window.UserConnectionManager.SITE_ID + 'LU', '');
+                                    self.location.replace('/');
+                                },
+                                failure: function(response) {
+                                }
+                            });
+                        }
+                        else {
+                            Ext.Ajax.request({
+                                url: '/ServerPage/login/userLoginStatus.jsp',
+                                success: function (response) {
+                                    var response = Ext.decode(response.responseText);
+                                    if (!response.success) {
+                                        if (me.SessionChecking) clearInterval(me.SessionChecking);
+                                        me.AutoLogoutFg = false;
+                                        me.UnloadCheckFg = false;
+                                        Ext.util.Cookies.set(me.SITE_ID + 'AutoLogOff', '2');
+                                        me.SessionOut(sendData, {
+                                            success: function(response) {
+                                                Ext.util.Cookies.set(window.UserConnectionManager.SITE_ID + 'LON', '0');
+                                                window.localStorage.setItem(window.UserConnectionManager.SITE_ID + 'LU', '');
+                                                self.location.replace('/');
+                                            },
+                                            failure: function(response) {
+                                            }
+                                        });
+                                    }
+                                },
+                                failure: function (response) {
+                                }
+                            });
+                        }
+                    }
+                },
+                ErpMsgChecking: null,
+                ErpMsgCheckingInterval: 1 * 60 * 1000,
+                ErpMsgCheck: function () {
+                    var me = UserConnectionManager;
+                    var commonFn = Terp.app.getController('TerpCommon');
+                    Ext.Ajax.request({
+                        url: '/ServerPage/sy/sy_erp_msg.jsp',
+                        params: {
+                            sendData: Ext.encode([{ actiondata: 'instance', loginIduser: me.LogonUserId }])
+                        },
+                        success: function (response) {
+                            var obj = Ext.decode(response.responseText);
+                            if (obj.success && (obj.data.length > 0)) {
+                                for (var i=0; i<obj.data.length; i++) {
+                                    var dcMsg = obj.data[i].dc_msg;
+                                    var idRow = obj.data[i].id_row;
+                                    Ext.MessageBox.show({
+                                        icon: Ext.MessageBox.INFO,
+                                        title: 'ERP Message',
+                                        msg: dcMsg,
+                                        buttons: Ext.MessageBox.OK,
+                                        fn: function (btn) {
+                                            if (btn === 'ok') {
+                                                Ext.Ajax.request({
+                                                    url: '/ServerPage/sy/sy_erp_msg.jsp',
+                                                    params: {
+                                                        sendData: Ext.encode([{
+                                                            actiondata: 'erpcfm',
+                                                            loginIduser: me.LogonUserId,
+                                                            id_row: idRow
+                                                        }])
+                                                    },
+                                                    success: function (response1) {
+                                                        var obj1 = Ext.decode(response1.responseText);
+                                                    }
+                                                });
+                                            }
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                    });
+                }
+            };
+
+            window.downloadTerpFile = function(path, fn, dfn) {
+                UserConnectionManager.UnloadCheckFg = false;
+                //self.location.href = Ext.String.format('/ServerPage/common/download.jsp?path={0}&fn={1}&dfn={2}', path, fn, dfn);
+
+                // var url = Ext.String.format('/ServerPage/common/download.jsp?path={0}/&fn={1}.png&dfn={2}', path, fn, dfn);
+                var url = Ext.String.format('/ServerPage/common/download.jsp?path={0}/&fn={1}&dfn={2}', path, fn, dfn);
+
+                window.downloadFromUrl(url,dfn);
+            };
+
+            //뒤로가기방지를 위해 추가 220713 jiscraft
+            history.pushState(null, null, location.href);
+            window.onpopstate = function(event) {
+                history.go(1);
+            };
+            //
+
+            window.downloadTerpFileFromUrl = function(url, dfn) {
+                var ifrm = document.getElementById('dnFrm');
+                var idoc = ifrm.contentWindow || ifrm.contentDocument;
+                if (idoc.document) idoc = idoc.document;
+                var aLink = idoc.createElement('a');
+                aLink.href = url;
+                aLink.download = dfn;
+                aLink.click();
+            };
+
+            window.downloadFromUrl = function(url, dfn) {
+                var ifrm = document.getElementById('dnFrm');
+                var idoc = ifrm.contentWindow || ifrm.contentDocument;
+                if (idoc.document) idoc = idoc.document;
+                var aLink = idoc.createElement('a');
+                // 20220629 jiscraft
+                // aLink.href = dataUri;
+                // aLink.download = dfn;
+                console.log(url);
+                console.log(dfn);
+                aLink.href = url;
+                aLink.download = dfn;
+                aLink.click();
+            };
+            window.downloadFromDataUri = function(dataUri, dfn) {
+                var ifrm = document.getElementById('dnFrm');
+                var idoc = ifrm.contentWindow || ifrm.contentDocument;
+                if (idoc.document) idoc = idoc.document;
+                var aLink = idoc.createElement('a');
+                aLink.href = dataUri;
+                aLink.download = dfn;
+                aLink.click();
+            };
+            window.downloadBlob = function(blob, dfn) {
+                var ifrm = document.getElementById('dnFrm');
+                var idoc = ifrm.contentWindow || ifrm.contentDocument;
+                if (idoc.document) idoc = idoc.document;
+                var aLink = idoc.createElement('a');
+                aLink.href = window.URL.createObjectURL(blob);
+                aLink.download = dfn;
+                aLink.click();
+            };
+            window.pdfExport = function(params) {
+                self.PdfExporterParams = params;
+                var win = window.open('/ServerPage/common/pdfExport.jsp', 'PdfExporter-'+((new Date()).getTime()), 'left=0,top=0,width=800,height=600,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,Toolbar=no', true);
+                win.focus();
+            };
+            window.pdfViewer = function(pdfFileUrl) {
+                var path = '/ServerPage/common/pdfViewer.jsp?url=' + pdfFileUrl;
+                var win = window.open(path, 'pdfviewer-'+((new Date()).getTime()), 'left=0,top=0,width=1024,height=768,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no', true);
+                win.focus();
+            };
+            window.openImageViewer = function(img) {
+                var win = window.open(img.src, 'ImageViewer-'+((new Date()).getTime()), 'left=0,top=0,width=400,height=400,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,Toolbar=no', true);
+                win.focus();
+            };
+        });
+
+        onCompletedTerpFile = function(ifrm) {
+            var idoc = ifrm.contentWindow || ifrm.contentDocument;
+            if (idoc.document) idoc = idoc.document;
+            if (idoc.location.href !== 'about:blank') {
+                idoc.location.replace('about:blank');
+            }
+        };
+    </script>
+
+</head>
+
+<body>
+
+    <iframe id="dnFrm" style="display:none;width:0;height:0;" onload="onCompletedTerpFile(this)"></iframe>
+
+</body>
+
+</html>

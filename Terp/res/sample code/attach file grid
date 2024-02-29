@@ -1,0 +1,74 @@
+1. view
+
+	{
+		xtype :'tsoftattachfilegrid',
+		title : '첨부파일',
+		iconCls: 'fa fa-file',
+		maxUploadFiles: 20,	// 최대 업로드 파일 갯수
+		listeners: {
+			reconfigure: function(grid, store, columns, oldStore, oldColumns) {
+				// 그리드 스토어 바인딩시 reconfigure가 작동하므로
+				// afterrender나 boxready 이벤트 캐치 시점에서는
+				// 스토어가 ext-empty-store로 잡혀 있음.
+				// reconfigure가 완료되어야 바인딩한 스토어로 교체됨.
+				// 그러므로...
+				// 그리드가 렌더된 후 스토어에 데이터를 적재하고자 하는 경우
+				// reconfigure 이벤트 리스너에서 load 해야 함.
+				console.log(grid, grid.getStore(), store);
+				store.load(...);
+			}
+		}
+	}
+
+2. controller
+
+	1) init에서 load할 경우
+
+		... 생략 ...
+
+		init: function() {
+			var me = this;
+			me.getView().down('tsoftattachfilegrid').on({
+				reconfigure: me.onXyz_AttachFile_Grid;
+			});
+		},
+
+		onXyz_AttachFile_Grid: function(grid, store, columns, oldStore, oldColumns) {
+			console.log(grid, grid.getStore(), store);
+			store.load(...);
+		}
+
+	2) boxready 또는 afterrender에서 load할 경우
+
+		... 생략 ...
+
+		onXyz_AttachFile_Grid_BoxReady: function(gridPanel) {
+			var me = this;
+			gridPanel.on({
+				reconfigure: me.onXyz_AttachFile_Grid;
+			});
+		},
+
+		onXyz_AttachFile_Grid_Reconfigure: function(grid, store, columns, oldStore, oldColumns) {
+			console.log(grid, grid.getStore(), store);
+			store.load(...);
+		}
+
+	3) control 사용시
+
+		... 생략 ...
+
+		control: {
+			'tsoftattachfilegrid': {
+				reconfigure: 'onXyz_AttachFile_Grid_Reconfigure'
+			}
+		},
+
+		... 생략 ...
+
+		onXyz_AttachFile_Grid_Reconfigure: function(grid, store, columns, oldStore, oldColumns) {
+				console.log(grid, grid.getStore(), store);
+				store.load(...);
+		}
+
+

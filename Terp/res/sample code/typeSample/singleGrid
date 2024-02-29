@@ -1,0 +1,399 @@
+/**
+ *  Standard View
+ */
+Ext.define('Terp.view.fi.convertClassId.convertClassId', {
+    extend: 'Terp.view.tsoft.componentbase.TsoftPagePanel',
+    xtype: 'convertClassId',
+
+    requires: [
+        'Ext.layout.container.VBox',
+        'Terp.view.fi.convertClassId.convertClassIdController',
+        'Terp.view.fi.convertClassId.convertClassIdModel',
+        'Terp.view.tsoft.componentbase.TsoftCommonCodeComboBox',
+        'Terp.view.tsoft.componentbase.TsoftGrid',
+        'Terp.view.tsoft.componentux.TsoftHeadButtons'
+    ],
+
+    controller : 'convertClassId',
+    viewModel: {
+        type :'convertClassId'
+    },
+
+    layout :{
+        type : 'vbox',
+        align : 'stretch'
+    },
+
+
+
+    items: [
+        {
+            xtype :'tsoftheadbuttons',
+            reference: 'convertClassId_headbutton'
+        },
+        {
+            xtype :'tsoftsearchform',
+            reference: 'convertClassId_searchform',
+            items :[
+                {
+                    xtype :'tsofttextfield',
+                    fieldLabel: '검색',
+                    name : 'p_search',
+                    width : 300
+                },
+                {
+                    xtype :'tbspacer',
+                    width : 20
+                },
+                {
+                    xtype :'tsoftpartnerhelpfield',
+                    fieldLabel: '건설사',
+                    name :'cd_p',
+                    width : 200 ,
+                    editable: false ,
+                    //협력업체 헬프윈도우에 초기화값을 보내준다.
+                    helpInitParams :{
+                        'helpInitParam_fg_p' : '0',
+                        'helpInitParam_h_search' : ''
+                    }
+
+                },
+                {
+                    xtype :'tbspacer',
+                    width : 20
+                },
+                {
+                    xtype :'tsoftsitehelpfield',
+                    fieldLabel: '현장',
+                    name :'cd_site',
+                    width : 300 ,
+                    editable: false
+
+                }
+            ]
+        },
+        {
+            xtype :'tsoftgrid',
+            title : '회사계좌등록',
+            iconCls: 'fa fa-dollar',
+            reference: 'convertClassId_grid1',
+            flex : 1,
+            hiddenTools :['plus','edit','minus','save','copy','cancel' , 'import'],
+            bind :{
+                store :'{convertClassId_grid1_store}'
+            },
+
+            columns:[
+                {
+                    text:'코드',
+                    dataIndex:'cd_codel',
+                    width:100,
+                    editor: 'tsofttextfield'
+                },
+                {
+                    text:'계좌명',
+                    dataIndex:'nm_codel',
+                    width:200,
+                    editor: 'tsofttextfield'
+                },
+                {
+                    text:'icube금융거래처코드',
+                    dataIndex:'dc_codel',
+                    width:200,
+                    editor: 'tsofttextfield'
+                },
+                {
+                    text:'계좌번호',
+                    dataIndex:'dc_codel1',
+                    width:200,
+                    editor: 'tsofttextfield'
+                },
+                {
+                    text : '금융기관',
+                    dataIndex: 'dc_codel2',
+                    width:200,
+                    renderer :function(value, metaData, record, rowIndex, colIndex , store ){
+                        if ( value == null  ){
+                            return '';
+                        }else {
+                            return Terp.app.getController('TerpCommon').commonCodeRender(value , 'FI010');
+                        }
+                    },
+
+                    editor: {
+                        xtype: 'tsoftcommoncodecombobox',
+                        allowBlank: false ,
+                        listeners :{
+                            render:  function(){
+                                Terp.app.getController('TerpCommon').setCommonCode(this ,'FI010' ,'Y');
+                            }
+                        }
+                    }
+                },
+                {
+                    text:'카드번호',
+                    dataIndex:'dc_codel3',
+                    width:200,
+                    editor: 'tsofttextfield'
+                },
+                {
+                    text:'사용여부',
+                    dataIndex:'yn_use',
+                    width:80,
+                    editor: 'tsoftcomboboxyesno',
+                    renderer : function (value, metaData, record, rowIndex, colIndex, store, view) {
+                        return Terp.app.getController('TerpCommon').yesnoRender(value);
+                    }
+                }
+
+            ]
+        }/*,
+        {
+            xtype :'tsoftfuctionform',
+            reference: 'convertClassId_functionform',
+
+            items :[
+                {
+                    xtype:'button',
+                    text : '퇴 근',
+                    height : 24,
+                    width : 120 ,
+                    handler :'onFunctionButtonClick_@@@@@@',
+                    cls :'x-btn-default-small-custom',
+                    iconCls: 'fa fa-external-link',
+                    scale : 'small',
+                    iconAlign: 'left'
+                }
+            ]
+        }*/
+    ]/*,
+
+    //화면로드후 바로 조회하기 위해
+    listeners: {
+        afterrender: 'onSelect'
+    }
+    */
+});
+
+
+/**
+ * Standard Model
+ */
+Ext.define('Terp.view.fi.convertClassId.convertClassIdModel', {
+    extend: 'Ext.app.ViewModel',
+    alias: 'viewmodel.convertClassId',
+
+    requires: [
+        'Ext.data.proxy.Ajax',
+        'Ext.data.reader.Json'
+    ],
+
+    stores: {
+        convertClassId_grid1_store :{
+            sorters: [{property: 'fg_m', direction: 'desc'},{property: 'id_row', direction: 'asc'}],
+            config:{
+
+                proxy: {
+                    type :'ajax',
+                    url:'../ServerPage/@@/@@_@@@@.jsp',
+                    actionMethods: {
+                        create :'POST',
+                        read :'POST',
+                        update :'POST',
+                        destroy :'POST'
+                    },
+                    params:{
+                        sendData :''
+                    },
+                    reader :{
+                        type:'json',
+                        rootProperty: 'data',
+                        keepRawData: true
+                    },
+                    timeout : 480000
+                },
+                autoLoad: false
+            }
+        }
+    },
+
+    data: {
+        /* This object holds the arbitrary data that populates the ViewModel and is then available for binding. */
+    }
+});
+
+
+
+
+/**
+ * Standard Controller
+ */
+Ext.define('Terp.view.fi.convertClassId.convertClassIdController', {
+    extend: 'Ext.app.ViewController',
+    alias: 'controller.convertClassId',
+
+    commonFn:'',
+    convertClassId_headbutton:'',
+    convertClassId_searchform :'',
+    convertClassId_grid1 :'',
+    convertClassId_grid1_store :'' ,
+    control: {
+        'convertClassId [reference=convertClassId_grid2]': {
+            celldblclick :'onHandleDblclick'
+        }
+    },
+    init: function() {
+        commonFn = Terp.app.getController('TerpCommon');
+        convertClassId_headbutton = this.lookupReference('convertClassId_headbutton');
+        convertClassId_searchform = this.lookupReference('convertClassId_searchform');
+
+        convertClassId_grid1 = this.lookupReference('convertClassId_grid1');
+        convertClassId_grid1_store =  this.getViewModel().getStore('convertClassId_grid1_store') ;
+
+        this.onInitValue();
+        convertClassId_grid1.setReadOnly(true);
+
+    },
+
+    onInitValue : function(){
+
+    },
+
+    onSelect : function(){
+
+        var me = this;
+
+        //조회조건에 값이 입력되었는지 체크
+        var searchValue = convertClassId_searchform.down('[name=cd_site]').getValue();
+        if (searchValue  == '' ||  searchValue == null ){
+            commonFn.toastMessage('현장코드를 선택후 조회하세요','t')  ;
+            return;
+        };
+
+
+        var sendDataJsonEncode = convertClassId_searchform.makeSendData('r');
+        ///////////////////
+
+        /* type 2 던져줄값을 만들어서 처리
+        var jsonData = {
+            'actiondata': 'm',
+            'loginIduser': commonFn.getUserInfo('id_user'),
+            'loginCdc': commonFn.getUserInfo('cd_c'),
+            'cd_codeh' : 'FI040'
+        };
+
+        var sendDataJson = [];
+        sendDataJson.push(jsonData);
+        var sendDataJsonEncode = Ext.encode(sendDataJson);
+        */
+
+        Ext.getBody().mask('Loading...');
+        convertClassId_grid1_store.load({
+            params :{
+                sendData : sendDataJsonEncode
+            },
+            callback : me.onSelctCallback,
+            scope : me
+        });
+    },
+
+
+    onSelctCallback : function(records, operation , success) {
+
+        if (success == true) {
+            Ext.getBody().unmask();
+            convertClassId_grid1.setReadOnly(true);
+            convertClassId_grid1.getSelectionModel().select(0);
+
+        } else {
+            Ext.getBody().unmask();
+            var errorMsg = this.getViewModel().getStore('convertClassId_grid1_store').getProxy().getReader().rawData.msg;
+            commonFn.errorHandling(errorMsg);
+        }
+
+    },
+
+
+
+
+    onInsert : function(){
+        var me = this;
+        var gridRowindex = convertClassId_grid1.getGridRowIdx();
+        var gridSelection = convertClassId_grid1.getGridSelection();
+
+        if (gridRowindex == 0 || gridRowindex == undefined ){
+            gridRowindex = 0 ;
+        };
+
+        var insertData ={
+            cd_c: commonFn.getUserInfo().cd_c,
+            cd_codeh :'FI040',
+            cd_codel: '',
+            nm_codel: '',
+            dc_codel :'',
+            dc_codel1 :'',
+            dc_codel2 :'',
+            dc_codel3 :'',
+            yn_use :'Y'
+        };
+
+        convertClassId_grid1.setReadOnly(false);
+        convertClassId_grid1.getPlugin('cellplugin').completeEdit();
+        convertClassId_headbutton.down('[name = savebutton]').setDisabled(false);
+
+        convertClassId_grid1_store.insert(gridRowindex, insertData);
+        convertClassId_grid1.getPlugin('cellplugin').startEditByPosition({
+            row: gridRowindex,
+            column: 0
+        });
+
+    },
+
+
+    onModify : function(){
+        var me = this;
+        convertClassId_grid1.setReadOnly(false);
+        convertClassId_headbutton.down('[name = savebutton]').setDisabled(false);
+    },
+
+
+    onDelete : function(){
+        var me = this;
+        var gridRowindex = convertClassId_grid1.getGridRowIdx();
+        var gridSelection = convertClassId_grid1.getGridSelection();
+
+        convertClassId_headbutton.down('[name = savebutton]').setDisabled(false);
+
+        convertClassId_grid1_store.remove(gridSelection);
+        convertClassId_grid1.getSelectionModel().select(gridRowindex);
+    },
+
+
+    onSave : function(){
+        var me = this;
+        convertClassId_grid1.getPlugin('cellplugin').completeEdit();
+        var sendDataJsonEncode = convertClassId_grid1.makeSendData();
+
+        commonFn.getTsoftAjaxRequest(sendDataJsonEncode , '../ServerPage/cn/cn_hardware_po_h.jsp' , true , function (ajaxResult) {
+            // sendDataJsonEncode 보낼데이타 ,  url , async값(순서상관없이 받을시 true) , callback받을펑션
+            if ( ajaxResult.success ){   // 결과가 성공일때
+                commonFn.toastMessage('발주서 삭제성공','t');
+                cn16k2401_form1.clearForm();
+                commonFn.setDataBindHelpBox(cn16k2401_searchform, 'no_po', '', '');
+                me.onGridSelect_cn16k2401_grid1();
+                me.onGridSelect_cn16k2401_grid2();
+                cn16k2401_headbutton.down('[name = savebutton]').setDisabled(true);
+            }
+        });
+    }
+
+    /*
+    onFunctionButtonClick_@@@@@ : finction(){
+        Ext.MessageBox.confirm('확인', '퇴근 정보를 처리합니다. 처리 하시겠습니까?', this.doInnerFunction_@@@@@@@, this);
+    },
+
+    doInnerFunction_@@@@@@@ : function(){
+
+    }
+    */
+});

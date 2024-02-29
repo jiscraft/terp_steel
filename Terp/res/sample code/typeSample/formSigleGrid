@@ -1,0 +1,746 @@
+Ext.define('Terp.view.ma.convertClassId.convertClassId', {
+    extend: 'Terp.view.tsoft.componentbase.TsoftPagePanel',
+    xtype: 'convertClassId',
+
+    requires: [
+        'Ext.form.field.TextArea',
+        'Ext.layout.container.Table',
+        'Ext.layout.container.VBox',
+        'Ext.toolbar.Spacer',
+        'Terp.view.ma.convertClassId.convertClassIdController',
+        'Terp.view.ma.convertClassId.convertClassIdModel',
+        'Terp.view.tsoft.componentbase.TsoftComboBox',
+        'Terp.view.tsoft.componentbase.TsoftComboboxYesNo',
+        'Terp.view.tsoft.componentbase.TsoftCommonCodeComboBox',
+        'Terp.view.tsoft.componentbase.TsoftForm',
+        'Terp.view.tsoft.componentbase.TsoftGrid',
+        'Terp.view.tsoft.componentbase.TsoftTextField',
+        'Terp.view.tsoft.componentux.TsoftEmpHelpField',
+        'Terp.view.tsoft.componentux.TsoftHeadButtons',
+        'Terp.view.tsoft.componentux.TsoftOrgHelpField',
+        'Terp.view.tsoft.componentux.TsoftPartnerHelpField',
+        'Terp.view.tsoft.componentux.TsoftSearchForm',
+        'Terp.view.tsoft.componentux.grideditor.TsoftSiteGridField'
+    ],
+
+    controller : 'convertClassId',
+    viewModel: {
+        type :'convertClassId'
+    },
+    layout :{
+        type : 'vbox',
+        align : 'stretch'
+    },
+
+    items: [
+        {
+            xtype :'tsoftheadbuttons',
+            reference :'convertClassId_headbutton'
+        },
+        {
+            xtype :'tsoftsearchform',
+            reference: 'convertClassId_searchform',
+            items :[
+                {
+                    xtype :'tsoftpartnerhelpfield',
+                    fieldLabel: '협력업체',
+                    name :'cd_p',
+                    width : 300 ,
+                    editable: false
+                }
+
+            ]
+        },
+        {
+            xtype : 'tsoftform',
+            reference :'convertClassId_form1',
+            flex : 2,
+            layout : {
+                type: 'table',
+                columns: 5
+            },
+            defaults: {
+                width : 300 ,
+                labelWidth: 80
+            },
+            items :[
+                {
+                    xtype :'tsofttextfield',
+                    fieldLabel: '코드',
+                    name :'cd_p',
+                    keyField: true ,
+                    colspan: 1,
+                    allowBlank: false
+                },
+                {
+                    xtype :'tbspacer',
+                    width : 20
+                },
+                {
+                    xtype :'tsofttextfield',
+                    fieldLabel: '거래처명',
+                    name :'nm_p',
+                    colspan : 3 ,
+                    allowBlank: false
+                },
+
+                {
+                    xtype :'tsofttextfield',
+                    fieldLabel: '등록거래처명',
+                    name :'nm_p_resister',
+                    colspan : 1
+                },
+                {
+                    xtype :'tbspacer',
+                    width : 20
+                },
+                {
+                    xtype :'tsoftcombobox',
+                    fieldLabel: '거래구분',
+                    name :'fg_p',
+                    width : 200 ,
+                    colspan : 3,
+                    displayField: 'name',
+                    valueField: 'value',
+                    queryMode:'local',
+                    editable: false ,
+                    allowBlank: false ,
+                    store :[
+                        ['0','영업'],
+                        ['1','구매자재'],
+                        ['2','일반'],
+                        ['3','금융'],
+                        ['9','기타']
+
+                    ]
+                },
+
+                {
+                    xtype :'tsofttextfield',
+                    fieldLabel: '사업자등록<br>번호',
+                    name :'no_p',
+                    allowBlank: false ,
+                    colspan : 1
+                },
+                {
+                    xtype :'tbspacer',
+                    width : 20
+                },
+                {
+                    xtype :'tsofttextfield',
+                    fieldLabel: '법인번호',
+                    name :'no_c',
+                    colspan : 3
+                },
+
+                {
+                    xtype :'tsoftpartnerhelpfield',
+                    fieldLabel: '상위거래처',
+                    name :'cd_p_parent',
+                    colspan :1
+                },
+                {
+                    xtype :'tbspacer',
+                    width : 20
+                },
+                {
+                    xtype :'tsofttextfield',
+                    fieldLabel: '대표',
+                    name :'dc_boss',
+                    colspan :3
+                },
+
+                {
+                    xtype :'tsofttextfield',
+                    fieldLabel: '업태',
+                    name :'dc_ut',
+                    colspan : 1
+                },
+                {
+                    xtype :'tbspacer',
+                    width : 20
+                },
+                {
+                    xtype :'tsofttextfield',
+                    fieldLabel: '업종',
+                    name :'dc_jm',
+                    colspan : 3
+                },
+
+                {
+                    xtype :'tsoftorghelpfield',
+                    fieldLabel: '담당부서',
+                    name :'cd_o_encharge',
+                    colspan : 1
+                },
+                {
+                    xtype :'tbspacer',
+                    width : 20
+                },
+                {
+                    xtype :'tsoftemphelpfield',
+                    fieldLabel: '담당자',
+                    name :'cd_e_encharge',
+                    colspan : 3
+                },
+
+                {
+                    name :'dc_etc',
+                    xtype :'textareafield',
+                    fieldLabel: '설명',
+                    width : 620 ,
+                    height : 100 ,
+                    colspan : 5
+                },
+
+                {
+                    xtype :'tsoftcomboboxyesno',
+                    fieldLabel: '사용',
+                    name :'yn_use',
+                    width : 200 ,
+                    colspan : 1 ,
+                    allowBlank: false
+                },
+                {
+                    xtype :'tbspacer',
+                    width : 20
+                },
+                {
+                    xtype :'tsoftcombobox',
+                    fieldLabel: '협력업체구분',
+                    name :'fg_cowork',
+                    width : 200 ,
+                    colspan : 3 ,
+                    allowBlank: true,
+                    displayField: 'name',
+                    valueField: 'value',
+                    queryMode:'local',
+                    editable: false ,
+                    store :[
+                        ['0','공장'],
+                        ['1','현장'],
+                        ['2','물류'],
+                        ['9','기타']
+
+                    ]
+                },
+
+                {
+                  xtype:'tbspacer',
+                    height : 20 ,
+                    colspan : 5
+                },
+
+                {
+                    name :'dc_addr',
+                    xtype : 'tsofttextfield',
+                    fieldLabel: '주소',
+                    colspan : 5 ,
+                    width : 620
+                },
+
+                {
+                    name :'dc_zip',
+                    xtype : 'tsofttextfield',
+                    fieldLabel: '우편번호',
+                    colspan : 1 ,
+                    width : 200
+                },
+                {
+                    xtype :'tbspacer',
+                    width : 20
+                },
+                {
+                    name :'dc_tel',
+                    xtype : 'tsofttextfield',
+                    fieldLabel: '전화번호',
+                    colspan : 3 ,
+                    width : 200
+                },
+
+                {
+                    name :'dc_fax',
+                    xtype : 'tsofttextfield',
+                    fieldLabel: '팩스',
+                    colspan : 1 ,
+                    width : 200
+                },
+                {
+                    xtype :'tbspacer',
+                    width : 20
+                },
+                {
+                    name :'yn_jeonja',
+                    xtype : 'tsoftcomboboxyesno',
+                    fieldLabel: '전자세금계산서',
+                    colspan : 3 ,
+                    width : 200
+                },
+
+                {
+                    name :'fg_fi010',
+                    xtype : 'tsoftcommoncodecombobox',
+                    reference: 'convertClassId_form1_combo1',
+                    fieldLabel: '금융코드',
+                    colspan : 1 ,
+                    width : 200
+                },
+                {
+                    xtype :'tbspacer',
+                    width : 20
+                },
+                {
+                    name :'dc_bank_account',
+                    xtype : 'tsofttextfield',
+                    fieldLabel: '계좌번호',
+                    colspan : 3
+                },
+
+                {
+                    name :'dc_bank_owner',
+                    xtype : 'tsofttextfield',
+                    fieldLabel: '예금주',
+                    colspan : 1
+                },
+                {
+                    xtype :'tbspacer',
+                    width : 20
+                },
+                {
+                    name :'dc_bank_etc',
+                    xtype : 'tsofttextfield',
+                    fieldLabel: '계좌설명',
+                    colspan : 3
+                },
+
+
+                {
+                    name :'dc_initial',
+                    xtype : 'tsofttextfield',
+                    fieldLabel: 'initial',
+                    colspan : 3,
+                    maxLength: 2
+                }
+            ]
+        },
+        {
+            xtype : 'tbspacer',
+            height : 5
+        },
+        {
+            xtype :'tsoftgrid',
+            title : 'Contact List',
+            iconCls: 'fa fa-user',
+            reference: 'convertClasId_grid1',
+            flex : 1,
+            collapsible: true ,
+            hiddenTools :['copy', 'cancel' ,'import'],
+            bind :{
+                store :'{convertClasId_grid1_store}'
+            },
+            columns:[
+                {
+                    text:'이름',
+                    dataIndex:'dc_name',
+                    width:100,
+                    editor: 'tsofttextfield'
+                },
+                {
+                    text:'직책',
+                    dataIndex:'dc_jc',
+                    width:100,
+                    editor: 'tsofttextfield'
+                },
+                {
+                    text:'담당업무',
+                    dataIndex:'dc_role',
+                    width:200,
+                    editor: 'tsofttextfield'
+                },
+                {
+                    text:'연락처1',
+                    dataIndex:'dc_tel1',
+                    width:150,
+                    editor: 'tsofttextfield'
+                },
+                {
+                    text:'연락처2',
+                    dataIndex:'dc_tel2',
+                    width:150,
+                    editor: 'tsofttextfield'
+                },
+                {
+                    text:'mail',
+                    dataIndex:'dc_mail',
+                    width:200,
+                    editor: 'tsofttextfield'
+                },
+                {
+                    text:'현장',
+                    dataIndex:'cd_site',
+                    nmIndex : 'nm_site' ,
+                    width:150,
+                    editor :{
+                        xtype: 'tsoftsitegridfield'
+                    }
+
+                },
+                {
+                    text:'현장명',
+                    dataIndex:'nm_site',
+                    width:300
+                }
+
+            ]/*,
+            listeners: {
+                rowdblclick: 'onGridRowdoubleClick_convertClasId_grid1'
+            }
+            */
+        }        
+        
+    ]
+});
+
+
+
+
+/**
+ * Created by jiscraft on 2016-02-17.
+ */
+Ext.define('Terp.view.ma.convertClassId.convertClassIdModel', {
+    extend: 'Ext.app.ViewModel',
+    alias: 'viewmodel.convertClassId',
+
+    requires: [
+        'Ext.data.proxy.Ajax',
+        'Ext.data.reader.Json'
+    ],
+
+    stores: {
+        convertClassId_form1_store :{
+            config:{
+                proxy: {
+                    type :'ajax',
+                    url:'../ServerPage/@@/@@_@@@@@.jsp',
+                    params:{
+
+                    },
+                    reader :{
+                        type:'json',
+                        rootProperty: 'data',
+                        keepRawData: true
+                    }
+                },
+                autoLoad: false
+            }
+
+        },
+        convertClassId_grid1_store :{
+            config:{
+                proxy: {
+                    type :'ajax',
+                    url:'../ServerPage/@@/@@_@@@@.jsp',
+                    params:{
+                    },
+                    reader :{
+                        type:'json',
+                        rootProperty: 'data',
+                        keepRawData: true
+                    }
+                },
+                autoLoad: false
+            }
+        }        
+    },
+
+    data: {
+        /* This object holds the arbitrary data that populates the ViewModel and is then available for binding. */
+    }
+});
+
+
+
+
+/**
+ * Created by jiscraft on 2016-02-17.
+ */
+Ext.define('Terp.view.ma.convertClassId.convertClassIdController', {
+    extend: 'Ext.app.ViewController',
+    alias: 'controller.convertClassId',
+
+    requires: [
+        'Terp.view.tsoft.common.contactUser.ContactUser'
+    ],
+
+    commonFn: '',
+    convertClassId_headbutton:'',
+    convertClassId_searchform :'',
+    convertClassId_form1 :'',
+    convertClassId_form1_store :'',
+
+
+    init: function() {
+        commonFn = Terp.app.getController('TerpCommon');
+
+        convertClassId_headbutton = this.lookupReference('convertClassId_headbutton');
+        convertClassId_searchform = this.lookupReference('convertClassId_searchform');
+
+        convertClassId_form1 = this.lookupReference('convertClassId_form1');
+        convertClassId_form1_store =  this.getViewModel().getStore('convertClassId_form1_store') ;
+
+        convertClassId_form1.setReadOnly(true);
+        this.onInitCombstore();
+
+    },
+
+    onInitCombstore : function(){
+        commonFn.setCommonCode(this.lookupReference('convertClassId_form1_combo1') ,'FI010');
+    },
+
+
+
+    onSelect : function(){
+        var me = this;
+        
+        //조회조건을 체크
+        var searchFormValue = convertClassId_searchform.down('[name=cd_p]').getValue();
+        if ( searchFormValue == '' || searchFormValue == null ){
+            commonFn.toastMessage('조회조건을 입력한뒤 조회하세요','t');
+            return;
+        }
+
+        var sendDataJsonEncode = convertClassId_searchform.makeSendData('r');
+        convertClassId_form1_store.load({
+            params :{
+                sendData : sendDataJsonEncode
+            },
+            callback : me.onSelctCallback,
+            scope : me
+        });
+    },
+
+
+    onSelctCallback : function(records, operation , success){
+        var me = this;
+        if(success == true ){
+            if  ( records.length < 1 ){
+                convertClassId_form1.clearForm();
+                me.onGridSelect_convertClasId_grid1();
+
+            }else {
+                convertClassId_form1.loadRecord(records[0]);
+                //폼에 HELP FIELD 네임값들 바인딩
+                commonFn.setDataBindHelpBox(convertClassId_form1, 'cd_p_parent', records[0].data.cd_p_parent, records[0].data.nm_p_parent);
+                commonFn.setDataBindHelpBox(convertClassId_form1, 'cd_o_encharge', records[0].data.cd_o_encharge, records[0].data.nm_o_encharge);
+                commonFn.setDataBindHelpBox(convertClassId_form1, 'cd_e_encharge', records[0].data.cd_e_encharge, records[0].data.nm_e_encharge);
+                convertClassId_form1.setReadOnly(true);
+                me.
+            }
+        }else{
+            
+            var errorMsg = this.getViewModel().getStore('convertClassId_grid1_store').getProxy().getReader().rawData.msg;
+            commonFn.errorHandling(errorMsg);
+        }
+    },
+
+    onModify : function(){
+        convertClassId_form1.setReadOnly(false);
+        convertClassId_headbutton.down('[name = savebutton]').setDisabled(false);
+
+    },
+
+
+    onSave : function(){
+        var me = this;
+
+        var sendDataJsonEncode = convertClassId_form1.makeSendData('s');
+
+        Ext.Ajax.request({
+            url :'../ServerPage/@@/@@_@@@@.jsp' ,
+            params :{
+                sendData : sendDataJsonEncode
+            },
+            success :function(res){
+                var obj = Ext.JSON.decode(res.responseText);
+                if(obj.success == true){
+                    commonFn.toastMessage('저장성공','t');
+                    convertClassId_form1.setReadOnly(true);
+                    convertClassId_headbutton.down('[name = savebutton]').setDisabled(true);
+                    
+                    /* 등록하는 메뉴일경우
+                    convertClassId_searchform.down('[name=cd_p]').setValue(convertClassId_form1.down('[name=cd_p]').getValue());
+                    */
+                    me.onSelect();
+
+                }else{
+                    var errorMsg = obj.msg;
+                    commonFn.errorHandling(errorMsg);
+                }
+            },
+            fail : function(){
+                commonFn.toastMessage('"데이타처리중 오류가 발생했습니다','t');
+            }
+        });
+    },
+
+
+    onInsert : function(){
+        convertClassId_searchform.clearForm();
+        convertClassId_form1.clearForm();
+        this.onModify();
+
+        convertClassId_form1.down('[name=fg_p]').setValue('0');
+        convertClassId_form1.down('[name=yn_use]').setValue('Y');
+        convertClassId_form1.down('[name=fg_cowork]').setValue('9');
+        convertClassId_form1.down('[name=yn_jeonja]').setValue('Y');
+    },
+
+
+    onDelete : function(){
+        var me = this;
+
+        var sendDataJsonEncode = convertClassId_form1.makeSendData('d');
+
+        Ext.Ajax.request({
+            url :'../ServerPage/@@/@@_@@@@.jsp' ,
+            params :{
+                sendData : sendDataJsonEncode
+            },
+            success :function(res){
+                var obj = Ext.JSON.decode(res.responseText);
+                if(obj.success == true){
+                    commonFn.toastMessage('데이타 삭제성공','t');
+                    convertClassId_form1.setReadOnly(true);
+                    convertClassId_searchform.clearForm();
+                    convertClassId_form1.clearForm();
+
+
+                }else{
+                    var errorMsg = obj.msg;
+                    commonFn.errorHandling(errorMsg);
+                }
+            },
+            fail : function(){
+                commonFn.toastMessage('데이타처리중 에러발생','t');
+            }
+        });
+    },
+    
+    onGridInsert_convertClasId_grid1 : function(selection , rowIdx){
+
+        //추가에 필요한 값 체크
+        if ( convertClasId_searchform.down('[name = cd_p]').getValue() == ''  )
+        {
+            commonFn.toastMessage('협력업체를 선택 조회한뒤 추가하세요','b');
+            return;
+        }
+
+        var insertData ={
+            cd_c: commonFn.getUserInfo().cd_c,
+            no_contact: noDocu,
+            dc_name : '',
+            dc_jc :'',
+            dc_roll :'',
+            dc_tel1 :'',
+            dc_tel2 :'',
+            dc_mail :'',
+            dc_company :'',
+            dc_remark :'',
+            cd_p : convertClasId_searchform.down('[name = cd_p]').getValue(),
+            cd_site :''
+        };
+
+        //edit하던 내용을 컴플릿시킴..
+        convertClasId_grid1.getPlugin('cellplugin').completeEdit();
+        convertClasId_grid1.getStore('convertClasId_grid1_store').insert(rowIdx, insertData);
+        convertClasId_grid1.getSelectionModel().select(rowIdx);
+        convertClasId_grid1.setReadOnly(false);
+        //row selection한뒤 에디트를 시작할 셀로 이동
+        convertClasId_grid1.getPlugin('cellplugin').startEditByPosition({
+            row: rowIdx,
+            column: 0  //가고자하는 컬럼번호
+        });
+
+    },
+
+
+    onGridModify_convertClasId_grid1 : function(){
+        convertClasId_grid1.setReadOnly(false);
+    },
+
+
+    onGridDelete_convertClasId_grid1 : function(selection , rowIdx){
+        convertClasId_grid1_store.remove(selection);
+        convertClassId_grid1_store.remove(selection);
+        convertClassId_grid1.getSelectionModel().select(rowIdx);
+    },
+    
+    onGridSave_convertClasId_grid1 : function(){
+        var me = this;
+        convertClasId_grid1.getPlugin('cellplugin').completeEdit();
+        var sendData = convertClasId_grid1.makeSendData();
+
+        Ext.Ajax.request({
+            url :'../ServerPage/ma/ma_contact.jsp' ,
+            method :'POST',
+            params :{
+                sendData : sendData
+            },
+
+            success :function(res){
+                var obj = Ext.JSON.decode(res.responseText);
+                if(obj.success == true){
+                    commonFn.toastMessage("저장성공",'b');
+                    convertClasId_grid1.setReadOnly(true);
+                }else{
+                    var errorMsg = obj.msg;
+                    commonFn.errorHandling(errorMsg);
+                }
+            },
+            fail : function(){
+                commonFn.toastMessage("데이타처리중 오류가 발생했습니다",'t');
+            }
+        })
+    },
+
+
+    onGridSelect_convertClasId_grid1 : function(){
+        var me = this;
+        var sendDataJsonEncode =  convertClasId_searchform.makeSendData('m');
+        convertClasId_grid1_store.load({
+            params :{
+                sendData : sendDataJsonEncode
+            },
+            callback : me.onGridSelctCallback_convertClasId_grid1,
+            scope : me
+        });
+    },
+
+
+    onGridSelctCallback_convertClasId_grid1 : function(records, operation , success){
+        if(success == true ){
+            convertClasId_grid1.setReadOnly(true);
+        }else{
+            var errorMsg = this.getViewModel().getStore('convertClasId_grid1_store').getProxy().getReader().rawData.msg;
+            commonFn.errorHandling(errorMsg);
+
+        }
+
+    }/*,
+
+    //row에서추가 동작을 할때
+
+    onGridRowdoubleClick_convertClasId_grid1 : function( obj , record , tr , rowIndex , e , eOpts ){
+
+        var pop = Ext.create('Terp.view.tsoft.common.contactUser.ContactUser',{
+             popupParamView : me.getView() ,   //부르는넘의 뷰
+             popupParamCallback : 'onCallback' ,  // 끝나고 돌아와서 처리할 펑션이름
+             popupParams : sm16h0901_searchform.down('[name=dc_rev]').value   //처리할파라미터
+        });
+        pop.show();
+    }    
+    */
+
+
+
+});

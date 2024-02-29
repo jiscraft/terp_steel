@@ -1,0 +1,82 @@
+그리드 cell merge 및 sub total 기능 사용법
+
+
+1. TsoftGridCellMergePlugin 클래스 정의했음.
+
+	Ext.define('Terp.view.tsoft.componentux.TsoftGridCellMergePlugin', {
+		extend: 'Ext.AbstractPlugin',
+		alias: 'plugin.tsoftgridcellmerge',
+
+		... (생략 : 소스에 달린 주석 참조) ...
+
+	});
+
+
+
+2. TsoftGrid에 디폴트로 플러그인을 등록해 두었음.
+
+	Ext.define('Terp.view.tsoft.componentbase.TsoftGrid', {
+
+		... (생략) ...
+
+	    plugins: [
+
+			{
+				pluginId: 'cellMerge',
+				ptype: 'tsoftgridcellmerge'
+			}
+		]
+
+		... (생략) ...
+
+	});
+
+
+
+3. 그리드 설정 및 컬럼 설정법
+
+	Ext.define('Terp.view.samples.TsoftCellMergePluginSampleGrid', {
+	    extend: 'Terp.view.tsoft.componentbase.TsoftGrid',
+
+		... (생략) ...
+
+	    enableCellMergePlugin: true,	// cell merge 플러그인 사용 여부
+		rowLines: false,	// cell merge 플러그인 사용시 반드시 false로 설정해야 함
+		enableSubTotal: true,	// sub total 적용여부 (grid의 enableLocking 속성이 true이면 무조건 false로 처리됨)
+		bufferedRenderer: false ,  // 합계기능을 위해서는 반드시 false
+
+		columns: [
+
+			... (생략) ...
+
+	        {
+	            text:'품명',
+	            dataIndex:'nm_item',
+				renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+					return view.grid.getMergeValue(value, metaData, record, rowIndex, colIndex, store, view);
+				}
+	        },
+	        {
+	            text:'수량',
+	            dataIndex:'qt',
+	            align :'right',
+				formatter: 'number("0,000")',
+				enableSubTotal: true,	// 합계를 계산하려면 true
+				subTotalRenderer: 'number',	// Ext.util.Format에 정의된 메소드명
+				subTotalRenderFormat: '0,000'	// Ext.util.Format에 정의된 메소드에 전달할 argument들
+	        },
+	        {
+	            text:'금액',
+	            dataIndex:'at',
+	            align :'right',
+				formatter: 'number("0,000")',
+				enableSubTotal: true,	// 합계를 계산하려면 true
+				subTotalRenderer: 'number',	// Ext.util.Format에 정의된 메소드명
+				subTotalRenderFormat: '0,000'	// Ext.util.Format에 정의된 메소드에 전달할 argument들
+	        }
+
+			... (생략) ...
+
+	    ]
+
+	});
